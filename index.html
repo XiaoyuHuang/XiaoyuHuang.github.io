@@ -3,15 +3,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Xiaoyu Huang â Portfolio</title>
-  <meta name="description" content="Personal portfolio of Xiaoyu Huang â Principal Software Engineer at Microsoft." />
+  <title>Xiaoyu Huang — Portfolio</title>
+  <meta name="description" content="Personal portfolio of Xiaoyu Huang — Principal Software Engineer at Microsoft." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <style>
-    /* âââ Reset âââ */
+    /* ═══ Reset ═══ */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
@@ -35,7 +35,7 @@
     }
     a { color: inherit; text-decoration: none; }
 
-    /* âââ Typography (matching template) âââ */
+    /* ═══ Typography (matching template) ═══ */
     .heading-display {
       font-size: clamp(2.5rem, 5vw, 3.75rem);
       font-weight: 800;
@@ -62,7 +62,7 @@
       color: var(--text-secondary);
     }
 
-    /* âââ Bento Layout (Laptop) âââ */
+    /* ═══ Bento Layout (Laptop) ═══ */
     .bento-container {
       width: 100vw;
       height: 100vh;
@@ -91,7 +91,7 @@
       min-height: 0;
     }
 
-    /* âââ Panels âââ */
+    /* ═══ Panels ═══ */
     .panel {
       background: var(--panel-bg);
       overflow: hidden;
@@ -102,7 +102,7 @@
       opacity: 0;
     }
 
-    /* âââ Dividers (draggable) âââ */
+    /* ═══ Dividers (draggable) ═══ */
     .divider {
       background: transparent;
       position: relative;
@@ -154,7 +154,7 @@
       transform-origin: top;
     }
 
-    /* âââ Hero Section âââ */
+    /* ═══ Hero Section ═══ */
     .hero-panel {
       justify-content: center;
     }
@@ -185,7 +185,7 @@
       transform: translateY(-20px);
     }
 
-    /* âââ Skills Section (Matter.js) âââ */
+    /* ═══ Skills Section (Matter.js) ═══ */
     .skills-panel {
       padding: 0 !important;
       cursor: grab;
@@ -197,7 +197,7 @@
       display: block;
     }
 
-    /* âââ Work Section âââ */
+    /* ═══ Work Section ═══ */
     .work-panel { padding: 0 !important; }
     .work-header {
       padding: 28px 32px;
@@ -255,7 +255,7 @@
       color: var(--text-secondary);
     }
 
-    /* âââ About Section âââ */
+    /* ═══ About Section ═══ */
     .about-panel {
       cursor: pointer;
       transition: background 0.3s;
@@ -295,7 +295,7 @@
       overflow: hidden;
     }
 
-    /* âââ Contact Section âââ */
+    /* ═══ Contact Section ═══ */
     .contact-panel { justify-content: center; }
     .contact-list { display: flex; flex-direction: column; gap: 12px; }
     .contact-item {
@@ -317,7 +317,7 @@
     .contact-item:hover .contact-label { color: rgba(255,255,255,0.6); }
     .contact-value { font-weight: 500; }
 
-    /* âââ Expanded Overlay âââ */
+    /* ═══ Expanded Overlay ═══ */
     .expanded-overlay {
       position: fixed;
       inset: 0;
@@ -352,7 +352,7 @@
       transform: scale(1.1);
     }
 
-    /* âââ Expanded Work View âââ */
+    /* ═══ Expanded Work View ═══ */
     .expanded-work {
       max-width: 1100px;
       margin: 0 auto;
@@ -405,7 +405,7 @@
     .exp-project-card h4 { font-weight: 600; margin-bottom: 8px; }
     .exp-project-card p { font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 10px; }
 
-    /* âââ Expanded About View âââ */
+    /* ═══ Expanded About View ═══ */
     .expanded-about {
       max-width: 900px;
       margin: 0 auto;
@@ -473,7 +473,7 @@
       list-style: none;
     }
     .exp-details li::before {
-      content: 'â';
+      content: '—';
       position: absolute;
       left: 0;
       color: var(--border);
@@ -496,7 +496,7 @@
     .edu-degree { color: var(--text-secondary); font-size: 0.9rem; }
     .edu-detail { color: var(--text-secondary); font-size: 0.8rem; font-family: 'JetBrains Mono', monospace; }
 
-    /* âââ Mobile Layout âââ */
+    /* ═══ Mobile Layout ═══ */
     .mobile-container {
       display: none;
       width: 100%;
@@ -529,7 +529,7 @@
 </head>
 <body>
 
-<!-- âââ DESKTOP BENTO LAYOUT âââ -->
+<!-- ═══ DESKTOP BENTO LAYOUT ═══ -->
 <div class="bento-container" id="bentoContainer">
   <!-- Top Row -->
   <div class="top-row">
@@ -563,7 +563,7 @@
       </div>
       <div class="work-content">
         <a href="https://github.com/XiaoyuHuang/XiaoyuHuang.github.io" target="_blank" class="project-card">
-          <div class="proj-img">ð</div>
+          <div class="proj-img">🌐</div>
           <h3>Personal Portfolio</h3>
           <div class="proj-tags">
             <span class="proj-tag">HTML</span>
@@ -572,7 +572,7 @@
           </div>
         </a>
         <a href="https://github.com/XiaoyuHuang/WebDevelop" target="_blank" class="project-card">
-          <div class="proj-img">ð»</div>
+          <div class="proj-img">💻</div>
           <h3>Web Development</h3>
           <div class="proj-tags">
             <span class="proj-tag">CSS</span>
@@ -580,7 +580,7 @@
           </div>
         </a>
         <a href="https://github.com/XiaoyuHuang/Sort-Algorithm" target="_blank" class="project-card">
-          <div class="proj-img">ð¢</div>
+          <div class="proj-img">🔢</div>
           <h3>Sort Algorithm</h3>
           <div class="proj-tags">
             <span class="proj-tag">Python</span>
@@ -598,10 +598,10 @@
       <!-- About Panel -->
       <div class="panel about-panel" id="panelAbout">
         <div class="about-inner">
-          <div class="about-avatar">é»</div>
+          <div class="about-avatar">黄</div>
           <div class="about-text-wrap">
             <div class="about-label">About</div>
-            <div class="about-body">Product-minded technical leader with 10+ years at Microsoft and J.P. Morgan. Principal Software Engineer driving Incident Management Automation across Azure â building agentic workflows adopted by 10K+ authors, powering millions of incident actions. Founding member of Azure Advisor (300K+ MAU). Columbia University CS graduate passionate about developer platforms, UX-driven product thinking, and bridging engineering with product strategy.</div>
+            <div class="about-body">Product-minded technical leader with 10+ years at Microsoft and J.P. Morgan. Principal Software Engineer driving Incident Management Automation across Azure — building agentic workflows adopted by 10K+ authors, powering millions of incident actions. Founding member of Azure Advisor (300K+ MAU). Columbia University CS graduate passionate about developer platforms, UX-driven product thinking, and bridging engineering with product strategy.</div>
           </div>
         </div>
       </div>
@@ -613,14 +613,14 @@
       <div class="panel contact-panel" id="panelContact">
         <div class="contact-list">
           <a href="mailto:xiaoyu.huang314@gmail.com" class="contact-item">
-            <span class="contact-icon">â</span>
+            <span class="contact-icon">✉</span>
             <div>
               <div class="contact-label">Email</div>
               <div class="contact-value">xiaoyu.huang314@gmail.com</div>
             </div>
           </a>
           <a href="https://github.com/XiaoyuHuang" target="_blank" class="contact-item">
-            <span class="contact-icon">â</span>
+            <span class="contact-icon">⟁</span>
             <div>
               <div class="contact-label">GitHub</div>
               <div class="contact-value">github.com/XiaoyuHuang</div>
@@ -639,7 +639,7 @@
   </div>
 </div>
 
-<!-- âââ MOBILE LAYOUT âââ -->
+<!-- ═══ MOBILE LAYOUT ═══ -->
 <div class="mobile-container" id="mobileContainer">
   <div class="mobile-section mobile-hero" id="mobileHero">
     <div class="hero-greeting">Hi, I am Xiaoyu</div>
@@ -660,14 +660,14 @@
     <div style="font-weight:700;margin-bottom:16px;">Contact</div>
     <div class="contact-list">
       <a href="mailto:xiaoyu.huang314@gmail.com" class="contact-item">
-        <span class="contact-icon">â</span>
+        <span class="contact-icon">✉</span>
         <div>
           <div class="contact-label">Email</div>
           <div class="contact-value">xiaoyu.huang314@gmail.com</div>
         </div>
       </a>
       <a href="https://github.com/XiaoyuHuang" target="_blank" class="contact-item">
-        <span class="contact-icon">â</span>
+        <span class="contact-icon">⟁</span>
         <div>
           <div class="contact-label">GitHub</div>
           <div class="contact-value">github.com/XiaoyuHuang</div>
@@ -684,7 +684,7 @@
   </div>
 </div>
 
-<!-- âââ EXPANDED WORK OVERLAY âââ -->
+<!-- ═══ EXPANDED WORK OVERLAY ═══ -->
 <div class="expanded-overlay" id="workOverlay">
   <button class="close-btn" onclick="closeOverlay('workOverlay')">&times;</button>
   <div class="expanded-work">
@@ -693,7 +693,7 @@
       <h3>Platform Products</h3>
       <div class="exp-projects-grid">
         <a href="https://github.com/XiaoyuHuang/XiaoyuHuang.github.io" target="_blank" class="exp-project-card">
-          <div class="proj-img">ð</div>
+          <div class="proj-img">🌐</div>
           <h4>Personal Portfolio</h4>
           <p>Bento-style animated personal portfolio with physics-based interactions and responsive design.</p>
           <div class="proj-tags">
@@ -704,7 +704,7 @@
           </div>
         </a>
         <a href="https://github.com/XiaoyuHuang/WebDevelop" target="_blank" class="exp-project-card">
-          <div class="proj-img">ð»</div>
+          <div class="proj-img">💻</div>
           <h4>Web Development</h4>
           <p>Collection of web development projects and experiments with modern frontend technologies.</p>
           <div class="proj-tags">
@@ -713,7 +713,7 @@
           </div>
         </a>
         <a href="https://github.com/XiaoyuHuang/Sort-Algorithm" target="_blank" class="exp-project-card">
-          <div class="proj-img">ð¢</div>
+          <div class="proj-img">🔢</div>
           <h4>Sort Algorithm</h4>
           <p>Implementations and visualizations of classic sorting algorithms in Python.</p>
           <div class="proj-tags">
@@ -727,7 +727,7 @@
       <h3>Microsoft (Professional)</h3>
       <div class="exp-projects-grid">
         <div class="exp-project-card">
-          <div class="proj-img">ð¤</div>
+          <div class="proj-img">🤖</div>
           <h4>Incident Automation Platform</h4>
           <p>Agentic automation workflows adopted by 10K+ authors, powering millions of incident actions across Azure services.</p>
           <div class="proj-tags">
@@ -738,9 +738,9 @@
           </div>
         </div>
         <div class="exp-project-card">
-          <div class="proj-img">ð</div>
+          <div class="proj-img">📊</div>
           <h4>Azure Advisor</h4>
-          <p>Founding member â built recommendation UX and pipelines serving 300K+ monthly active users and 1.5M daily recommendations.</p>
+          <p>Founding member — built recommendation UX and pipelines serving 300K+ monthly active users and 1.5M daily recommendations.</p>
           <div class="proj-tags">
             <span class="proj-tag">C#</span>
             <span class="proj-tag">React</span>
@@ -752,16 +752,16 @@
   </div>
 </div>
 
-<!-- âââ EXPANDED ABOUT OVERLAY âââ -->
+<!-- ═══ EXPANDED ABOUT OVERLAY ═══ -->
 <div class="expanded-overlay" id="aboutOverlay">
   <button class="close-btn" onclick="closeOverlay('aboutOverlay')">&times;</button>
   <div class="expanded-about">
     <div class="expanded-about-top">
-      <div class="expanded-avatar">é»</div>
+      <div class="expanded-avatar">黄</div>
       <div>
         <h2>About Me</h2>
         <div class="bio">
-          Product-minded technical leader with 10+ years of experience building and scaling platform products at Microsoft and J.P. Morgan Chase. Currently a Principal Software Engineer driving Incident Management Automation across Azure â designing agentic workflows adopted by 10,000+ authors that power millions of incident actions.
+          Product-minded technical leader with 10+ years of experience building and scaling platform products at Microsoft and J.P. Morgan Chase. Currently a Principal Software Engineer driving Incident Management Automation across Azure — designing agentic workflows adopted by 10,000+ authors that power millions of incident actions.
           <br><br>
           Founding member of Azure Advisor (300K+ MAU), where I led end-to-end ownership of recommendations UX, telemetry, and data pipelines ingesting 1.5M recommendations daily. I'm passionate about developer platforms, UX-driven product thinking, and bridging engineering with product strategy.
           <br><br>
@@ -783,7 +783,7 @@
             <li>Driving MCP server capabilities and conversational workflow initiatives</li>
           </ul>
         </div>
-        <span class="exp-date">2024 â Present</span>
+        <span class="exp-date">2024 — Present</span>
       </div>
       <div class="exp-item">
         <div style="flex:1">
@@ -797,7 +797,7 @@
             <li>Designed and launched Automation ROI dashboards consumed by leadership</li>
           </ul>
         </div>
-        <span class="exp-date">2016 â 2024</span>
+        <span class="exp-date">2016 — 2024</span>
       </div>
       <div class="exp-item">
         <div style="flex:1">
@@ -808,7 +808,7 @@
             <li>Owned system migration projects for fixed income trading platforms</li>
           </ul>
         </div>
-        <span class="exp-date">2014 â 2015</span>
+        <span class="exp-date">2014 — 2015</span>
       </div>
     </div>
 
@@ -816,22 +816,22 @@
       <h3>Education</h3>
       <div class="edu-item">
         <div class="edu-school">Columbia University</div>
-        <div class="edu-degree">M.S. Computer Science â Fu Foundation School of Engineering</div>
-        <div class="edu-detail">GPA 3.51 / 4.0 Â· Dec 2013 Â· New York, NY</div>
+        <div class="edu-degree">M.S. Computer Science — Fu Foundation School of Engineering</div>
+        <div class="edu-detail">GPA 3.51 / 4.0 · Dec 2013 · New York, NY</div>
       </div>
       <div class="edu-item">
         <div class="edu-school">Northeastern University (China)</div>
-        <div class="edu-degree">B.S. Software Engineering â College of Software</div>
-        <div class="edu-detail">GPA 3.85 / 4.0 Â· Rank 3/336 Â· June 2012 Â· Shenyang, CN</div>
+        <div class="edu-degree">B.S. Software Engineering — College of Software</div>
+        <div class="edu-detail">GPA 3.85 / 4.0 · Rank 3/336 · June 2012 · Shenyang, CN</div>
       </div>
     </div>
   </div>
 </div>
 
 <script>
-// âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ═══════════════════════════════════════════════════════════
 // DATA
-// âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ═══════════════════════════════════════════════════════════
 const heroTitles = [
   "a Principal Engineer",
   "a Product Builder",
@@ -842,9 +842,9 @@ const heroTitles = [
 const skillWords = "TypeScript, JavaScript, C#, Java, Python, C++, SQL, Shell, Azure, React, MCP Servers, Agentic AI, Incident Automation, UX Design, Product Strategy, GSAP, Matter.js, Node.js, .NET, Cosmos DB, Kusto, Git, Agile, Scrum";
 const highlightedSkills = ["TypeScript", "Python", "Azure", "React", "Agentic AI"];
 
-// âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ═══════════════════════════════════════════════════════════
 // ROTATING TITLES
-// âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ═══════════════════════════════════════════════════════════
 function initRotatingTitles(containerId) {
   const container = document.getElementById(containerId);
   if (!container) return;
@@ -882,9 +882,9 @@ function initRotatingTitles(containerId) {
 initRotatingTitles('heroTitles');
 initRotatingTitles('mobileHeroTitles');
 
-// âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ═══════════════════════════════════════════════════════════
 // MATTER.JS FALLING SKILLS
-// âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ═══════════════════════════════════════════════════════════
 
 // roundRect polyfill for older browsers
 function drawRoundRect(ctx, x, y, w, h, r) {
@@ -1067,9 +1067,9 @@ setTimeout(() => {
   }
 }, 300);
 
-// âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ═══════════════════════════════════════════════════════════
 // DRAGGABLE DIVIDERS
-// âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ═══════════════════════════════════════════════════════════
 const container = document.getElementById('bentoContainer');
 let topHeight = 45;    // percent
 let leftWidth = 55;    // percent
@@ -1138,9 +1138,9 @@ const bottomV = document.getElementById('dividerBottomV');
 
 applyLayout();
 
-// âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ═══════════════════════════════════════════════════════════
 // EXPANDED OVERLAYS
-// âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ═══════════════════════════════════════════════════════════
 function openOverlay(overlayId, sourceEl) {
   const overlay = document.getElementById(overlayId);
   const rect = sourceEl.getBoundingClientRect();
@@ -1193,9 +1193,9 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
-// âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ═══════════════════════════════════════════════════════════
 // GSAP ENTRY ANIMATION
-// âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ═══════════════════════════════════════════════════════════
 window.addEventListener('DOMContentLoaded', () => {
   const isMobile = window.innerWidth <= 768;
 
