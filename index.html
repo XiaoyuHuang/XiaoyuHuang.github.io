@@ -1,122 +1,1230 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Xiaoyu Huang — Principal Software Engineer</title>
-  <meta name="description" content="Portfolio of Xiaoyu Huang, Principal Software Engineer at Microsoft.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Xiaoyu Huang â Portfolio</title>
+  <meta name="description" content="Personal portfolio of Xiaoyu Huang â Principal Software Engineer at Microsoft." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <style>
-    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-    :root{--bg:#f5f5f4;--card:#fff;--text:#1c1917;--text-secondary:#57534e;--border:#e7e5e4;--accent:#2563eb;--accent-light:#eff6ff;--radius:16px;--shadow:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06);--shadow-hover:0 4px 12px rgba(0,0,0,.08);--transition:.3s cubic-bezier(.4,0,.2,1)}
-    body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;-webkit-font-smoothing:antialiased}
-    .container{max-width:1100px;margin:0 auto;padding:40px 20px}
-    .bento{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}
-    .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:28px;box-shadow:var(--shadow);transition:box-shadow var(--transition),transform var(--transition);overflow:hidden}
-    .card:hover{box-shadow:var(--shadow-hover);transform:translateY(-2px)}
-    .card-hero{grid-column:span 8;grid-row:span 2;padding:40px}
-    .card-photo{grid-column:span 4;grid-row:span 2;display:flex;align-items:center;justify-content:center}
-    .card-about{grid-column:span 7}.card-contact{grid-column:span 5}
-    .card-skills{grid-column:span 12}.card-exp{grid-column:span 6}
-    .card-edu{grid-column:span 6}.card-projects{grid-column:span 12}
-    .hero-greeting{font-size:14px;font-weight:500;color:var(--accent);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:12px}
-    .hero-name{font-size:48px;font-weight:700;line-height:1.1;margin-bottom:12px;letter-spacing:-1px}
-    .hero-title{font-size:20px;font-weight:400;color:var(--text-secondary);margin-bottom:24px}
-    .hero-desc{font-size:16px;color:var(--text-secondary);max-width:520px;line-height:1.7}
-    .avatar{width:180px;height:180px;border-radius:50%;background:linear-gradient(135deg,var(--accent-light),#dbeafe);display:flex;align-items:center;justify-content:center;font-size:64px;font-weight:700;color:var(--accent);user-select:none}
-    .section-label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1.5px;color:var(--accent);margin-bottom:16px}
-    .about-text{font-size:15px;color:var(--text-secondary);line-height:1.8}
-    .contact-links{list-style:none;display:flex;flex-direction:column;gap:12px}
-    .contact-links a{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--text);font-size:14px;font-weight:500;padding:10px 14px;border-radius:10px;border:1px solid var(--border);transition:all var(--transition)}
-    .contact-links a:hover{border-color:var(--accent);background:var(--accent-light);color:var(--accent)}
-    .contact-links svg{width:18px;height:18px;flex-shrink:0}
-    .skills-grid{display:flex;flex-wrap:wrap;gap:10px}
-    .skill-tag{padding:8px 16px;border-radius:100px;font-size:13px;font-weight:500;border:1px solid var(--border);background:var(--bg);color:var(--text-secondary);transition:all var(--transition)}
-    .skill-tag:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-light)}
-    .skill-tag.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
-    .exp-item{margin-bottom:24px;padding-bottom:24px;border-bottom:1px solid var(--border)}
-    .exp-item:last-child{margin-bottom:0;padding-bottom:0;border-bottom:none}
-    .exp-company{font-size:18px;font-weight:600;margin-bottom:2px}
-    .exp-role{font-size:15px;color:var(--accent);font-weight:500;margin-bottom:4px}
-    .exp-date{font-size:13px;color:var(--text-secondary);margin-bottom:12px}
-    .exp-desc{font-size:14px;color:var(--text-secondary);line-height:1.7}
-    .exp-tech{margin-top:10px;display:flex;flex-wrap:wrap;gap:6px}
-    .exp-tech span{font-size:11px;padding:3px 10px;border-radius:100px;background:var(--bg);color:var(--text-secondary);border:1px solid var(--border)}
-    .edu-item{margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid var(--border)}
-    .edu-item:last-child{margin-bottom:0;padding-bottom:0;border-bottom:none}
-    .edu-school{font-size:17px;font-weight:600;margin-bottom:4px}
-    .edu-degree{font-size:14px;color:var(--accent);font-weight:500;margin-bottom:4px}
-    .edu-meta{font-size:13px;color:var(--text-secondary)}
-    .projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
-    .project-card{padding:20px;border:1px solid var(--border);border-radius:12px;transition:all var(--transition)}
-    .project-card:hover{border-color:var(--accent);background:var(--accent-light)}
-    .project-name{font-size:16px;font-weight:600;margin-bottom:6px}
-    .project-desc{font-size:13px;color:var(--text-secondary);line-height:1.6;margin-bottom:10px}
-    .project-lang{font-size:12px;display:flex;align-items:center;gap:6px;color:var(--text-secondary)}
-    .project-lang .dot{width:10px;height:10px;border-radius:50%;display:inline-block}
-    .dot-python{background:#3572A5}.dot-css{background:#563d7c}
-    .footer{text-align:center;padding:40px 20px 24px;font-size:13px;color:var(--text-secondary)}
-    @media(max-width:900px){.bento{grid-template-columns:repeat(6,1fr)}.card-hero,.card-photo,.card-about,.card-contact,.card-skills,.card-exp,.card-edu,.card-projects{grid-column:span 6}.card-photo{grid-row:span 1;padding:28px}.hero-name{font-size:36px}}
-    @media(max-width:600px){.container{padding:20px 12px}.bento{gap:12px}.card{padding:20px}.card-hero{padding:24px}.hero-name{font-size:28px}.hero-title{font-size:16px}.avatar{width:120px;height:120px;font-size:44px}}
-    .card{opacity:0;transform:translateY(20px);animation:fadeUp .5s ease forwards}
-    .card:nth-child(1){animation-delay:.05s}.card:nth-child(2){animation-delay:.1s}
-    .card:nth-child(3){animation-delay:.15s}.card:nth-child(4){animation-delay:.2s}
-    .card:nth-child(5){animation-delay:.25s}.card:nth-child(6){animation-delay:.3s}
-    .card:nth-child(7){animation-delay:.35s}.card:nth-child(8){animation-delay:.4s}
-    @keyframes fadeUp{to{opacity:1;transform:translateY(0)}}
+    /* âââ Reset âââ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f5f5f0;
+      --panel-bg: #ffffff;
+      --text: #1a1a1a;
+      --text-secondary: #6b6b6b;
+      --border: #d4d4d4;
+      --primary: #1a1a1a;
+      --accent: #4f46e5;
+      --divider-size: 8px;
+      --radius: 0px;
+    }
+
+    html, body { height: 100%; overflow: hidden; }
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+    }
+    a { color: inherit; text-decoration: none; }
+
+    /* âââ Typography (matching template) âââ */
+    .heading-display {
+      font-size: clamp(2.5rem, 5vw, 3.75rem);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+    }
+    .heading-section {
+      font-size: clamp(1.8rem, 3.5vw, 3rem);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.01em;
+    }
+    .heading-card {
+      font-size: 1.125rem;
+      font-weight: 500;
+    }
+    .text-body {
+      font-size: clamp(1rem, 1.5vw, 1.25rem);
+      line-height: 1.6;
+      color: var(--text-secondary);
+    }
+    .text-meta {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+    }
+
+    /* âââ Bento Layout (Laptop) âââ */
+    .bento-container {
+      width: 100vw;
+      height: 100vh;
+      display: grid;
+      grid-template-rows: var(--top-height, 45%) var(--divider-size) 1fr;
+      grid-template-columns: 100%;
+      padding: 10px;
+      gap: 0;
+    }
+
+    .top-row {
+      display: grid;
+      grid-template-columns: var(--left-width, 55%) var(--divider-size) 1fr;
+      min-height: 0;
+    }
+
+    .bottom-row {
+      display: grid;
+      grid-template-columns: var(--left-width, 55%) var(--divider-size) 1fr;
+      min-height: 0;
+    }
+
+    .bottom-right {
+      display: grid;
+      grid-template-rows: var(--about-height, 55%) var(--divider-size) 1fr;
+      min-height: 0;
+    }
+
+    /* âââ Panels âââ */
+    .panel {
+      background: var(--panel-bg);
+      overflow: hidden;
+      position: relative;
+      padding: 28px 32px;
+      display: flex;
+      flex-direction: column;
+      opacity: 0;
+    }
+
+    /* âââ Dividers (draggable) âââ */
+    .divider {
+      background: transparent;
+      position: relative;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .divider-h {
+      cursor: row-resize;
+      height: var(--divider-size);
+    }
+    .divider-v {
+      cursor: col-resize;
+      width: var(--divider-size);
+    }
+    .divider::after {
+      content: '';
+      position: absolute;
+      background: var(--border);
+      transition: background 0.2s;
+    }
+    .divider-h::after {
+      width: 100%; height: 1px;
+    }
+    .divider-v::after {
+      height: 100%; width: 1px;
+    }
+    .divider:hover::after, .divider.active::after {
+      background: var(--primary);
+    }
+
+    /* Lines for GSAP entry */
+    .line {
+      position: absolute;
+      background: var(--border);
+      transform: scaleX(0);
+      transform-origin: left;
+      z-index: 5;
+    }
+    .line-h {
+      height: 1px;
+      left: 0; right: 0;
+    }
+    .line-v {
+      width: 1px;
+      top: 0; bottom: 0;
+      transform: scaleY(0);
+      transform-origin: top;
+    }
+
+    /* âââ Hero Section âââ */
+    .hero-panel {
+      justify-content: center;
+    }
+    .hero-greeting {
+      font-size: clamp(1rem, 1.8vw, 1.35rem);
+      color: var(--text-secondary);
+      margin-bottom: 12px;
+      font-weight: 400;
+    }
+    .hero-titles {
+      position: relative;
+      height: clamp(3.5rem, 7vw, 5rem);
+      overflow: hidden;
+    }
+    .hero-title-line {
+      position: absolute;
+      top: 0; left: 0;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .hero-title-line.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .hero-title-line.exit-up {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+
+    /* âââ Skills Section (Matter.js) âââ */
+    .skills-panel {
+      padding: 0 !important;
+      cursor: grab;
+    }
+    .skills-panel:active { cursor: grabbing; }
+    #skills-canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    /* âââ Work Section âââ */
+    .work-panel { padding: 0 !important; }
+    .work-header {
+      padding: 28px 32px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: background 0.3s;
+    }
+    .work-header:hover { background: var(--primary); color: white; }
+    .work-header:hover .work-arrow { color: white; }
+    .work-arrow {
+      font-size: 1.5rem; color: var(--text-secondary);
+      transition: all 0.3s;
+    }
+    .work-content {
+      padding: 0 32px 28px;
+      overflow-y: auto;
+      flex: 1;
+    }
+    .project-card {
+      display: block;
+      margin-bottom: 24px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+      transition: opacity 0.3s;
+    }
+    .project-card:last-child { border-bottom: none; margin-bottom: 0; }
+    .project-card:hover { opacity: 0.7; }
+    .project-card .proj-img {
+      width: 100%;
+      aspect-ratio: 2/1;
+      background: var(--bg);
+      border-radius: 4px;
+      margin-bottom: 12px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+    }
+    .project-card h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+    .proj-tags {
+      display: flex; gap: 6px; flex-wrap: wrap;
+    }
+    .proj-tag {
+      font-size: 0.7rem;
+      padding: 2px 8px;
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      color: var(--text-secondary);
+    }
+
+    /* âââ About Section âââ */
+    .about-panel {
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .about-panel:hover { background: var(--primary); color: white; }
+    .about-panel:hover .text-body,
+    .about-panel:hover .text-meta { color: rgba(255,255,255,0.7); }
+    .about-inner {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+      height: 100%;
+    }
+    .about-avatar {
+      width: 56px; height: 56px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #6366f1, #ec4899);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem; font-weight: 700; color: white;
+      flex-shrink: 0;
+    }
+    .about-text-wrap {
+      flex: 1;
+      overflow: hidden;
+    }
+    .about-label {
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+    .about-body {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      line-height: 1.6;
+      display: -webkit-box;
+      -webkit-line-clamp: 5;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    /* âââ Contact Section âââ */
+    .contact-panel { justify-content: center; }
+    .contact-list { display: flex; flex-direction: column; gap: 12px; }
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 14px;
+      border: 1px solid var(--border);
+      transition: all 0.3s;
+      font-size: 0.9rem;
+    }
+    .contact-item:hover {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+    .contact-icon { font-size: 1.1rem; width: 24px; text-align: center; }
+    .contact-label { font-size: 0.7rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px; }
+    .contact-item:hover .contact-label { color: rgba(255,255,255,0.6); }
+    .contact-value { font-weight: 500; }
+
+    /* âââ Expanded Overlay âââ */
+    .expanded-overlay {
+      position: fixed;
+      inset: 0;
+      background: var(--panel-bg);
+      z-index: 100;
+      clip-path: inset(var(--clip-top) var(--clip-right) var(--clip-bottom) var(--clip-left));
+      transition: clip-path 0.5s cubic-bezier(0.65, 0, 0.35, 1);
+      overflow-y: auto;
+      padding: 40px;
+      display: none;
+    }
+    .expanded-overlay.open {
+      clip-path: inset(0 0 0 0);
+    }
+    .expanded-overlay.closing {
+      clip-path: inset(var(--clip-top) var(--clip-right) var(--clip-bottom) var(--clip-left));
+    }
+    .close-btn {
+      position: fixed;
+      top: 24px; right: 24px;
+      width: 48px; height: 48px;
+      border: 1px solid var(--border);
+      background: white;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem;
+      z-index: 101;
+      transition: all 0.3s;
+    }
+    .close-btn:hover {
+      background: var(--primary); color: white; border-color: var(--primary);
+      transform: scale(1.1);
+    }
+
+    /* âââ Expanded Work View âââ */
+    .expanded-work {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding-top: 60px;
+    }
+    .expanded-work h2 {
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      font-weight: 800;
+      margin-bottom: 40px;
+      letter-spacing: -0.02em;
+    }
+    .exp-category {
+      margin-bottom: 40px;
+    }
+    .exp-category h3 {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--text-secondary);
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+    .exp-projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 24px;
+    }
+    .exp-project-card {
+      border: 1px solid var(--border);
+      padding: 20px;
+      transition: all 0.3s;
+      cursor: pointer;
+    }
+    .exp-project-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    }
+    .exp-project-card .proj-img {
+      width: 100%;
+      aspect-ratio: 2/1;
+      background: var(--bg);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+    }
+    .exp-project-card h4 { font-weight: 600; margin-bottom: 8px; }
+    .exp-project-card p { font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 10px; }
+
+    /* âââ Expanded About View âââ */
+    .expanded-about {
+      max-width: 900px;
+      margin: 0 auto;
+      padding-top: 60px;
+    }
+    .expanded-about-top {
+      display: flex;
+      gap: 40px;
+      align-items: flex-start;
+      margin-bottom: 48px;
+    }
+    .expanded-avatar {
+      width: 80px; height: 80px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #6366f1, #ec4899);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2rem; font-weight: 700; color: white;
+      flex-shrink: 0;
+    }
+    .expanded-about h2 {
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      font-weight: 800;
+      margin-bottom: 24px;
+      letter-spacing: -0.02em;
+    }
+    .expanded-about .bio {
+      font-size: 1.1rem;
+      line-height: 1.8;
+      color: var(--text-secondary);
+      margin-bottom: 40px;
+    }
+    .experience-section { margin-bottom: 40px; }
+    .experience-section h3 {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--text-secondary);
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+    .exp-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding: 16px 0;
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+    }
+    .exp-item:last-child { border-bottom: none; }
+    .exp-company { font-weight: 700; font-size: 1rem; }
+    .exp-role { color: var(--text-secondary); font-size: 0.9rem; margin-top: 2px; }
+    .exp-date {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      font-family: 'JetBrains Mono', monospace;
+      white-space: nowrap;
+    }
+    .exp-details { margin-top: 8px; }
+    .exp-details li {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      padding: 3px 0;
+      padding-left: 14px;
+      position: relative;
+      list-style: none;
+    }
+    .exp-details li::before {
+      content: 'â';
+      position: absolute;
+      left: 0;
+      color: var(--border);
+    }
+    .edu-section h3 {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--text-secondary);
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+    .edu-item {
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+    }
+    .edu-item:last-child { border-bottom: none; }
+    .edu-school { font-weight: 700; }
+    .edu-degree { color: var(--text-secondary); font-size: 0.9rem; }
+    .edu-detail { color: var(--text-secondary); font-size: 0.8rem; font-family: 'JetBrains Mono', monospace; }
+
+    /* âââ Mobile Layout âââ */
+    .mobile-container {
+      display: none;
+      width: 100%;
+      min-height: 100vh;
+      flex-direction: column;
+      overflow-y: auto;
+    }
+    .mobile-section {
+      border-bottom: 1px solid var(--border);
+      padding: 28px 24px;
+      opacity: 0;
+    }
+    .mobile-hero { min-height: 40vh; display: flex; flex-direction: column; justify-content: center; }
+    .mobile-skills { min-height: 30vh; padding: 0 !important; position: relative; }
+    .mobile-clickable {
+      cursor: pointer;
+      transition: background 0.3s;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .mobile-clickable:hover { background: var(--primary); color: white; }
+    .mobile-clickable:hover .work-arrow { color: white; }
+    .mobile-contact { min-height: 25vh; }
+
+    @media (max-width: 768px) {
+      .bento-container { display: none !important; }
+      .mobile-container { display: flex; overflow-y: auto; }
+      html, body { overflow: auto; }
+    }
   </style>
 </head>
 <body>
-<div class="container"><div class="bento">
-  <div class="card card-hero">
-    <div class="hero-greeting">Hello, I'm</div>
-    <h1 class="hero-name">Xiaoyu Huang</h1>
-    <p class="hero-title">Principal Software Engineer at Microsoft</p>
-    <p class="hero-desc">I build large-scale cloud infrastructure and developer tools at Microsoft. With over a decade of experience spanning incident automation, Azure services, and financial technology, I'm passionate about creating systems that make engineers' lives easier.</p>
-  </div>
-  <div class="card card-photo"><div class="avatar">XH</div></div>
-  <div class="card card-about">
-    <div class="section-label">About</div>
-    <p class="about-text">I'm a software engineer based in Redmond, WA with deep expertise in cloud platforms, full-stack development, and building tools at scale. As a founding member of Azure Advisor and a lead on Incident Management Automation at Microsoft, I've helped build products used by hundreds of thousands of engineers and customers. I hold an M.S. in Computer Science from Columbia University.</p>
-  </div>
-  <div class="card card-contact">
-    <div class="section-label">Connect</div>
-    <ul class="contact-links">
-      <li><a href="https://github.com/XiaoyuHuang" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>GitHub</a></li>
-      <li><a href="https://www.linkedin.com/in/xiaoyuhuang/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>LinkedIn</a></li>
-      <li><a href="mailto:xiaoyu.huang314@gmail.com"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>xiaoyu.huang314@gmail.com</a></li>
-      <li><a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>Redmond, WA</a></li>
-    </ul>
-  </div>
-  <div class="card card-skills">
-    <div class="section-label">Skills &amp; Technologies</div>
-    <div class="skills-grid">
-      <span class="skill-tag primary">TypeScript</span><span class="skill-tag primary">JavaScript</span><span class="skill-tag primary">C#</span><span class="skill-tag primary">React</span><span class="skill-tag primary">Python</span>
-      <span class="skill-tag">Java</span><span class="skill-tag">Node.js</span><span class="skill-tag">Azure</span><span class="skill-tag">Cosmos DB</span><span class="skill-tag">Fluent UI</span>
-      <span class="skill-tag">Service Fabric</span><span class="skill-tag">Power BI</span><span class="skill-tag">KUSTO / KQL</span><span class="skill-tag">SQL</span><span class="skill-tag">C++</span><span class="skill-tag">Shell</span>
+
+<!-- âââ DESKTOP BENTO LAYOUT âââ -->
+<div class="bento-container" id="bentoContainer">
+  <!-- Top Row -->
+  <div class="top-row">
+    <!-- Hero Panel -->
+    <div class="panel hero-panel" id="panelHero">
+      <div class="hero-greeting">Hi, I am Xiaoyu</div>
+      <div class="hero-titles" id="heroTitles">
+        <!-- Rotating titles injected by JS -->
+      </div>
+    </div>
+
+    <!-- Vertical Divider (top) -->
+    <div class="divider divider-v" id="dividerTopV" data-axis="x"></div>
+
+    <!-- Skills Panel -->
+    <div class="panel skills-panel" id="panelSkills">
+      <canvas id="skills-canvas"></canvas>
     </div>
   </div>
-  <div class="card card-exp">
-    <div class="section-label">Experience</div>
-    <div class="exp-item"><div class="exp-company">Microsoft</div><div class="exp-role">Principal Software Engineer</div><div class="exp-date">September 2020 — Present · Redmond, WA</div><p class="exp-desc">Driving Incident Management Automation (Geneva Automation) — building systems that shorten live site incident mitigation time through automated troubleshooting, telemetry analysis, and intelligent incident transfer. Designed the Automation ROI dashboard consumed by leadership and customers.</p><div class="exp-tech"><span>C#</span><span>TypeScript</span><span>React</span><span>Cosmos DB</span><span>Azure</span><span>KUSTO</span></div></div>
-    <div class="exp-item"><div class="exp-company">Microsoft</div><div class="exp-role">Senior Software Engineer</div><div class="exp-date">December 2015 — September 2020 · Redmond, WA</div><p class="exp-desc">Founding member of Azure Advisor — a personalized cloud consultant with 300K monthly unique users. Led the front-end and telemetry pipeline. Built the recommendations SDK control adopted across Azure, and offline pipelines ingesting 1.5M recommendations daily.</p><div class="exp-tech"><span>C#</span><span>TypeScript</span><span>Ibiza SDK</span><span>Service Fabric</span><span>Power BI</span></div></div>
-    <div class="exp-item"><div class="exp-company">J.P. Morgan Chase</div><div class="exp-role">Technology Analyst</div><div class="exp-date">February 2014 — December 2015 · New York, NY</div><p class="exp-desc">Enhanced fixed income trading platforms, managed system migrations, and worked closely with traders on the front and middle office.</p><div class="exp-tech"><span>Python</span><span>Linux</span><span>Vertica</span><span>SQL</span></div></div>
-  </div>
-  <div class="card card-edu">
-    <div class="section-label">Education</div>
-    <div class="edu-item"><div class="edu-school">Columbia University</div><div class="edu-degree">M.S. in Computer Science</div><div class="edu-meta">Fu Foundation School of Engineering · New York, NY · 2013</div><div class="edu-meta">GPA: 3.51 / 4.0</div></div>
-    <div class="edu-item"><div class="edu-school">Northeastern University</div><div class="edu-degree">B.S. in Software Engineering</div><div class="edu-meta">College of Software · Shenyang, China · 2012</div><div class="edu-meta">GPA: 3.85 / 4.0 · Rank: 3 / 336</div></div>
-  </div>
-  <div class="card card-projects">
-    <div class="section-label">Projects</div>
-    <div class="projects-grid">
-      <a href="https://github.com/XiaoyuHuang/Sort-Algorithm" target="_blank" rel="noopener" class="project-card" style="text-decoration:none;color:inherit"><div class="project-name">Sort-Algorithm</div><p class="project-desc">A collection of sorting algorithm implementations for learning and reference.</p><div class="project-lang"><span class="dot dot-python"></span> Python</div></a>
-      <a href="https://github.com/XiaoyuHuang/WebDevelop" target="_blank" rel="noopener" class="project-card" style="text-decoration:none;color:inherit"><div class="project-name">WebDevelop</div><p class="project-desc">Web development experiments and front-end projects.</p><div class="project-lang"><span class="dot dot-css"></span> CSS</div></a>
+
+  <!-- Horizontal Divider -->
+  <div class="divider divider-h" id="dividerH" data-axis="y"></div>
+
+  <!-- Bottom Row -->
+  <div class="bottom-row">
+    <!-- Work Panel -->
+    <div class="panel work-panel" id="panelWork">
+      <div class="work-header" id="workHeader">
+        <span class="heading-section">Work</span>
+        <span class="work-arrow">&#8599;</span>
+      </div>
+      <div class="work-content">
+        <a href="https://github.com/XiaoyuHuang/XiaoyuHuang.github.io" target="_blank" class="project-card">
+          <div class="proj-img">ð</div>
+          <h3>Personal Portfolio</h3>
+          <div class="proj-tags">
+            <span class="proj-tag">HTML</span>
+            <span class="proj-tag">CSS</span>
+            <span class="proj-tag">JavaScript</span>
+          </div>
+        </a>
+        <a href="https://github.com/XiaoyuHuang/WebDevelop" target="_blank" class="project-card">
+          <div class="proj-img">ð»</div>
+          <h3>Web Development</h3>
+          <div class="proj-tags">
+            <span class="proj-tag">CSS</span>
+            <span class="proj-tag">Web</span>
+          </div>
+        </a>
+        <a href="https://github.com/XiaoyuHuang/Sort-Algorithm" target="_blank" class="project-card">
+          <div class="proj-img">ð¢</div>
+          <h3>Sort Algorithm</h3>
+          <div class="proj-tags">
+            <span class="proj-tag">Python</span>
+            <span class="proj-tag">Algorithms</span>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <!-- Vertical Divider (bottom) -->
+    <div class="divider divider-v" id="dividerBottomV" data-axis="x"></div>
+
+    <!-- Bottom Right: About + Contact -->
+    <div class="bottom-right">
+      <!-- About Panel -->
+      <div class="panel about-panel" id="panelAbout">
+        <div class="about-inner">
+          <div class="about-avatar">é»</div>
+          <div class="about-text-wrap">
+            <div class="about-label">About</div>
+            <div class="about-body">Product-minded technical leader with 10+ years at Microsoft and J.P. Morgan. Principal Software Engineer driving Incident Management Automation across Azure â building agentic workflows adopted by 10K+ authors, powering millions of incident actions. Founding member of Azure Advisor (300K+ MAU). Columbia University CS graduate passionate about developer platforms, UX-driven product thinking, and bridging engineering with product strategy.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Horizontal Divider (bottom-right) -->
+      <div class="divider divider-h" id="dividerBRH" data-axis="br-y"></div>
+
+      <!-- Contact Panel -->
+      <div class="panel contact-panel" id="panelContact">
+        <div class="contact-list">
+          <a href="mailto:xiaoyu.huang314@gmail.com" class="contact-item">
+            <span class="contact-icon">â</span>
+            <div>
+              <div class="contact-label">Email</div>
+              <div class="contact-value">xiaoyu.huang314@gmail.com</div>
+            </div>
+          </a>
+          <a href="https://github.com/XiaoyuHuang" target="_blank" class="contact-item">
+            <span class="contact-icon">â</span>
+            <div>
+              <div class="contact-label">GitHub</div>
+              <div class="contact-value">github.com/XiaoyuHuang</div>
+            </div>
+          </a>
+          <a href="https://www.linkedin.com/in/xiaoyuhuang/" target="_blank" class="contact-item">
+            <span class="contact-icon">in</span>
+            <div>
+              <div class="contact-label">LinkedIn</div>
+              <div class="contact-value">linkedin.com/in/xiaoyuhuang</div>
+            </div>
+          </a>
+        </div>
+      </div>
     </div>
   </div>
-</div></div>
-<footer class="footer">© 2026 Xiaoyu Huang. Built with care.</footer>
+</div>
+
+<!-- âââ MOBILE LAYOUT âââ -->
+<div class="mobile-container" id="mobileContainer">
+  <div class="mobile-section mobile-hero" id="mobileHero">
+    <div class="hero-greeting">Hi, I am Xiaoyu</div>
+    <div class="hero-titles" id="mobileHeroTitles"></div>
+  </div>
+  <div class="mobile-section mobile-skills" id="mobileSkills">
+    <canvas id="mobile-skills-canvas"></canvas>
+  </div>
+  <div class="mobile-section mobile-clickable" id="mobileWork">
+    <span class="heading-section">Work</span>
+    <span class="work-arrow">&#8599;</span>
+  </div>
+  <div class="mobile-section mobile-clickable" id="mobileAbout">
+    <span class="heading-section">About</span>
+    <span class="work-arrow">&#8599;</span>
+  </div>
+  <div class="mobile-section mobile-contact">
+    <div style="font-weight:700;margin-bottom:16px;">Contact</div>
+    <div class="contact-list">
+      <a href="mailto:xiaoyu.huang314@gmail.com" class="contact-item">
+        <span class="contact-icon">â</span>
+        <div>
+          <div class="contact-label">Email</div>
+          <div class="contact-value">xiaoyu.huang314@gmail.com</div>
+        </div>
+      </a>
+      <a href="https://github.com/XiaoyuHuang" target="_blank" class="contact-item">
+        <span class="contact-icon">â</span>
+        <div>
+          <div class="contact-label">GitHub</div>
+          <div class="contact-value">github.com/XiaoyuHuang</div>
+        </div>
+      </a>
+      <a href="https://www.linkedin.com/in/xiaoyuhuang/" target="_blank" class="contact-item">
+        <span class="contact-icon">in</span>
+        <div>
+          <div class="contact-label">LinkedIn</div>
+          <div class="contact-value">linkedin.com/in/xiaoyuhuang</div>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- âââ EXPANDED WORK OVERLAY âââ -->
+<div class="expanded-overlay" id="workOverlay">
+  <button class="close-btn" onclick="closeOverlay('workOverlay')">&times;</button>
+  <div class="expanded-work">
+    <h2>Work</h2>
+    <div class="exp-category">
+      <h3>Platform Products</h3>
+      <div class="exp-projects-grid">
+        <a href="https://github.com/XiaoyuHuang/XiaoyuHuang.github.io" target="_blank" class="exp-project-card">
+          <div class="proj-img">ð</div>
+          <h4>Personal Portfolio</h4>
+          <p>Bento-style animated personal portfolio with physics-based interactions and responsive design.</p>
+          <div class="proj-tags">
+            <span class="proj-tag">HTML</span>
+            <span class="proj-tag">CSS</span>
+            <span class="proj-tag">JavaScript</span>
+            <span class="proj-tag">Matter.js</span>
+          </div>
+        </a>
+        <a href="https://github.com/XiaoyuHuang/WebDevelop" target="_blank" class="exp-project-card">
+          <div class="proj-img">ð»</div>
+          <h4>Web Development</h4>
+          <p>Collection of web development projects and experiments with modern frontend technologies.</p>
+          <div class="proj-tags">
+            <span class="proj-tag">CSS</span>
+            <span class="proj-tag">Web</span>
+          </div>
+        </a>
+        <a href="https://github.com/XiaoyuHuang/Sort-Algorithm" target="_blank" class="exp-project-card">
+          <div class="proj-img">ð¢</div>
+          <h4>Sort Algorithm</h4>
+          <p>Implementations and visualizations of classic sorting algorithms in Python.</p>
+          <div class="proj-tags">
+            <span class="proj-tag">Python</span>
+            <span class="proj-tag">Algorithms</span>
+          </div>
+        </a>
+      </div>
+    </div>
+    <div class="exp-category">
+      <h3>Microsoft (Professional)</h3>
+      <div class="exp-projects-grid">
+        <div class="exp-project-card">
+          <div class="proj-img">ð¤</div>
+          <h4>Incident Automation Platform</h4>
+          <p>Agentic automation workflows adopted by 10K+ authors, powering millions of incident actions across Azure services.</p>
+          <div class="proj-tags">
+            <span class="proj-tag">TypeScript</span>
+            <span class="proj-tag">Azure</span>
+            <span class="proj-tag">Agentic AI</span>
+            <span class="proj-tag">MCP</span>
+          </div>
+        </div>
+        <div class="exp-project-card">
+          <div class="proj-img">ð</div>
+          <h4>Azure Advisor</h4>
+          <p>Founding member â built recommendation UX and pipelines serving 300K+ monthly active users and 1.5M daily recommendations.</p>
+          <div class="proj-tags">
+            <span class="proj-tag">C#</span>
+            <span class="proj-tag">React</span>
+            <span class="proj-tag">Azure</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- âââ EXPANDED ABOUT OVERLAY âââ -->
+<div class="expanded-overlay" id="aboutOverlay">
+  <button class="close-btn" onclick="closeOverlay('aboutOverlay')">&times;</button>
+  <div class="expanded-about">
+    <div class="expanded-about-top">
+      <div class="expanded-avatar">é»</div>
+      <div>
+        <h2>About Me</h2>
+        <div class="bio">
+          Product-minded technical leader with 10+ years of experience building and scaling platform products at Microsoft and J.P. Morgan Chase. Currently a Principal Software Engineer driving Incident Management Automation across Azure â designing agentic workflows adopted by 10,000+ authors that power millions of incident actions.
+          <br><br>
+          Founding member of Azure Advisor (300K+ MAU), where I led end-to-end ownership of recommendations UX, telemetry, and data pipelines ingesting 1.5M recommendations daily. I'm passionate about developer platforms, UX-driven product thinking, and bridging engineering with product strategy.
+          <br><br>
+          Columbia University CS graduate. Now seeking Product Manager and Technical PM roles where I can apply my deep technical background and product instinct to build what matters.
+        </div>
+      </div>
+    </div>
+
+    <div class="experience-section">
+      <h3>Experience</h3>
+      <div class="exp-item">
+        <div style="flex:1">
+          <div class="exp-company">Microsoft</div>
+          <div class="exp-role">Principal Software Engineer</div>
+          <ul class="exp-details">
+            <li>Owned product direction for Incident Management Automation across Azure</li>
+            <li>Defined customer pain points using incident data & user feedback; led phased deprecation and UX migration</li>
+            <li>Led agentic automation workflows adopted by 10K+ authors, powering millions of incident actions</li>
+            <li>Driving MCP server capabilities and conversational workflow initiatives</li>
+          </ul>
+        </div>
+        <span class="exp-date">2024 â Present</span>
+      </div>
+      <div class="exp-item">
+        <div style="flex:1">
+          <div class="exp-company">Microsoft</div>
+          <div class="exp-role">Senior Software Engineer</div>
+          <ul class="exp-details">
+            <li>Founding member of Azure Advisor (300K+ MAU)</li>
+            <li>Led end-to-end ownership of recommendations UX and telemetry</li>
+            <li>Built reusable recommendation controls contributing ~15% of active usage</li>
+            <li>Scaled pipelines ingesting 1.5M recommendations daily</li>
+            <li>Designed and launched Automation ROI dashboards consumed by leadership</li>
+          </ul>
+        </div>
+        <span class="exp-date">2016 â 2024</span>
+      </div>
+      <div class="exp-item">
+        <div style="flex:1">
+          <div class="exp-company">J.P. Morgan Chase</div>
+          <div class="exp-role">Technology Analyst</div>
+          <ul class="exp-details">
+            <li>Gathered business requirements from front and middle office stakeholders</li>
+            <li>Owned system migration projects for fixed income trading platforms</li>
+          </ul>
+        </div>
+        <span class="exp-date">2014 â 2015</span>
+      </div>
+    </div>
+
+    <div class="edu-section">
+      <h3>Education</h3>
+      <div class="edu-item">
+        <div class="edu-school">Columbia University</div>
+        <div class="edu-degree">M.S. Computer Science â Fu Foundation School of Engineering</div>
+        <div class="edu-detail">GPA 3.51 / 4.0 Â· Dec 2013 Â· New York, NY</div>
+      </div>
+      <div class="edu-item">
+        <div class="edu-school">Northeastern University (China)</div>
+        <div class="edu-degree">B.S. Software Engineering â College of Software</div>
+        <div class="edu-detail">GPA 3.85 / 4.0 Â· Rank 3/336 Â· June 2012 Â· Shenyang, CN</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// DATA
+// âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+const heroTitles = [
+  "a Principal Engineer",
+  "a Product Builder",
+  "an Automation Architect",
+  "seeking PM roles"
+];
+
+const skillWords = "TypeScript, JavaScript, C#, Java, Python, C++, SQL, Shell, Azure, React, MCP Servers, Agentic AI, Incident Automation, UX Design, Product Strategy, GSAP, Matter.js, Node.js, .NET, Cosmos DB, Kusto, Git, Agile, Scrum";
+const highlightedSkills = ["TypeScript", "Python", "Azure", "React", "Agentic AI"];
+
+// âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ROTATING TITLES
+// âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+function initRotatingTitles(containerId) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+  let currentIndex = 0;
+
+  function createTitleEl(text) {
+    const el = document.createElement('div');
+    el.className = 'hero-title-line heading-display';
+    el.textContent = text;
+    return el;
+  }
+
+  // Initial title
+  const first = createTitleEl(heroTitles[0]);
+  first.classList.add('active');
+  container.appendChild(first);
+
+  setInterval(() => {
+    const current = container.querySelector('.active');
+    if (current) {
+      current.classList.remove('active');
+      current.classList.add('exit-up');
+      setTimeout(() => current.remove(), 500);
+    }
+
+    currentIndex = (currentIndex + 1) % heroTitles.length;
+    const next = createTitleEl(heroTitles[currentIndex]);
+    container.appendChild(next);
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => next.classList.add('active'));
+    });
+  }, 3000);
+}
+
+initRotatingTitles('heroTitles');
+initRotatingTitles('mobileHeroTitles');
+
+// âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// MATTER.JS FALLING SKILLS
+// âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+
+// roundRect polyfill for older browsers
+function drawRoundRect(ctx, x, y, w, h, r) {
+  ctx.beginPath();
+  ctx.moveTo(x + r, y);
+  ctx.lineTo(x + w - r, y);
+  ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+  ctx.lineTo(x + w, y + h - r);
+  ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+  ctx.lineTo(x + r, y + h);
+  ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+  ctx.lineTo(x, y + r);
+  ctx.quadraticCurveTo(x, y, x + r, y);
+  ctx.closePath();
+}
+
+function initFallingSkills(canvasId, panelId) {
+  const canvas = document.getElementById(canvasId);
+  const panel = document.getElementById(panelId);
+  if (!canvas || !panel) return;
+
+  const Engine = Matter.Engine,
+        Render = Matter.Render,
+        World = Matter.World,
+        Bodies = Matter.Bodies,
+        Body = Matter.Body,
+        Mouse = Matter.Mouse,
+        MouseConstraint = Matter.MouseConstraint,
+        Runner = Matter.Runner;
+
+  let engine, render, runner, mouseConstraint;
+  const words = skillWords.split(',').map(s => s.trim());
+
+  function setup() {
+    const w = panel.clientWidth;
+    const h = panel.clientHeight;
+
+    // Guard against zero dimensions (panel not yet laid out)
+    if (w < 10 || h < 10) {
+      setTimeout(setup, 100);
+      return;
+    }
+
+    canvas.width = w * (window.devicePixelRatio || 1);
+    canvas.height = h * (window.devicePixelRatio || 1);
+    canvas.style.width = w + 'px';
+    canvas.style.height = h + 'px';
+
+    engine = Engine.create({ gravity: { x: 0, y: 0.56 } });
+
+    render = Render.create({
+      canvas: canvas,
+      engine: engine,
+      options: {
+        width: w,
+        height: h,
+        wireframes: false,
+        background: '#ffffff',
+        pixelRatio: window.devicePixelRatio || 1
+      }
+    });
+
+    // Walls
+    const wallOpts = { isStatic: true, render: { visible: false } };
+    World.add(engine.world, [
+      Bodies.rectangle(w / 2, h + 25, w, 50, wallOpts),   // floor
+      Bodies.rectangle(-25, h / 2, 50, h * 2, wallOpts),   // left
+      Bodies.rectangle(w + 25, h / 2, 50, h * 2, wallOpts),// right
+    ]);
+
+    // Word bodies
+    const fontSize = Math.max(13, Math.min(18, w / 28));
+    const tmpCtx = canvas.getContext('2d');
+    tmpCtx.font = `500 ${fontSize}px Inter, sans-serif`;
+
+    words.forEach((word, i) => {
+      const textW = tmpCtx.measureText(word).width + 28;
+      const textH = fontSize + 18;
+      const x = 40 + Math.random() * (w - 80);
+      const y = -30 - (i * 35) - Math.random() * 100;
+      const isHighlight = highlightedSkills.includes(word);
+
+      const body = Bodies.rectangle(x, y, textW, textH, {
+        restitution: 0.8,
+        friction: 0.1,
+        frictionAir: 0.008,
+        render: {
+          fillStyle: 'transparent'
+        },
+        label: word,
+        plugin: { isHighlight }
+      });
+      World.add(engine.world, body);
+    });
+
+    // Mouse interaction
+    const mouse = Mouse.create(canvas);
+    mouseConstraint = MouseConstraint.create(engine, {
+      mouse: mouse,
+      constraint: {
+        stiffness: 0.2,
+        render: { visible: false }
+      }
+    });
+    World.add(engine.world, mouseConstraint);
+    render.mouse = mouse;
+
+    // Custom rendering for text
+    Matter.Events.on(render, 'afterRender', () => {
+      const ctx = render.context;
+      const bodies = Matter.Composite.allBodies(engine.world);
+      const fs = Math.max(13, Math.min(18, w / 28));
+
+      bodies.forEach(body => {
+        if (body.isStatic || !body.label || body.label === 'Rectangle Body') return;
+        const { x, y } = body.position;
+        const angle = body.angle;
+        const isHL = body.plugin && body.plugin.isHighlight;
+
+        ctx.save();
+        ctx.translate(x, y);
+        ctx.rotate(angle);
+
+        // Measure text and draw pill
+        ctx.font = `${isHL ? '600' : '400'} ${fs}px Inter, sans-serif`;
+        const tw = ctx.measureText(body.label).width;
+        const pw = tw + 28;
+        const ph = fs + 18;
+        const radius = ph / 2;
+
+        // Draw pill background using polyfill
+        drawRoundRect(ctx, -pw/2, -ph/2, pw, ph, radius);
+        ctx.fillStyle = isHL ? 'rgba(26,26,26,0.08)' : 'rgba(0,0,0,0.03)';
+        ctx.fill();
+        ctx.strokeStyle = isHL ? 'rgba(26,26,26,0.3)' : 'rgba(0,0,0,0.12)';
+        ctx.lineWidth = 1;
+        ctx.stroke();
+
+        // Draw text
+        ctx.fillStyle = isHL ? '#1a1a1a' : '#6b6b6b';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(body.label, 0, 1);
+
+        ctx.restore();
+      });
+    });
+
+    runner = Runner.create();
+    Runner.run(runner, engine);
+    Render.run(render);
+  }
+
+  // Delay setup slightly so DOM layout is ready
+  setTimeout(setup, 200);
+
+  // Resize handler
+  let resizeTimeout;
+  const ro = new ResizeObserver(() => {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(() => {
+      if (runner) Runner.stop(runner);
+      if (render) Render.stop(render);
+      if (engine) {
+        World.clear(engine.world);
+        Engine.clear(engine);
+      }
+      setup();
+    }, 300);
+  });
+  ro.observe(panel);
+}
+
+// Init skills after a short delay to ensure panels are laid out
+setTimeout(() => {
+  if (window.innerWidth > 768) {
+    initFallingSkills('skills-canvas', 'panelSkills');
+  } else {
+    initFallingSkills('mobile-skills-canvas', 'mobileSkills');
+  }
+}, 300);
+
+// âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// DRAGGABLE DIVIDERS
+// âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+const container = document.getElementById('bentoContainer');
+let topHeight = 45;    // percent
+let leftWidth = 55;    // percent
+let aboutHeight = 55;  // percent
+
+function applyLayout() {
+  container.style.setProperty('--top-height', topHeight + '%');
+  container.style.setProperty('--left-width', leftWidth + '%');
+  container.style.setProperty('--about-height', aboutHeight + '%');
+}
+
+function initDivider(dividerEl, axis) {
+  let dragging = false;
+
+  dividerEl.addEventListener('mousedown', (e) => {
+    e.preventDefault();
+    dragging = true;
+    dividerEl.classList.add('active');
+    document.body.style.cursor = axis === 'x' ? 'col-resize' : 'row-resize';
+    document.body.style.userSelect = 'none';
+  });
+
+  document.addEventListener('mousemove', (e) => {
+    if (!dragging) return;
+    const rect = container.getBoundingClientRect();
+
+    if (axis === 'x') {
+      const pct = ((e.clientX - rect.left) / rect.width) * 100;
+      leftWidth = Math.max(30, Math.min(70, pct));
+    } else if (axis === 'y') {
+      const pct = ((e.clientY - rect.top) / rect.height) * 100;
+      topHeight = Math.max(20, Math.min(60, pct));
+    } else if (axis === 'br-y') {
+      // Bottom-right horizontal divider
+      const bottomRowTop = (topHeight / 100) * rect.height + 8; // divider-size
+      const bottomRowHeight = rect.height - bottomRowTop;
+      const rightColLeft = (leftWidth / 100) * rect.width + 8;
+      const rightColWidth = rect.width - rightColLeft;
+      const brTop = bottomRowTop;
+      const relY = e.clientY - rect.top - brTop;
+      const pct = (relY / bottomRowHeight) * 100;
+      aboutHeight = Math.max(25, Math.min(75, pct));
+    }
+    applyLayout();
+  });
+
+  document.addEventListener('mouseup', () => {
+    if (dragging) {
+      dragging = false;
+      dividerEl.classList.remove('active');
+      document.body.style.cursor = '';
+      document.body.style.userSelect = '';
+    }
+  });
+}
+
+initDivider(document.getElementById('dividerTopV'), 'x');
+initDivider(document.getElementById('dividerBottomV'), 'x');
+initDivider(document.getElementById('dividerH'), 'y');
+initDivider(document.getElementById('dividerBRH'), 'br-y');
+
+// Sync both vertical dividers
+const topV = document.getElementById('dividerTopV');
+const bottomV = document.getElementById('dividerBottomV');
+// They share leftWidth so they're already synced
+
+applyLayout();
+
+// âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// EXPANDED OVERLAYS
+// âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+function openOverlay(overlayId, sourceEl) {
+  const overlay = document.getElementById(overlayId);
+  const rect = sourceEl.getBoundingClientRect();
+  const vw = window.innerWidth;
+  const vh = window.innerHeight;
+
+  overlay.style.setProperty('--clip-top', rect.top + 'px');
+  overlay.style.setProperty('--clip-right', (vw - rect.right) + 'px');
+  overlay.style.setProperty('--clip-bottom', (vh - rect.bottom) + 'px');
+  overlay.style.setProperty('--clip-left', rect.left + 'px');
+
+  overlay.style.display = 'block';
+  overlay.classList.remove('closing');
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => overlay.classList.add('open'));
+  });
+}
+
+function closeOverlay(overlayId) {
+  const overlay = document.getElementById(overlayId);
+  overlay.classList.remove('open');
+  overlay.classList.add('closing');
+  setTimeout(() => {
+    overlay.style.display = 'none';
+    overlay.classList.remove('closing');
+  }, 500);
+}
+
+// Work header click
+document.getElementById('workHeader').addEventListener('click', () => {
+  openOverlay('workOverlay', document.getElementById('panelWork'));
+});
+document.getElementById('mobileWork')?.addEventListener('click', () => {
+  openOverlay('workOverlay', document.getElementById('mobileWork'));
+});
+
+// About panel click
+document.getElementById('panelAbout').addEventListener('click', () => {
+  openOverlay('aboutOverlay', document.getElementById('panelAbout'));
+});
+document.getElementById('mobileAbout')?.addEventListener('click', () => {
+  openOverlay('aboutOverlay', document.getElementById('mobileAbout'));
+});
+
+// Close on Escape
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    closeOverlay('workOverlay');
+    closeOverlay('aboutOverlay');
+  }
+});
+
+// âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// GSAP ENTRY ANIMATION
+// âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+window.addEventListener('DOMContentLoaded', () => {
+  const isMobile = window.innerWidth <= 768;
+
+  if (!isMobile) {
+    const panels = document.querySelectorAll('.bento-container .panel');
+    const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+
+    // Animate divider lines first
+    tl.to('.divider-h::after', { scaleX: 1, duration: 0.5 }, 0);
+
+    // Then fade in panels with stagger
+    tl.to(panels, {
+      opacity: 1,
+      duration: 0.6,
+      stagger: 0.12,
+      ease: 'power2.out'
+    }, 0.2);
+  } else {
+    const sections = document.querySelectorAll('.mobile-section');
+    gsap.to(sections, {
+      opacity: 1,
+      duration: 0.5,
+      stagger: 0.1,
+      ease: 'power2.out',
+      delay: 0.1
+    });
+  }
+});
+</script>
+
 </body>
 </html>
