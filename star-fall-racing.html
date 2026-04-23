@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Star Fall Racing</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: #050510; overflow: hidden; font-family: Arial, sans-serif; }
+canvas { display: block; }
+
+#ui {
+  position: absolute; top: 0; left: 0;
+  width: 100%; height: 100%;
+  display: flex; align-items: center; justify-content: center;
+  pointer-events: none;
+}
+
+.panel {
+  pointer-events: all;
+  background: rgba(6, 6, 30, 0.94);
+  border: 2px solid #3344cc;
+  border-radius: 18px;
+  padding: 36px 44px;
+  text-align: center;
+  max-width: 520px;
+  width: 92%;
+  box-shadow: 0 0 40px rgba(60, 80, 255, 0.35);
+}
+
+h1 { font-size: 2.8em; color: #ffd700; text-shadow: 0 0 24px #ffaa00, 0 0 60px #ff6600; letter-spacing: 4px; }
+.subtitle { color: #8899ff; margin: 6px 0 28px; font-size: 1em; letter-spacing: 2px; }
+
+.section-label {
+  text-align: left; color: #9999cc; font-size: 0.78em;
+  letter-spacing: 2px; margin-bottom: 10px; margin-top: 20px;
+}
+
+/* Color palette */
+.color-palette { display: flex; flex-wrap: wrap; gap: 10px; }
+.swatch {
+  width: 42px; height: 42px; border-radius: 50%;
+  cursor: pointer; border: 3px solid transparent;
+  transition: transform 0.15s, border-color 0.15s;
+}
+.swatch:hover { transform: scale(1.12); }
+.swatch.sel { border-color: #fff; transform: scale(1.18); box-shadow: 0 0 12px rgba(255,255,255,0.5); }
+
+/* Number buttons */
+.num-grid { display: flex; flex-wrap: wrap; gap: 8px; }
+.num-btn {
+  width: 46px; height: 40px;
+  background: #111133; border: 2px solid #2233aa;
+  color: #ccd; border-radius: 8px; cursor: pointer;
+  font-size: 1em; font-weight: bold;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+.num-btn:hover { background: #1a1a55; border-color: #5566ff; color: #fff; }
+.num-btn.sel { background: #2233cc; border-color: #fff; color: #fff; }
+
+.go-btn {
+  margin-top: 28px;
+  padding: 14px 56px;
+  font-size: 1.25em; font-weight: bold; letter-spacing: 3px;
+  background: linear-gradient(135deg, #2244ff, #8800ff);
+  color: #fff; border: none; border-radius: 50px; cursor: pointer;
+  box-shadow: 0 0 24px rgba(100, 0, 255, 0.55);
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.go-btn:hover { transform: scale(1.06); box-shadow: 0 0 36px rgba(120, 40, 255, 0.8); }
+
+/* Hint bar */
+#hint {
+  position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%);
+  background: rgba(0,0,0,0.65); padding: 10px 24px;
+  border-radius: 24px; color: #ffd700;
+  font-size: 1.05em; letter-spacing: 1px;
+  border: 1px solid rgba(255,215,0,0.3);
+  display: none; pointer-events: none;
+}
+
+/* Results */
+.result-title { font-size: 2.2em; color: #ffd700; text-shadow: 0 0 20px #ffaa00; margin-bottom: 4px; }
+.rank-msg { font-size: 1.2em; font-weight: bold; color: #ffd700; margin: 10px 0 16px; }
+table { width: 100%; border-collapse: collapse; margin: 4px 0 18px; }
+th { color: #7788cc; font-size: 0.8em; letter-spacing: 2px; padding: 6px 0; border-bottom: 1px solid #223; }
+td { padding: 9px 4px; text-align: center; font-size: 0.95em; color: #ccd; }
+tr:nth-child(odd) td { background: rgba(255,255,255,0.03); }
+.you-tag { color: #ffd700; font-weight: bold; }
+.dot { display: inline-block; width: 16px; height: 16px; border-radius: 50%; vertical-align: middle; margin-right: 6px; border: 2px solid rgba(255,255,255,0.35); }
+
+.again-btn {
+  padding: 12px 44px; font-size: 1.1em; font-weight: bold; letter-spacing: 2px;
+  background: linear-gradient(135deg, #ff6600, #ff2200);
+  color: #fff; border: none; border-radius: 50px; cursor: pointer;
+  box-shadow: 0 0 20px rgba(255, 80, 0, 0.5);
+  transition: transform 0.15s;
+}
+.again-btn:hover { transform: scale(1.06); }
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+
+<div id="ui">
+  <!-- SETUP -->
+  <div class="panel" id="setupPanel">
+    <h1>&#11088; STAR FALL</h1>
+    <p class="subtitle">SPACE RACING CHAMPIONSHIP</p>
+
+    <p class="section-label">CHOOSE YOUR CAR COLOR</p>
+    <div class="color-palette" id="palette"></div>
+
+    <p class="section-label">CHOOSE YOUR CAR NUMBER</p>
+    <div class="num-grid" id="numGrid"></div>
+
+    <button class="go-btn" onclick="startRace()">START RACE</button>
+  </div>
+
+  <!-- RESULTS -->
+  <div class="panel" id="resultsPanel" style="display:none">
+    <div class="result-title">&#127937; RACE OVER!</div>
+    <div class="rank-msg" id="rankMsg"></div>
+    <table>
+      <thead><tr><th>RANK</th><th>CAR</th><th>TIME</th></tr></thead>
+      <tbody id="rankBody"></tbody>
+    </table>
+    <button class="again-btn" onclick="resetGame()">PLAY AGAIN</button>
+  </div>
+</div>
+
+<div id="hint">Press SPACE (or tap) to BOOST! &#128171;</div>
+
+<script>
+// ── Canvas ──────────────────────────────────────────────────
+const canvas = document.getElementById('c');
+const ctx = canvas.getContext('2d');
+let W, H;
+function resize() {
+  W = canvas.width  = window.innerWidth;
+  H = canvas.height = window.innerHeight;
+}
+resize();
+window.addEventListener('resize', resize);
+
+// ── Palette data ─────────────────────────────────────────────
+const COLORS = [
+  { name:'Flame Red',   hex:'#ff2233' },
+  { name:'Rocket Blue', hex:'#2255ff' },
+  { name:'Nebula Green',hex:'#22cc55' },
+  { name:'Solar Yellow',hex:'#ffcc00' },
+  { name:'Pulsar Purple',hex:'#bb33ff' },
+  { name:'Comet Orange',hex:'#ff7700' },
+  { name:'Galaxy Pink', hex:'#ff44aa' },
+  { name:'Ice Cyan',    hex:'#00ddff' },
+];
+const NUMBERS = [1, 3, 5, 7, 9, 11, 13, 21, 42, 77];
+
+let pickedColor = COLORS[0];
+let pickedNumber = NUMBERS[0];
+
+// Build color swatches
+const palette = document.getElementById('palette');
+COLORS.forEach((c, i) => {
+  const d = document.createElement('div');
+  d.className = 'swatch' + (i === 0 ? ' sel' : '');
+  d.style.background = c.hex;
+  d.title = c.name;
+  d.onclick = () => {
+    palette.querySelectorAll('.swatch').forEach(s => s.classList.remove('sel'));
+    d.classList.add('sel');
+    pickedColor = c;
+  };
+  palette.appendChild(d);
+});
+
+// Build number buttons
+const numGrid = document.getElementById('numGrid');
+NUMBERS.forEach((n, i) => {
+  const b = document.createElement('button');
+  b.className = 'num-btn' + (i === 0 ? ' sel' : '');
+  b.textContent = n;
+  b.onclick = () => {
+    numGrid.querySelectorAll('.num-btn').forEach(x => x.classList.remove('sel'));
+    b.classList.add('sel');
+    pickedNumber = n;
+  };
+  numGrid.appendChild(b);
+});
+
+// ── Stars ────────────────────────────────────────────────────
+let bgStars = [], fallers = [];
+
+function initBgStars() {
+  bgStars = Array.from({ length: 180 }, () => ({
+    x: Math.random() * W, y: Math.random() * H,
+    r: Math.random() * 1.5 + 0.4,
+    phase: Math.random() * Math.PI * 2,
+    spd: Math.random() * 1.5 + 0.5,
+  }));
+}
+
+function spawnFaller() {
+  fallers.push({
+    x: Math.random() * W * 1.2 - W * 0.1,
+    y: -20,
+    vx: (Math.random() - 0.5) * 1.5,
+    vy: Math.random() * 5 + 3,
+    r: Math.random() * 2.5 + 1,
+    alpha: 1,
+    trail: [],
+  });
+}
+
+function drawStars(dt) {
+  // background twinkle
+  bgStars.forEach(s => {
+    s.phase += dt * s.spd;
+    const a = 0.4 + 0.6 * Math.abs(Math.sin(s.phase));
+    ctx.fillStyle = `rgba(255,255,255,${a})`;
+    ctx.beginPath();
+    ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+    ctx.fill();
+  });
+
+  // falling stars
+  fallers.forEach(f => {
+    f.trail.push({ x: f.x, y: f.y });
+    if (f.trail.length > 18) f.trail.shift();
+    f.x += f.vx; f.y += f.vy; f.alpha -= 0.012;
+
+    f.trail.forEach((p, i) => {
+      const ta = f.alpha * (i / f.trail.length) * 0.6;
+      ctx.fillStyle = `rgba(255,220,80,${ta})`;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, f.r * (i / f.trail.length), 0, Math.PI * 2);
+      ctx.fill();
+    });
+    ctx.fillStyle = `rgba(255,240,160,${f.alpha})`;
+    ctx.beginPath(); ctx.arc(f.x, f.y, f.r, 0, Math.PI * 2); ctx.fill();
+  });
+
+  for (let i = fallers.length - 1; i >= 0; i--) {
+    if (fallers[i].y > H + 40 || fallers[i].alpha <= 0) {
+      fallers.splice(i, 1);
+      spawnFaller();
+    }
+  }
+}
+
+// ── Game state ───────────────────────────────────────────────
+let state = 'setup'; // setup | racing | done
+let cars = [], finishOrder = [], raceStart = 0;
+
+function trackBounds() {
+  const pad = 60;
+  return {
+    top: H * 0.18,
+    bottom: H * 0.88,
+    startX: pad + 30,
+    finishX: W - pad - 30,
+  };
+}
+
+function makeCars() {
+  const tb = trackBounds();
+  const laneH = (tb.bottom - tb.top) / 4;
+  const aiColors = COLORS.filter(c => c.hex !== pickedColor.hex);
+  const aiNums   = NUMBERS.filter(n => n !== pickedNumber);
+  const playerLane = Math.floor(Math.random() * 4);
+  cars = [];
+
+  for (let i = 0; i < 4; i++) {
+    const isPlayer = i === playerLane;
+    const ci = (i < playerLane ? i : i - 1);
+    cars.push({
+      x: tb.startX,
+      y: tb.top + laneH * i + laneH / 2,
+      vx: 0,
+      color: isPlayer ? pickedColor.hex : aiColors[ci % aiColors.length].hex,
+      num:   isPlayer ? pickedNumber    : aiNums[ci % aiNums.length],
+      isPlayer,
+      finished: false,
+      finishTime: null,
+      boosting: false,
+      boostTimer: 0,
+      wobble: 0,
+      wobbleV: 0,
+      aiClock: Math.random() * 0.4,
+      aiInterval: 0.22 + Math.random() * 0.22,
+    });
+  }
+}
+
+function boostCar(car) {
+  const add = 9 + Math.random() * 5;
+  car.vx = Math.min(car.vx + add, 20);
+  car.boosting = true;
+  car.boostTimer = 1;
+  car.wobbleV += (Math.random() - 0.5) * 3;
+}
+
+// ── Drawing ──────────────────────────────────────────────────
+function drawBackground() {
+  const g = ctx.createLinearGradient(0, 0, 0, H);
+  g.addColorStop(0, '#040410');
+  g.addColorStop(1, '#080420');
+  ctx.fillStyle = g;
+  ctx.fillRect(0, 0, W, H);
+}
+
+function drawCheckers(x, yTop, yBot) {
+  const sq = 14;
+  const n  = Math.floor((yBot - yTop) / sq);
+  for (let i = 0; i < n; i++) {
+    ctx.fillStyle = i % 2 === 0 ? '#fff' : '#000';
+    ctx.fillRect(x - sq / 2, yTop + i * sq, sq, sq);
+  }
+}
+
+function drawTrack() {
+  const tb = trackBounds();
+  const laneH = (tb.bottom - tb.top) / 4;
+  const tw = tb.finishX - tb.startX;
+
+  // Asphalt
+  ctx.fillStyle = '#0d0d2a';
+  ctx.fillRect(tb.startX - 24, tb.top, tw + 48, tb.bottom - tb.top);
+
+  // Lane dashes
+  ctx.setLineDash([22, 16]);
+  ctx.strokeStyle = 'rgba(80,90,200,0.28)';
+  ctx.lineWidth = 2;
+  for (let i = 1; i < 4; i++) {
+    const ly = tb.top + laneH * i;
+    ctx.beginPath();
+    ctx.moveTo(tb.startX, ly);
+    ctx.lineTo(tb.finishX, ly);
+    ctx.stroke();
+  }
+  ctx.setLineDash([]);
+
+  // Border
+  ctx.strokeStyle = '#3344bb';
+  ctx.lineWidth = 3;
+  ctx.strokeRect(tb.startX - 24, tb.top, tw + 48, tb.bottom - tb.top);
+
+  // Checkers
+  drawCheckers(tb.startX, tb.top, tb.bottom);
+  drawCheckers(tb.finishX, tb.top, tb.bottom);
+
+  // Labels
+  ctx.fillStyle = '#aabbff';
+  ctx.font = 'bold 13px Arial';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'bottom';
+  ctx.fillText('START',  tb.startX, tb.top - 6);
+  ctx.fillText('FINISH', tb.finishX, tb.top - 6);
+}
+
+function drawCar(car) {
+  const CW = 62, CH = 28;
+  ctx.save();
+  ctx.translate(car.x, car.y + car.wobble);
+
+  // Boost flames
+  if (car.boosting && car.boostTimer > 0) {
+    const len = 28 * car.boostTimer;
+    const flameGrad = ctx.createLinearGradient(-CW / 2 - len, 0, -CW / 2, 0);
+    flameGrad.addColorStop(0, 'rgba(255,100,0,0)');
+    flameGrad.addColorStop(1, `rgba(255,200,50,${car.boostTimer * 0.9})`);
+    ctx.fillStyle = flameGrad;
+    ctx.beginPath();
+    ctx.moveTo(-CW / 2, -CH / 2 + 6);
+    ctx.lineTo(-CW / 2 - len, 0);
+    ctx.lineTo(-CW / 2, CH / 2 - 6);
+    ctx.closePath();
+    ctx.fill();
+
+    ctx.shadowColor = car.color;
+    ctx.shadowBlur = 18;
+  }
+
+  // Body
+  ctx.fillStyle = car.color;
+  ctx.beginPath();
+  ctx.moveTo(-CW / 2 + 6, -CH / 2);
+  ctx.lineTo( CW / 2 - 4, -CH / 2);
+  ctx.quadraticCurveTo(CW / 2, -CH / 2, CW / 2, -CH / 2 + 5);
+  ctx.lineTo( CW / 2, CH / 2 - 5);
+  ctx.quadraticCurveTo(CW / 2, CH / 2, CW / 2 - 4, CH / 2);
+  ctx.lineTo(-CW / 2 + 6, CH / 2);
+  ctx.quadraticCurveTo(-CW / 2, CH / 2, -CW / 2, CH / 2 - 5);
+  ctx.lineTo(-CW / 2, -CH / 2 + 5);
+  ctx.quadraticCurveTo(-CW / 2, -CH / 2, -CW / 2 + 6, -CH / 2);
+  ctx.closePath();
+  ctx.fill();
+  ctx.shadowBlur = 0;
+
+  // Windshield
+  ctx.fillStyle = 'rgba(160,210,255,0.65)';
+  ctx.beginPath();
+  ctx.rect(-2, -CH / 2 + 4, 20, CH - 8);
+  ctx.fill();
+
+  // Side stripe
+  ctx.fillStyle = 'rgba(255,255,255,0.12)';
+  ctx.fillRect(-CW / 2 + 2, -4, CW - 4, 8);
+
+  // Wheels
+  const wpos = [
+    [-CW / 2 + 12, -CH / 2],
+    [ CW / 2 - 10, -CH / 2],
+    [-CW / 2 + 12,  CH / 2],
+    [ CW / 2 - 10,  CH / 2],
+  ];
+  wpos.forEach(([wx, wy]) => {
+    ctx.fillStyle = '#1a1a2a';
+    ctx.beginPath();
+    ctx.ellipse(wx, wy, 9, 6, 0, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.strokeStyle = '#555';
+    ctx.lineWidth = 1;
+    ctx.stroke();
+    ctx.strokeStyle = '#888';
+    ctx.beginPath();
+    ctx.arc(wx, wy, 3, 0, Math.PI * 2);
+    ctx.stroke();
+  });
+
+  // Number plate
+  ctx.fillStyle = 'rgba(0,0,0,0.55)';
+  ctx.fillRect(-CW / 2 + 3, -9, 22, 18);
+  ctx.fillStyle = '#fff';
+  ctx.font = `bold ${car.num > 9 ? '11' : '13'}px Arial`;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText(car.num, -CW / 2 + 14, 0);
+
+  // YOU label
+  if (car.isPlayer) {
+    ctx.fillStyle = '#ffd700';
+    ctx.font = 'bold 9px Arial';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'bottom';
+    ctx.fillText('YOU', 0, -CH / 2 - 4);
+  }
+
+  ctx.restore();
+}
+
+function drawHUD() {
+  if (state !== 'racing') return;
+  const player = cars.find(c => c.isPlayer);
+  if (!player || player.finished) return;
+  const tb = trackBounds();
+  const dist = tb.finishX - tb.startX;
+  const prog = Math.max(0, Math.min((player.x - tb.startX) / dist, 1));
+  const speedF = Math.min(player.vx / 20, 1);
+
+  const mx = 18, my = 18, mw = 160, mh = 18;
+
+  // Speed bar
+  ctx.fillStyle = 'rgba(0,0,0,0.55)';
+  ctx.fillRect(mx - 4, my - 4, mw + 8, mh * 2 + 28);
+
+  ctx.fillStyle = '#1a1a3a'; ctx.fillRect(mx, my, mw, mh);
+  const sg = ctx.createLinearGradient(mx, 0, mx + mw, 0);
+  sg.addColorStop(0, '#00ff88'); sg.addColorStop(0.55, '#ffdd00'); sg.addColorStop(1, '#ff4400');
+  ctx.fillStyle = sg; ctx.fillRect(mx, my, mw * speedF, mh);
+  ctx.strokeStyle = '#444'; ctx.lineWidth = 1; ctx.strokeRect(mx, my, mw, mh);
+  ctx.fillStyle = '#9999cc'; ctx.font = '10px Arial';
+  ctx.textAlign = 'left'; ctx.textBaseline = 'top';
+  ctx.fillText('SPEED', mx, my + mh + 3);
+
+  // Progress bar
+  const py = my + mh + 20;
+  ctx.fillStyle = '#1a1a3a'; ctx.fillRect(mx, py, mw, 12);
+  ctx.fillStyle = pickedColor.hex; ctx.fillRect(mx, py, mw * prog, 12);
+  ctx.strokeStyle = '#444'; ctx.lineWidth = 1; ctx.strokeRect(mx, py, mw, 12);
+  ctx.fillStyle = '#9999cc'; ctx.font = '10px Arial';
+  ctx.textAlign = 'left'; ctx.textBaseline = 'top';
+  ctx.fillText('PROGRESS', mx, py + 14);
+}
+
+// ── Update ───────────────────────────────────────────────────
+function update(dt) {
+  if (state !== 'racing') return;
+  const tb = trackBounds();
+
+  cars.forEach(car => {
+    if (car.finished) return;
+
+    // AI
+    if (!car.isPlayer) {
+      car.aiClock -= dt;
+      if (car.aiClock <= 0) {
+        boostCar(car);
+        car.aiClock = car.aiInterval + (Math.random() - 0.5) * 0.08;
+      }
+    }
+
+    // Physics
+    car.vx *= 0.983;
+    car.x  += car.vx;
+
+    // Wobble damping
+    car.wobble  += car.wobbleV * dt * 8;
+    car.wobbleV *= 0.88;
+    car.wobble  *= 0.85;
+
+    // Boost timer
+    if (car.boosting) {
+      car.boostTimer -= dt * 2.5;
+      if (car.boostTimer <= 0) { car.boosting = false; car.boostTimer = 0; }
+    }
+
+    // Finish check
+    if (car.x >= tb.finishX) {
+      car.x = tb.finishX; car.vx = 0;
+      car.finished = true;
+      car.finishTime = (Date.now() - raceStart) / 1000;
+      finishOrder.push(car);
+    }
+  });
+
+  if (finishOrder.length === cars.length && state === 'racing') {
+    state = 'done';
+    setTimeout(showResults, 700);
+  }
+}
+
+// ── Main loop ────────────────────────────────────────────────
+let raf, lastT = 0;
+function loop(ts) {
+  const dt = Math.min((ts - lastT) / 1000, 0.05);
+  lastT = ts;
+
+  drawBackground();
+  drawStars(dt);
+
+  if (state === 'racing' || state === 'done') {
+    drawTrack();
+    cars.forEach(drawCar);
+    drawHUD();
+  }
+
+  update(dt);
+  raf = requestAnimationFrame(loop);
+}
+
+// ── Controls ─────────────────────────────────────────────────
+window.addEventListener('keydown', e => {
+  if (e.code === 'Space') {
+    e.preventDefault();
+    if (state === 'racing') {
+      const p = cars.find(c => c.isPlayer);
+      if (p && !p.finished) boostCar(p);
+    }
+  }
+});
+
+canvas.addEventListener('touchstart', e => {
+  e.preventDefault();
+  if (state === 'racing') {
+    const p = cars.find(c => c.isPlayer);
+    if (p && !p.finished) boostCar(p);
+  }
+}, { passive: false });
+
+// ── Start / reset ─────────────────────────────────────────────
+function startRace() {
+  document.getElementById('setupPanel').style.display  = 'none';
+  document.getElementById('hint').style.display        = 'block';
+  finishOrder = [];
+  makeCars();
+  raceStart = Date.now();
+  state = 'racing';
+}
+
+function showResults() {
+  document.getElementById('hint').style.display = 'none';
+  document.getElementById('resultsPanel').style.display = 'block';
+
+  const medals = ['🥇', '🥈', '🥉', '4️⃣'];
+  const playerRank = finishOrder.findIndex(c => c.isPlayer) + 1;
+  const msgs = ['🏆 YOU ARE THE CHAMPION!', '✨ Excellent! 2nd place!', '3rd place — great race!', 'Good effort! Try again!'];
+  document.getElementById('rankMsg').textContent = msgs[playerRank - 1] || '';
+
+  const tbody = document.getElementById('rankBody');
+  tbody.innerHTML = '';
+  finishOrder.forEach((car, i) => {
+    const mins = Math.floor(car.finishTime / 60);
+    const secs = (car.finishTime % 60).toFixed(2).padStart(5, '0');
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${medals[i] || (i + 1)}</td>
+      <td>
+        <span class="dot" style="background:${car.color}"></span>
+        <span class="${car.isPlayer ? 'you-tag' : ''}">
+          Car #${car.num}${car.isPlayer ? ' (YOU)' : ''}
+        </span>
+      </td>
+      <td>${mins}:${secs}s</td>`;
+    tbody.appendChild(tr);
+  });
+}
+
+function resetGame() {
+  document.getElementById('resultsPanel').style.display = 'none';
+  document.getElementById('setupPanel').style.display  = 'block';
+  state = 'setup';
+  cars = []; finishOrder = [];
+}
+
+// ── Boot ──────────────────────────────────────────────────────
+initBgStars();
+for (let i = 0; i < 6; i++) spawnFaller();
+lastT = performance.now();
+raf = requestAnimationFrame(loop);
+</script>
+</body>
+</html>
