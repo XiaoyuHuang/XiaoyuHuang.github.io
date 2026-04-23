@@ -255,6 +255,59 @@
       color: var(--text-secondary);
     }
 
+    /* ═══ Star Fall story card ═══ */
+    .story-note {
+      background: linear-gradient(135deg, #fdf6ff, #f0f4ff);
+      border: 1px solid #d8b4fe;
+      border-left: 3px solid #7c3aed;
+      border-radius: 4px;
+      padding: 14px 16px;
+      margin-top: 10px;
+      font-size: 0.8rem;
+      color: #4b5563;
+      line-height: 1.6;
+    }
+    .story-note .story-label {
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: #7c3aed;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+    .story-prompt {
+      background: rgba(0,0,0,0.04);
+      border-left: 2px solid #c4b5fd;
+      padding: 8px 10px;
+      margin: 8px 0;
+      font-style: italic;
+      font-size: 0.78rem;
+      color: #374151;
+      border-radius: 0 3px 3px 0;
+    }
+    .proj-img-star {
+      width: 100%;
+      aspect-ratio: 2/1;
+      background: linear-gradient(135deg, #050510 0%, #0a0520 50%, #0d0830 100%);
+      border-radius: 4px;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .proj-img-star::after {
+      content: '✦ ✧ ✦';
+      position: absolute;
+      bottom: 6px;
+      right: 8px;
+      font-size: 0.7rem;
+      color: rgba(255,215,0,0.5);
+      letter-spacing: 4px;
+    }
+
     /* ═══ About Section ═══ */
     .about-panel {
       cursor: pointer;
@@ -587,6 +640,19 @@
             <span class="proj-tag">Algorithms</span>
           </div>
         </a>
+        <a href="/star-fall-racing.html" target="_blank" class="project-card">
+          <div class="proj-img-star">⭐</div>
+          <h3>Star Fall Racing</h3>
+          <div class="proj-tags">
+            <span class="proj-tag">AI</span>
+            <span class="proj-tag">Game</span>
+            <span class="proj-tag">Canvas</span>
+          </div>
+          <div class="story-note" style="margin-top:8px;">
+            <div class="story-label">Designed by my 6-year-old daughter</div>
+            She gave Claude AI one prompt — and this game was born.
+          </div>
+        </a>
       </div>
     </div>
 
@@ -723,6 +789,31 @@
         </a>
       </div>
     </div>
+    <div class="exp-category">
+      <h3>AI Experiments</h3>
+      <div class="exp-projects-grid">
+        <a href="/star-fall-racing.html" target="_blank" class="exp-project-card">
+          <div class="proj-img-star">⭐</div>
+          <h4>Star Fall Racing</h4>
+          <p>A space car racing game — built entirely from a single prompt by my 6-year-old daughter.</p>
+          <div class="story-note">
+            <div class="story-label">The story behind this</div>
+            My daughter came up with the idea and described it to Claude AI exactly as a 6-year-old would. I wanted to test the <em>aha moment</em> — to see how AI interprets the imagination and intent of a child's prompt, and what it builds.
+            <div class="story-prompt">
+              "design a game called star fall. there are cars that race. you can choose your color of your car. then you push a button space, then the car wil go go. when you cross the finish line it will tell you what is your ranking. you could also choose the number of your car."
+            </div>
+            Claude understood the vision — typos and all — and turned it into a fully playable game. The result speaks for itself.
+          </div>
+          <div class="proj-tags" style="margin-top:10px;">
+            <span class="proj-tag">Claude AI</span>
+            <span class="proj-tag">Canvas</span>
+            <span class="proj-tag">Game</span>
+            <span class="proj-tag">Prompt Engineering</span>
+          </div>
+        </a>
+      </div>
+    </div>
+
     <div class="exp-category">
       <h3>Microsoft (Professional)</h3>
       <div class="exp-projects-grid">
