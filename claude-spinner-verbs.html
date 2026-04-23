@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Claude Code Spinner Verbs — The Leaked List</title>
+  <meta name="description" content="All 187 leaked Claude Code spinner verbs, with English and Chinese explanations and pronunciation guides." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f5f5f0;
+      --panel-bg: #ffffff;
+      --text: #1a1a1a;
+      --text-secondary: #6b6b6b;
+      --border: #d4d4d4;
+      --primary: #1a1a1a;
+      --accent: #4f46e5;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      min-height: 100vh;
+    }
+    a { color: inherit; text-decoration: none; }
+
+    /* ── Nav ── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .nav-back {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: color 0.2s;
+    }
+    .nav-back:hover { color: var(--text); }
+    .nav-title {
+      font-size: 0.85rem;
+      font-weight: 600;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--text-secondary);
+    }
+    .nav-count {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      font-family: 'JetBrains Mono', monospace;
+      background: var(--border);
+      padding: 3px 10px;
+      border-radius: 20px;
+    }
+
+    /* ── Hero ── */
+    .hero {
+      padding: 72px 32px 48px;
+      max-width: 1200px;
+      margin: 0 auto;
+      opacity: 0;
+    }
+    .hero-kicker {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--text-secondary);
+      margin-bottom: 16px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .hero h1 {
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      margin-bottom: 20px;
+    }
+    .hero h1 span {
+      color: var(--text-secondary);
+    }
+    .hero-desc {
+      font-size: clamp(1rem, 1.5vw, 1.15rem);
+      color: var(--text-secondary);
+      max-width: 640px;
+      line-height: 1.7;
+    }
+    .hero-meta {
+      margin-top: 24px;
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .hero-stat {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .hero-stat-value {
+      font-size: 1.5rem;
+      font-weight: 800;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .hero-stat-label {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* ── Controls ── */
+    .controls {
+      position: sticky;
+      top: 53px;
+      z-index: 40;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 32px;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .search-wrap {
+      position: relative;
+      flex: 1;
+      min-width: 200px;
+      max-width: 400px;
+    }
+    .search-icon {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      pointer-events: none;
+    }
+    .search-input {
+      width: 100%;
+      padding: 10px 12px 10px 36px;
+      border: 1px solid var(--border);
+      background: var(--panel-bg);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem;
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .search-input:focus { border-color: var(--primary); }
+    .search-input::placeholder { color: var(--text-secondary); }
+
+    .filter-group {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .filter-btn {
+      padding: 8px 14px;
+      border: 1px solid var(--border);
+      background: transparent;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.2s;
+      letter-spacing: 0.3px;
+    }
+    .filter-btn:hover { border-color: var(--primary); color: var(--text); }
+    .filter-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
+
+    .view-toggle {
+      display: flex;
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
+    .view-btn {
+      padding: 8px 12px;
+      background: transparent;
+      border: none;
+      border-right: 1px solid var(--border);
+      cursor: pointer;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      transition: all 0.2s;
+    }
+    .view-btn:last-child { border-right: none; }
+    .view-btn.active { background: var(--primary); color: white; }
+
+    /* ── Grid ── */
+    .grid-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 32px 32px 64px;
+    }
+    .no-results {
+      text-align: center;
+      padding: 80px 20px;
+      color: var(--text-secondary);
+      display: none;
+    }
+    .no-results-icon { font-size: 3rem; margin-bottom: 12px; }
+    .no-results-text { font-size: 1rem; }
+
+    /* Card grid view */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+    .verb-card {
+      background: var(--panel-bg);
+      padding: 20px 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      transition: background 0.2s;
+      position: relative;
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    .verb-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 0.3s ease, transform 0.3s ease, background 0.2s;
+    }
+    .verb-card:hover { background: #fafaf7; }
+    .verb-card.hidden { display: none; }
+
+    .card-index {
+      font-size: 0.7rem;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--border);
+      position: absolute;
+      top: 14px;
+      right: 16px;
+    }
+    .card-word {
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      line-height: 1.2;
+    }
+    .card-word.highlight-word {
+      color: var(--accent);
+    }
+    .card-pronun {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      background: var(--bg);
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 3px;
+      align-self: flex-start;
+    }
+    .card-divider {
+      width: 24px;
+      height: 1px;
+      background: var(--border);
+      margin: 2px 0;
+    }
+    .card-en {
+      font-size: 0.85rem;
+      color: var(--text);
+      line-height: 1.5;
+    }
+    .card-zh {
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+    .card-badge {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 2px 7px;
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
+      align-self: flex-start;
+      margin-top: 2px;
+    }
+    .card-badge.meta { border-color: var(--accent); color: var(--accent); }
+    .card-badge.fun { border-color: #16a34a; color: #16a34a; }
+    .card-badge.food { border-color: #d97706; color: #d97706; }
+    .card-badge.dance { border-color: #db2777; color: #db2777; }
+    .card-badge.science { border-color: #0891b2; color: #0891b2; }
+
+    /* Table view */
+    .table-view {
+      display: none;
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
+    .table-view.show { display: block; }
+    .cards-grid.show { display: grid; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.875rem;
+    }
+    thead {
+      background: var(--primary);
+      color: white;
+      position: sticky;
+      top: 106px;
+      z-index: 30;
+    }
+    th {
+      padding: 12px 16px;
+      text-align: left;
+      font-weight: 600;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    td {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--bg);
+      vertical-align: top;
+    }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: #fafaf7; }
+    tr.hidden { display: none; }
+    .td-num {
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--border);
+      font-size: 0.75rem;
+      white-space: nowrap;
+    }
+    .td-word {
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .td-word.highlight-word { color: var(--accent); }
+    .td-pronun {
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--text-secondary);
+      font-size: 0.78rem;
+      white-space: nowrap;
+    }
+    .td-en { color: var(--text); max-width: 300px; }
+    .td-zh { color: var(--text-secondary); max-width: 300px; }
+
+    /* ── Letter index ── */
+    .letter-index {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 32px 0;
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .letter-link {
+      font-size: 0.8rem;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--text-secondary);
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--border);
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+    .letter-link:hover { background: var(--primary); color: white; border-color: var(--primary); }
+    .letter-link.inactive { opacity: 0.3; pointer-events: none; }
+
+    /* ── Footer ── */
+    .page-footer {
+      border-top: 1px solid var(--border);
+      padding: 32px;
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: gap;
+      gap: 12px;
+      color: var(--text-secondary);
+      font-size: 0.8rem;
+    }
+    .footer-source a { color: var(--text-secondary); border-bottom: 1px solid var(--border); }
+    .footer-source a:hover { color: var(--text); border-color: var(--text); }
+
+    /* ── Responsive ── */
+    @media (max-width: 600px) {
+      .hero { padding: 40px 20px 32px; }
+      .controls { padding: 12px 20px; top: 49px; }
+      .grid-container { padding: 20px 20px 48px; }
+      .letter-index { padding: 0 20px; }
+      .page-footer { padding: 24px 20px; flex-direction: column; align-items: flex-start; }
+      .nav { padding: 12px 20px; }
+      thead { top: 95px; }
+      .cards-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav class="nav">
+  <a href="/" class="nav-back">← Back</a>
+  <span class="nav-title">claude-spinner-verbs.html</span>
+  <span class="nav-count" id="visibleCount">187 verbs</span>
+</nav>
+
+<!-- Hero -->
+<header class="hero" id="hero">
+  <div class="hero-kicker">Claude Code Source Leak · April 2026</div>
+  <h1>The <span>187</span> Spinner Verbs</h1>
+  <p class="hero-desc">
+    When Claude Code thinks, it picks a word at random to show on screen instead of a boring spinner.
+    Someone leaked the source — and the weirdest thing inside was this list.
+    Every word, explained in English and Chinese, with pronunciation.
+  </p>
+  <div class="hero-meta">
+    <div class="hero-stat">
+      <span class="hero-stat-value">187</span>
+      <span class="hero-stat-label">Total Verbs</span>
+    </div>
+    <div class="hero-stat">
+      <span class="hero-stat-value">1</span>
+      <span class="hero-stat-label">Meta Self-Ref (Clauding)</span>
+    </div>
+    <div class="hero-stat">
+      <span class="hero-stat-value">3</span>
+      <span class="hero-stat-label">Combobulation Variants</span>
+    </div>
+    <div class="hero-stat">
+      <span class="hero-stat-value">∞</span>
+      <span class="hero-stat-label">Delight</span>
+    </div>
+  </div>
+</header>
+
+<!-- Letter index -->
+<div class="letter-index" id="letterIndex"></div>
+
+<!-- Controls -->
+<div class="controls">
+  <div class="search-wrap">
+    <span class="search-icon">⌕</span>
+    <input class="search-input" id="searchInput" type="search" placeholder="Search words..." autocomplete="off" />
+  </div>
+  <div class="filter-group">
+    <button class="filter-btn active" data-filter="all">All</button>
+    <button class="filter-btn" data-filter="meta">Meta</button>
+    <button class="filter-btn" data-filter="fun">Whimsical</button>
+    <button class="filter-btn" data-filter="food">Food</button>
+    <button class="filter-btn" data-filter="dance">Dance</button>
+    <button class="filter-btn" data-filter="science">Science</button>
+  </div>
+  <div class="view-toggle">
+    <button class="view-btn active" id="btnGrid" title="Card view">⊞</button>
+    <button class="view-btn" id="btnTable" title="Table view">☰</button>
+  </div>
+</div>
+
+<!-- Grid -->
+<main class="grid-container">
+  <div class="cards-grid show" id="cardsGrid"></div>
+  <div class="table-view" id="tableView">
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Word</th>
+          <th>Pronunciation</th>
+          <th>English</th>
+          <th>中文</th>
+        </tr>
+      </thead>
+      <tbody id="tableBody"></tbody>
+    </table>
+  </div>
+  <div class="no-results" id="noResults">
+    <div class="no-results-icon">🤔</div>
+    <div class="no-results-text">No verbs match your search.</div>
+  </div>
+</main>
+
+<!-- Footer -->
+<footer class="page-footer">
+  <div class="footer-source">
+    Source: <a href="https://deepakness.com/raw/claude-spinner-verbs/" target="_blank">deepakness.com</a> ·
+    <a href="https://codingcocoon.com/posts/claude-code-all-spinner-verbs/" target="_blank">codingcocoon.com</a>
+  </div>
+  <div>Made by <a href="/" style="border-bottom:1px solid var(--border)">Xiaoyu Huang</a> · 2026</div>
+</footer>
+
+<script>
+const VERBS = [
+  { word: "Accomplishing",      pronun: "uh-KOM-plish-ing",         en: "Completing a task or goal.",                                                            zh: "正在完成某项任务或目标。",                              tags: [] },
+  { word: "Actioning",          pronun: "AK-shun-ing",              en: "Corporate jargon for 'taking action on something.'",                                    zh: "企业黑话，表示"对某事采取行动"。",                      tags: [] },
+  { word: "Actualizing",        pronun: "AK-choo-uh-lize-ing",      en: "Making something real or concrete.",                                                    zh: "将某事变为现实或具体化。",                              tags: [] },
+  { word: "Architecting",       pronun: "AR-kih-tek-ting",          en: "Designing the structure of a system.",                                                  zh: "正在设计系统架构。",                                   tags: [] },
+  { word: "Baking",             pronun: "BAY-king",                 en: "Cooking in an oven; metaphor for 'letting ideas cook.'",                                zh: "烘焙；比喻"让想法酝酿成熟"。",                         tags: ["food"] },
+  { word: "Beaming",            pronun: "BEE-ming",                 en: "Transmitting via a beam; also grinning broadly.",                                       zh: "用光束传输；也有"满脸笑容"之意。",                     tags: [] },
+  { word: "Beboppin'",          pronun: "bee-BOP-in",               en: "Grooving jazz/swing style — note the dropped 'g', pure attitude.",                     zh: "以爵士/摇摆风格律动（注意省略了g，口语感十足）。",      tags: ["dance"] },
+  { word: "Befuddling",         pronun: "beh-FUD-ling",             en: "Confusing or muddling — the spinner admits it may be lost.",                           zh: "令人困惑或思维混乱——转圈圈承认自己可能迷路了。",        tags: ["fun"] },
+  { word: "Billowing",          pronun: "BIL-oh-ing",               en: "Swelling outward like a sail or cloud.",                                                zh: "像帆或云彩一样向外膨胀涌动。",                         tags: [] },
+  { word: "Blanching",          pronun: "BLAN-ching",               en: "Briefly boiling vegetables; also turning pale with shock.",                             zh: "焯水（短暂水煮蔬菜）；也指因震惊而脸色苍白。",         tags: ["food"] },
+  { word: "Bloviating",         pronun: "BLOH-vee-ay-ting",         en: "Speaking pompously at great length about very little.",                                 zh: "冗长而自大地大发议论。",                               tags: ["fun"] },
+  { word: "Boogieing",          pronun: "BOO-gee-ing",              en: "Dancing energetically to upbeat music.",                                                zh: "随着欢快音乐热情起舞。",                               tags: ["dance"] },
+  { word: "Boondoggling",       pronun: "BOON-dog-ling",            en: "Doing pointless, wasteful, or trivial work — the most honest word on the list.",       zh: "做毫无意义、浪费时间的工作——列表里最诚实的词。",       tags: ["fun"] },
+  { word: "Booping",            pronun: "BOOP-ing",                 en: "Gently tapping something (especially a nose). Peak internet cute.",                    zh: "轻轻戳某物（尤其是鼻子）。网络萌文化极致代表。",       tags: ["fun"] },
+  { word: "Bootstrapping",      pronun: "BOOT-strap-ing",           en: "Starting up a system from scratch; self-starting.",                                     zh: "从零启动系统；自力更生。",                             tags: [] },
+  { word: "Brewing",            pronun: "BROO-ing",                 en: "Making tea or coffee; also developing slowly in the background.",                      zh: "冲泡茶或咖啡；也比喻事情在后台慢慢酝酿。",             tags: ["food"] },
+  { word: "Bunning",            pronun: "BUN-ing",                  en: "Putting hair into a bun, or making buns.",                                              zh: "把头发挽成发髻；或制作圆面包。",                       tags: ["food"] },
+  { word: "Burrowing",          pronun: "BUR-oh-ing",               en: "Digging tunnels like a rabbit or mole — going deep into the problem.",                 zh: "像兔子或鼹鼠一样挖洞——深入钻研问题。",                tags: [] },
+  { word: "Calculating",        pronun: "KAL-kyoo-lay-ting",        en: "Performing mathematical computations.",                                                 zh: "进行数学计算。",                                      tags: [] },
+  { word: "Canoodling",         pronun: "kuh-NOO-dling",            en: "Cuddling or being affectionately cozy — the model is very fond of your prompt.",       zh: "亲密依偎，卿卿我我——模型非常喜欢你的提示词。",         tags: ["fun"] },
+  { word: "Caramelizing",       pronun: "KAIR-uh-mel-ize-ing",      en: "Heating sugar until it turns golden brown.",                                            zh: "将糖加热至金棕色焦糖状态。",                           tags: ["food"] },
+  { word: "Cascading",          pronun: "kas-KAY-ding",             en: "Falling in a waterfall-like sequence.",                                                 zh: "像瀑布一样层叠倾泻。",                                 tags: [] },
+  { word: "Catapulting",        pronun: "KAT-uh-pul-ting",          en: "Launching something with tremendous force.",                                            zh: "以巨大力量将某物弹射出去。",                           tags: [] },
+  { word: "Cerebrating",        pronun: "SER-uh-bray-ting",         en: "Thinking with one's brain (cerebrum). Fancy word for thinking.",                       zh: "用大脑思考；"思考"的高雅说法。",                       tags: [] },
+  { word: "Channeling",         pronun: "CHAN-el-ing",              en: "Directing energy or focus through a channel.",                                          zh: "将能量或注意力通过某渠道引导。",                       tags: [] },
+  { word: "Channelling",        pronun: "CHAN-el-ing",              en: "British spelling of Channeling. Same meaning, extra 'l'.",                              zh: ""Channeling"的英式拼写，多一个"l"，意思相同。",         tags: [] },
+  { word: "Choreographing",     pronun: "KOR-ee-oh-graf-ing",       en: "Designing and arranging dance movements.",                                              zh: "编排舞蹈动作。",                                      tags: ["dance"] },
+  { word: "Churning",           pronun: "CHUR-ning",                en: "Agitating cream to make butter; also working intensely.",                              zh: "搅动奶油制作黄油；也指高强度运转。",                    tags: ["food"] },
+  { word: "Clauding",           pronun: "KLAW-ding",                en: "A made-up word — Claude doing its Claude thing. The most meta entry.",                 zh: "自创词——Claude 以 Claude 的方式运作中。列表中最元的一项。", tags: ["meta"] },
+  { word: "Coalescing",         pronun: "koh-uh-LES-ing",           en: "Multiple things coming together into a unified whole.",                                 zh: "多个部分聚合成一个整体。",                             tags: [] },
+  { word: "Cogitating",         pronun: "KOJ-ih-tay-ting",          en: "Thinking deeply and carefully.",                                                        zh: "深刻而仔细地思考。",                                  tags: [] },
+  { word: "Combobulating",      pronun: "kom-BOB-yoo-lay-ting",     en: "Made-up counterpart to 'discombobulating' — getting organized. Part of a trilogy.",    zh: "\"discombobulating\"的反义自创词——整理有序。三部曲之一。", tags: ["fun", "meta"] },
+  { word: "Composing",          pronun: "kom-POH-zing",             en: "Creating music, writing, or assembling something.",                                     zh: "创作音乐或文章，或组装某物。",                         tags: [] },
+  { word: "Computing",          pronun: "kom-PYOO-ting",            en: "Processing and performing calculations.",                                               zh: "进行计算与数据处理。",                                 tags: [] },
+  { word: "Concocting",         pronun: "kon-KOK-ting",             en: "Devising or preparing something creatively.",                                           zh: "创意性地构想或调配某物。",                             tags: [] },
+  { word: "Considering",        pronun: "kon-SID-er-ing",           en: "Thinking carefully about options.",                                                     zh: "仔细考虑各种选项。",                                  tags: [] },
+  { word: "Contemplating",      pronun: "KON-tem-play-ting",        en: "Deeply reflecting on something.",                                                       zh: "深沉反思某事。",                                      tags: [] },
+  { word: "Cooking",            pronun: "KOOK-ing",                 en: "Preparing food; also 'cooking up' a plan.",                                             zh: "烹饪食物；也指"炮制"计划。",                            tags: ["food"] },
+  { word: "Crafting",           pronun: "KRAF-ting",                en: "Making something with skill and care.",                                                 zh: "用技巧和心思制作某物。",                               tags: [] },
+  { word: "Creating",           pronun: "kree-AY-ting",             en: "Bringing something new into existence.",                                                zh: "创造出新的事物。",                                    tags: [] },
+  { word: "Crunching",          pronun: "KRUN-ching",               en: "Processing large amounts of data or numbers — 'number crunching.'",                    zh: "处理大量数据或数字（"数字碾压"）。",                     tags: [] },
+  { word: "Crystallizing",      pronun: "KRIS-tul-ize-ing",         en: "Forming into crystals; or ideas becoming suddenly clear.",                             zh: "形成晶体；也指想法突然变得清晰明确。",                  tags: ["science"] },
+  { word: "Cultivating",        pronun: "KUL-tih-vay-ting",         en: "Nurturing growth over time.",                                                          zh: "长期培育和滋养。",                                    tags: [] },
+  { word: "Deciphering",        pronun: "dee-SY-fer-ing",           en: "Decoding or figuring out something complex.",                                           zh: "解码或破解复杂内容。",                                 tags: [] },
+  { word: "Deliberating",       pronun: "deh-LIB-er-ay-ting",       en: "Weighing pros and cons carefully.",                                                     zh: "仔细权衡利弊。",                                      tags: [] },
+  { word: "Determining",        pronun: "deh-TUR-min-ing",          en: "Reaching a decision or finding out definitively.",                                      zh: "作出决定或查明结果。",                                 tags: [] },
+  { word: "Dilly-dallying",     pronun: "DIL-ee DAL-ee-ing",        en: "Wasting time; dawdling around. A spinner that knows it's slow.",                       zh: "磨磨蹭蹭，浪费时间。承认自己在拖延的转圈圈。",         tags: ["fun"] },
+  { word: "Discombobulating",   pronun: "dis-kom-BOB-yoo-lay-ting", en: "Confusing or unsettling someone utterly. Trilogy part 1.",                             zh: "使人彻底困惑或不知所措。三部曲第一部。",               tags: ["fun", "meta"] },
+  { word: "Doing",              pronun: "DOO-ing",                  en: "Simply doing the thing. No frills, maximum honesty.",                                  zh: "就是在做这件事，没有废话，最诚实。",                    tags: [] },
+  { word: "Doodling",           pronun: "DOO-dling",                en: "Drawing casually while thinking.",                                                     zh: "一边思考一边随手涂鸦。",                               tags: ["fun"] },
+  { word: "Drizzling",          pronun: "DRIZ-ling",                en: "Light rain; or gently pouring a glaze over food.",                                     zh: "细雨；或将酱汁轻轻淋在食物上。",                       tags: ["food"] },
+  { word: "Ebbing",             pronun: "EB-ing",                   en: "Receding like a tide going out.",                                                      zh: "像退潮一样逐渐消退。",                                 tags: [] },
+  { word: "Effecting",          pronun: "eh-FEK-ting",              en: "Bringing about a change — not 'affecting.' Grammar matters.",                          zh: "促成变化（注意：不是affecting）。语法很重要。",         tags: [] },
+  { word: "Elucidating",        pronun: "ee-LOO-sih-day-ting",      en: "Making something clear and understandable.",                                            zh: "阐明，使某事清晰易懂。",                               tags: [] },
+  { word: "Embellishing",       pronun: "em-BEL-ish-ing",           en: "Adding decorative details; also slightly exaggerating.",                               zh: "添加装饰细节；也指稍加夸大其词。",                     tags: [] },
+  { word: "Enchanting",         pronun: "en-CHAN-ting",             en: "Casting a spell; utterly delightful.",                                                 zh: "施魔法；令人着迷。",                                  tags: ["fun"] },
+  { word: "Envisioning",        pronun: "en-VIZ-yun-ing",           en: "Forming a mental picture of the future.",                                              zh: "在脑海中描绘未来图景。",                               tags: [] },
+  { word: "Evaporating",        pronun: "ee-VAP-or-ay-ting",        en: "Turning into vapor; disappearing gradually.",                                          zh: "蒸发；逐渐消失。",                                    tags: ["science"] },
+  { word: "Fermenting",         pronun: "fur-MEN-ting",             en: "Undergoing fermentation; developing slowly with intensity.",                           zh: "发酵；慢慢酝酿发展中。",                               tags: ["food", "science"] },
+  { word: "Fiddle-faddling",    pronun: "FID-ul FAD-ling",          en: "Wasting time on trivial or fussy things.",                                              zh: "在琐碎小事上浪费时间。",                               tags: ["fun"] },
+  { word: "Finagling",          pronun: "fih-NAY-gling",            en: "Getting something by clever persuasion or trickery.",                                  zh: "通过巧妙说服或小计谋获取某物。",                       tags: ["fun"] },
+  { word: "Flambéing",          pronun: "flam-BAY-ing",             en: "Setting food aflame with alcohol for dramatic effect.",                                zh: "用酒精点燃食物，制造戏剧性效果。",                     tags: ["food"] },
+  { word: "Flibbertigibbeting",  pronun: "FLIB-er-tee-JIB-et-ing",  en: "Acting like a flibbertigibbet — a flighty, chatty, silly person. The longest word.",  zh: "像"轻浮多话的傻瓜"那样行事。列表中最长的词。",         tags: ["fun"] },
+  { word: "Flowing",            pronun: "FLOH-ing",                 en: "Moving smoothly and continuously like water.",                                         zh: "像水一样流畅连续地流动。",                             tags: [] },
+  { word: "Flummoxing",         pronun: "FLUM-ox-ing",              en: "Bewildering or completely baffling someone.",                                           zh: "让人完全摸不着头脑。",                                 tags: ["fun"] },
+  { word: "Fluttering",         pronun: "FLUT-er-ing",              en: "Moving rapidly with light, airy motions.",                                             zh: "轻盈快速地振动或飘动。",                               tags: [] },
+  { word: "Forging",            pronun: "FOR-jing",                 en: "Shaping metal with heat and force; also pushing steadily forward.",                   zh: "用热力锻造金属；也指坚定向前推进。",                   tags: [] },
+  { word: "Forming",            pronun: "FOR-ming",                 en: "Taking shape; coming into being.",                                                     zh: "成形；逐渐形成。",                                    tags: [] },
+  { word: "Frolicking",         pronun: "FROL-ik-ing",              en: "Playing and running about cheerfully.",                                                zh: "欢快地玩耍奔跑。",                                    tags: ["fun"] },
+  { word: "Frosting",           pronun: "FROS-ting",                en: "Applying frosting to a cake; or coating with frost.",                                  zh: "给蛋糕抹糖霜；或覆上霜冻。",                           tags: ["food"] },
+  { word: "Gallivanting",       pronun: "GAL-ih-van-ting",          en: "Roaming around from place to place for fun.",                                          zh: "四处游荡，到处玩乐。",                                 tags: ["fun"] },
+  { word: "Galloping",          pronun: "GAL-oh-ping",              en: "Running at a horse's gallop — moving fast.",                                           zh: "以马的奔驰速度跑动。",                                 tags: [] },
+  { word: "Garnishing",         pronun: "GAR-nish-ing",             en: "Decorating a dish with a garnish.",                                                    zh: "给菜肴加装饰配菜。",                                   tags: ["food"] },
+  { word: "Generating",         pronun: "JEN-er-ay-ting",           en: "Producing or creating output.",                                                        zh: "产生或创造输出内容。",                                 tags: [] },
+  { word: "Gesticulating",      pronun: "jes-TIK-yoo-lay-ting",     en: "Making expressive gestures while talking.",                                            zh: "说话时做出丰富的手势动作。",                           tags: ["fun"] },
+  { word: "Germinating",        pronun: "JUR-mih-nay-ting",         en: "Sprouting from a seed; beginning to grow.",                                            zh: "种子发芽；开始生长。",                                 tags: ["science"] },
+  { word: "Gitifying",          pronun: "GIT-ih-fy-ing",            en: "Made-up word — applying git-ness to something. A pure developer in-joke.",             zh: "自创词——将某物"git化"。纯粹的开发者内部笑话。",         tags: ["meta", "fun"] },
+  { word: "Grooving",           pronun: "GROO-ving",                en: "Moving rhythmically; being in the zone.",                                              zh: "有节奏地运动；进入状态。",                             tags: ["dance"] },
+  { word: "Gusting",            pronun: "GUS-ting",                 en: "Blowing in strong sudden bursts.",                                                     zh: "以强烈阵风吹动。",                                    tags: [] },
+  { word: "Harmonizing",        pronun: "HAR-moh-nize-ing",         en: "Bringing elements into harmony.",                                                      zh: "使各元素协调一致。",                                  tags: [] },
+  { word: "Hashing",            pronun: "HASH-ing",                 en: "Computing a hash; also chopping ingredients finely.",                                  zh: "计算哈希值；也指切碎食材。",                           tags: [] },
+  { word: "Hatching",           pronun: "HACH-ing",                 en: "Breaking out of an egg; also secretly plotting.",                                      zh: "破壳而出；也指秘密谋划。",                             tags: [] },
+  { word: "Herding",            pronun: "HUR-ding",                 en: "Gathering and guiding like a rancher with livestock.",                                 zh: "像牧羊人一样集合和引导。",                             tags: [] },
+  { word: "Honking",            pronun: "HON-king",                 en: "Making a loud honk — car horn or indignant goose.",                                    zh: "发出鸣笛声——汽车喇叭或愤怒鹅的叫声。",                tags: ["fun"] },
+  { word: "Hullaballooing",     pronun: "HUL-uh-buh-LOO-ing",       en: "Causing a hullabaloo — a noisy uproar. The word is 75% sound effect.",                zh: "引发一场嘈杂的骚动或喧嚣。这个词有75%是象声词。",       tags: ["fun"] },
+  { word: "Hyperspacing",       pronun: "HY-per-spay-sing",         en: "Jumping through hyperspace — sci-fi instant travel.",                                  zh: "穿越超空间——科幻瞬间旅行。",                           tags: ["fun"] },
+  { word: "Ideating",           pronun: "EYE-dee-ay-ting",          en: "Generating and forming ideas. Design-thinking jargon.",                                zh: "产生和构建想法（设计思维用语）。",                     tags: [] },
+  { word: "Imagining",          pronun: "ih-MAJ-ih-ning",           en: "Forming mental images or scenarios.",                                                  zh: "在脑海中构想场景或画面。",                             tags: [] },
+  { word: "Improvising",        pronun: "IM-proh-vize-ing",         en: "Creating on the fly without preparation.",                                             zh: "即兴创作，无需预先准备。",                             tags: [] },
+  { word: "Incubating",         pronun: "IN-kyoo-bay-ting",         en: "Keeping warm to allow slow development.",                                              zh: "保持温度以促进孵化发育。",                             tags: ["science"] },
+  { word: "Inferring",          pronun: "in-FUR-ing",               en: "Drawing conclusions from available evidence.",                                         zh: "从现有证据中推断结论。",                               tags: [] },
+  { word: "Infusing",           pronun: "in-FYOO-zing",             en: "Gradually introducing something into another — like tea in hot water.",                zh: "将某物逐渐注入另一物中——如热水泡茶。",                 tags: ["food"] },
+  { word: "Ionizing",           pronun: "EYE-oh-nize-ing",          en: "Converting atoms to ions. Sounds very scientific, inspires confidence.",               zh: "将原子转化为离子。听起来非常科学，令人信服。",         tags: ["science"] },
+  { word: "Jitterbugging",      pronun: "JIT-er-bug-ing",           en: "Doing the jitterbug — a lively 1940s swing dance.",                                    zh: "跳吉特巴舞——1940年代流行的摇摆舞。",                   tags: ["dance"] },
+  { word: "Julienning",         pronun: "joo-lee-EN-ing",           en: "Cutting vegetables into thin matchstick strips. French knife technique.",              zh: "将蔬菜切成细条（法式刀工）。",                         tags: ["food"] },
+  { word: "Kneading",           pronun: "NEE-ding",                 en: "Pressing and folding dough with hands.",                                               zh: "用手揉压面团。",                                      tags: ["food"] },
+  { word: "Leavening",          pronun: "LEV-en-ing",               en: "Making dough rise with yeast or baking powder.",                                       zh: "用酵母或泡打粉使面团发酵。",                           tags: ["food", "science"] },
+  { word: "Levitating",         pronun: "LEV-ih-tay-ting",          en: "Floating in the air, defying gravity.",                                                zh: "悬浮在空中，对抗重力。",                               tags: ["fun"] },
+  { word: "Lollygagging",       pronun: "LOL-ee-gag-ing",           en: "Spending time aimlessly; loafing about.",                                              zh: "漫无目的地消磨时间；游手好闲。",                       tags: ["fun"] },
+  { word: "Manifesting",        pronun: "MAN-ih-fes-ting",          en: "Making something real; bringing it into existence through intention.",                 zh: "使其显现；将意念变为现实。",                           tags: [] },
+  { word: "Marinating",         pronun: "MAIR-ih-nay-ting",         en: "Soaking in sauce to absorb flavor.",                                                   zh: "将食物浸泡在腌料中吸收风味。",                         tags: ["food"] },
+  { word: "Meandering",         pronun: "mee-AN-der-ing",           en: "Wandering in a winding, leisurely path — named after the Meander River.",             zh: "以曲折悠闲的路径漫游——词源为古希腊迈安德河。",         tags: [] },
+  { word: "Metamorphosing",     pronun: "met-uh-MOR-foh-sing",      en: "Undergoing a complete transformation.",                                                zh: "经历彻底的蜕变转化。",                                 tags: ["science"] },
+  { word: "Misting",            pronun: "MIS-ting",                 en: "Spraying a fine mist of water.",                                                       zh: "喷洒细小水雾。",                                      tags: [] },
+  { word: "Moonwalking",        pronun: "MOON-wok-ing",             en: "Doing Michael Jackson's signature backward glide.",                                    zh: "跳迈克尔·杰克逊标志性的太空步。",                      tags: ["dance", "fun"] },
+  { word: "Moseying",           pronun: "MOH-zee-ing",              en: "Walking slowly and casually; ambling without urgency.",                                zh: "悠闲缓慢地溜达，毫不着急。",                           tags: ["fun"] },
+  { word: "Mulling",            pronun: "MUL-ing",                  en: "Thinking something over; also heating wine with spices.",                              zh: "仔细考虑；也指加热香料酒。",                           tags: ["food"] },
+  { word: "Mustering",          pronun: "MUS-ter-ing",              en: "Gathering resources or summoning courage.",                                            zh: "集结资源或鼓起勇气。",                                 tags: [] },
+  { word: "Musing",             pronun: "MYOO-zing",                en: "Reflecting thoughtfully and dreamily.",                                                zh: "若有所思地沉思冥想。",                                 tags: [] },
+  { word: "Nebulizing",         pronun: "NEB-yoo-lize-ing",         en: "Converting liquid to a fine mist or spray.",                                           zh: "将液体转化为细雾。",                                   tags: ["science"] },
+  { word: "Nesting",            pronun: "NES-ting",                 en: "Building a cozy nest; also nesting data structures in code.",                         zh: "筑巢；也指在代码中嵌套数据结构。",                     tags: [] },
+  { word: "Newspapering",       pronun: "NOOZ-pay-per-ing",         en: "Covering with newspaper. An amusingly literal made-up verb.",                         zh: "用报纸覆盖。一个滑稽的字面自创动词。",                 tags: ["fun", "meta"] },
+  { word: "Noodling",           pronun: "NOO-dling",                en: "Casually improvising on a guitar; also loosely brainstorming.",                       zh: "随意即兴演奏；也指漫无目的地头脑风暴。",               tags: ["fun"] },
+  { word: "Nucleating",         pronun: "NOO-klee-ay-ting",         en: "Forming a nucleus around which further growth begins.",                                zh: "形成核心，围绕其开始生长。",                           tags: ["science"] },
+  { word: "Orbiting",           pronun: "OR-bit-ing",               en: "Moving in a circular orbit around something.",                                         zh: "围绕某物做圆形轨道运动。",                             tags: ["science"] },
+  { word: "Orchestrating",      pronun: "OR-kes-tray-ting",         en: "Coordinating many complex parts together like a conductor.",                          zh: "像指挥家一样协调众多复杂部分。",                       tags: [] },
+  { word: "Osmosing",           pronun: "oz-MOH-sing",              en: "Absorbing gradually, like osmosis through a membrane.",                               zh: "像渗透作用一样逐渐吸收。",                             tags: ["science"] },
+  { word: "Perambulating",      pronun: "per-AM-byoo-lay-ting",     en: "Walking about at leisure; strolling with no particular destination.",                 zh: "悠闲地四处漫步，没有特定目的地。",                     tags: [] },
+  { word: "Percolating",        pronun: "PUR-koh-lay-ting",         en: "Filtering slowly through — like coffee. Ideas are percolating.",                     zh: "慢慢渗透过滤——如咖啡。想法在渗透酝酿。",              tags: ["food"] },
+  { word: "Perusing",           pronun: "per-OO-zing",              en: "Reading carefully and thoroughly.",                                                    zh: "仔细认真地阅读。",                                    tags: [] },
+  { word: "Philosophising",     pronun: "fih-LOS-oh-fize-ing",      en: "Reflecting on deep questions. British spelling of philosophizing.",                   zh: "深入哲学反思（英式拼写）。",                           tags: [] },
+  { word: "Photosynthesizing",  pronun: "FOH-toh-SIN-thuh-size-ing",en: "Converting light into energy, like a plant.",                                         zh: "像植物一样将光转化为能量。",                           tags: ["science"] },
+  { word: "Pollinating",        pronun: "POL-ih-nay-ting",          en: "Transferring pollen from flower to flower, like a bee.",                              zh: "像蜜蜂一样在花间传播花粉。",                           tags: ["science"] },
+  { word: "Pondering",          pronun: "PON-der-ing",              en: "Thinking deeply about something.",                                                     zh: "深思熟虑某件事。",                                    tags: [] },
+  { word: "Pontificating",      pronun: "pon-TIF-ih-kay-ting",      en: "Expressing opinions in a pompously authoritative way.",                               zh: "以自大权威的方式发表意见。",                           tags: ["fun"] },
+  { word: "Pouncing",           pronun: "POWN-sing",                en: "Jumping suddenly onto something — like a cat on a keyboard.",                         zh: "突然猛扑上去——像猫扑键盘一样。",                       tags: [] },
+  { word: "Precipitating",      pronun: "preh-SIP-ih-tay-ting",     en: "Causing something to happen suddenly; also rain falling from clouds.",                zh: "突然促成某事；也指从云中降水。",                       tags: ["science"] },
+  { word: "Prestidigitating",   pronun: "pres-tih-DIJ-ih-tay-ting", en: "Performing sleight of hand / magic tricks. Fingers moving too fast to see.",         zh: "表演幻术魔法手法，手指快到看不见。",                   tags: ["fun"] },
+  { word: "Processing",         pronun: "PROS-es-ing",              en: "Working through and handling data.",                                                   zh: "处理和运转数据。",                                    tags: [] },
+  { word: "Proofing",           pronun: "PROOF-ing",                en: "Checking for errors; also letting bread dough rise.",                                 zh: "校对检查错误；也指让面团醒发。",                       tags: ["food"] },
+  { word: "Propagating",        pronun: "PROP-uh-gay-ting",         en: "Spreading or reproducing.",                                                           zh: "传播或繁殖。",                                        tags: ["science"] },
+  { word: "Puttering",          pronun: "PUT-er-ing",               en: "Doing small tasks in an unhurried, relaxed way.",                                     zh: "不慌不忙地做些零碎小事。",                             tags: ["fun"] },
+  { word: "Puzzling",           pronun: "PUZ-ling",                 en: "Solving a puzzle; or being puzzling to everyone around you.",                         zh: "解谜；或令周围所有人困惑。",                           tags: [] },
+  { word: "Quantumizing",       pronun: "KWON-tum-ize-ing",         en: "Made-up word for applying quantum magic. Sounds plausible.",                          zh: "自创词，将量子魔法应用其中，听起来煞有介事。",         tags: ["fun", "science", "meta"] },
+  { word: "Razzle-dazzling",    pronun: "RAZ-ul DAZ-ul-ing",        en: "Impressing with a spectacular, flashy display.",                                       zh: "以华丽耀眼的表演令人惊叹。",                           tags: ["fun"] },
+  { word: "Razzmatazzing",      pronun: "RAZ-muh-TAZ-ing",          en: "From 'razzmatazz' — showy, jazzy excitement and dazzle. The word that started it all.", zh: "源自"razzmatazz"，炫目的爵士风格兴奋感。引发泄露关注的词。", tags: ["fun"] },
+  { word: "Recombobulating",    pronun: "ree-kom-BOB-yoo-lay-ting", en: "Getting reorganized after being discombobulated. Trilogy part 3.",                   zh: "在混乱之后重新整理恢复秩序。三部曲第三部。",           tags: ["fun", "meta"] },
+  { word: "Reticulating",       pronun: "reh-TIK-yoo-lay-ting",     en: "Forming a network pattern. Famous from SimCity's 'Reticulating Splines' meme.",       zh: "形成网络图案。源自SimCity的经典梗"正在网格化样条线"。", tags: ["fun", "meta"] },
+  { word: "Roosting",           pronun: "ROOS-ting",                en: "Settling in to rest like a bird on a perch.",                                         zh: "像鸟儿栖息一样安定休憩。",                             tags: [] },
+  { word: "Ruminating",         pronun: "ROO-mih-nay-ting",         en: "Deeply chewing over an idea; literally, chewing cud like a cow.",                    zh: "反复咀嚼一个想法；字面义为（牛）反刍。",               tags: [] },
+  { word: "Sautéing",           pronun: "soh-TAY-ing",              en: "Frying quickly in a small amount of oil. French technique.",                          zh: "用少量油快速翻炒（法式烹饪技法）。",                   tags: ["food"] },
+  { word: "Scampering",         pronun: "SKAM-per-ing",             en: "Running quickly with small light steps.",                                              zh: "用轻快小步快速奔跑。",                                 tags: [] },
+  { word: "Schlepping",         pronun: "SHLEP-ing",                en: "Carrying something heavy or tediously. From Yiddish.",                                zh: "费力搬运重物（来自意第绪语）。",                       tags: ["fun"] },
+  { word: "Scurrying",          pronun: "SKUR-ee-ing",              en: "Moving hurriedly with short quick steps, like a mouse.",                              zh: "以短促快步匆忙移动，像老鼠一样。",                     tags: [] },
+  { word: "Seasoning",          pronun: "SEE-zon-ing",              en: "Adding spices for flavor; also seasoning a cast iron pan.",                           zh: "加入香料调味；也指给铸铁锅开锅养护。",                 tags: ["food"] },
+  { word: "Shenaniganing",      pronun: "sheh-NAN-ih-gan-ing",      en: "Engaging in mischief, tricks, or playful nonsense.",                                  zh: "从事恶作剧、把戏或顽皮无厘头行为。",                   tags: ["fun"] },
+  { word: "Shimmying",          pronun: "SHIM-ee-ing",              en: "Shaking or wiggling rapidly.",                                                        zh: "快速颤抖或扭动。",                                    tags: ["dance"] },
+  { word: "Simmering",          pronun: "SIM-er-ing",               en: "Cooking just below boiling; also tension slowly building.",                           zh: "以微沸状态慢炖；也比喻情绪在慢慢积累。",               tags: ["food"] },
+  { word: "Skedaddling",        pronun: "skeh-DAD-ling",            en: "Running away quickly; making a hasty escape.",                                        zh: "迅速逃跑；仓皇出逃。",                                 tags: ["fun"] },
+  { word: "Sketching",          pronun: "SKECH-ing",                en: "Drawing rough outlines or drafts.",                                                   zh: "勾画粗略草图或轮廓。",                                 tags: [] },
+  { word: "Slithering",         pronun: "SLITH-er-ing",             en: "Moving smoothly and sinuously like a snake.",                                         zh: "像蛇一样光滑蜿蜒地移动。",                             tags: [] },
+  { word: "Smooshing",          pronun: "SMOOSH-ing",               en: "Squishing or pressing things together.",                                               zh: "把东西挤压在一起。",                                   tags: ["fun"] },
+  { word: "Sock-hopping",       pronun: "SOK-hop-ing",              en: "Dancing at a 1950s-style sock hop party.",                                             zh: "参加1950年代风格的袜子舞派对。",                       tags: ["dance", "fun"] },
+  { word: "Spelunking",         pronun: "speh-LUNK-ing",            en: "Exploring caves as a hobby or adventure.",                                            zh: "以探险或爱好形式探索洞穴。",                           tags: [] },
+  { word: "Spinning",           pronun: "SPIN-ing",                 en: "Rotating rapidly. The core metaphor of a loading spinner, aware of itself.",          zh: "快速旋转。加载动画的核心比喻，高度自我意识。",         tags: ["meta"] },
+  { word: "Sprouting",          pronun: "SPROWT-ing",               en: "Beginning to grow; sending out new shoots.",                                          zh: "开始生长；萌发新芽。",                                 tags: ["science"] },
+  { word: "Stewing",            pronun: "STOO-ing",                 en: "Slow-cooking in liquid; also worrying excessively.",                                  zh: "慢炖；也指过度焦虑烦恼。",                             tags: ["food"] },
+  { word: "Sublimating",        pronun: "SUB-lih-may-ting",         en: "Converting directly from solid to gas, skipping liquid. Also redirecting energy.",    zh: "固体直接升华为气体，跳过液态。也指升华能量。",         tags: ["science"] },
+  { word: "Swirling",           pronun: "SWURL-ing",                en: "Moving in a swirling, circular pattern.",                                             zh: "以漩涡状圆形图案旋转移动。",                           tags: [] },
+  { word: "Swooping",           pronun: "SWOOP-ing",                en: "Moving in a swift curving dive.",                                                     zh: "以迅速的弧线俯冲。",                                   tags: [] },
+  { word: "Symbioting",         pronun: "SIM-bee-oh-ting",          en: "Living in a mutually beneficial symbiosis.",                                          zh: "以互利共生的方式生存。",                               tags: ["science"] },
+  { word: "Synthesizing",       pronun: "SIN-thuh-size-ing",        en: "Combining elements to produce something new.",                                        zh: "融合各元素产生新事物。",                               tags: [] },
+  { word: "Tempering",          pronun: "TEM-per-ing",              en: "Moderating; also treating chocolate or metal for strength.",                          zh: "调节平衡；也指调温巧克力或回火金属。",                 tags: ["food"] },
+  { word: "Thinking",           pronun: "THINK-ing",                en: "Using the mind. The most honest entry on the entire list.",                           zh: "使用大脑思考。整个列表中最诚实的一项。",               tags: [] },
+  { word: "Thundering",         pronun: "THUN-der-ing",             en: "Making a thunderous sound; moving loudly and powerfully.",                            zh: "发出雷鸣声；以响亮有力的方式运动。",                   tags: [] },
+  { word: "Tinkering",          pronun: "TINK-er-ing",              en: "Making small adjustments or repairs experimentally.",                                 zh: "试验性地做小修小改。",                                 tags: [] },
+  { word: "Tomfoolering",       pronun: "tom-FOOL-er-ing",          en: "Engaging in tomfoolery — foolish or silly behavior.",                                 zh: "从事愚蠢滑稽的行为。",                                 tags: ["fun"] },
+  { word: "Topsy-turvying",     pronun: "TOP-see TUR-vee-ing",      en: "Turning everything upside down into chaos.",                                          zh: "把一切翻转颠覆成一片混乱。",                           tags: ["fun"] },
+  { word: "Transfiguring",      pronun: "trans-FIG-yur-ing",        en: "Transforming in appearance, often gloriously.",                                       zh: "在外观上进行（通常是美好的）转化。",                   tags: [] },
+  { word: "Transmuting",        pronun: "trans-MYOO-ting",          en: "Converting one substance or form into another.",                                      zh: "将一种物质或形式转化为另一种。",                       tags: ["science"] },
+  { word: "Twisting",           pronun: "TWIS-ting",                en: "Turning in opposite directions; also the 1960s Twist dance.",                        zh: "向相反方向扭转；也指1960年代的扭扭舞。",               tags: ["dance"] },
+  { word: "Undulating",         pronun: "UN-dyoo-lay-ting",         en: "Moving in a smooth, continuous wave-like motion.",                                    zh: "以平滑连续的波浪状运动。",                             tags: [] },
+  { word: "Unfurling",          pronun: "un-FUR-ling",              en: "Opening out from a rolled or folded state.",                                          zh: "从卷起或折叠状态展开。",                               tags: [] },
+  { word: "Unravelling",        pronun: "un-RAV-el-ing",            en: "Coming apart at the seams; or slowly solving a mystery.",                            zh: "逐渐解开或瓦解；也指揭开谜底。",                       tags: [] },
+  { word: "Vibing",             pronun: "VY-bing",                  en: "Feeling the vibe; relaxing in a good mood.",                                         zh: "感受气氛；放松享受美好状态。",                         tags: ["fun"] },
+  { word: "Waddling",           pronun: "WAD-ling",                 en: "Walking with short swaying steps like a penguin or duck.",                           zh: "像企鹅或鸭子一样摇摆着短步行走。",                     tags: ["fun"] },
+  { word: "Wandering",          pronun: "WON-der-ing",              en: "Roaming without a fixed destination.",                                                zh: "无目的地漫游。",                                      tags: [] },
+  { word: "Warping",            pronun: "WORP-ing",                 en: "Bending out of shape; also warp speed in sci-fi.",                                   zh: "扭曲变形；也指科幻中的曲速。",                         tags: [] },
+  { word: "Whatchamacalliting", pronun: "WOCH-uh-muh-KAW-lit-ing",  en: "From 'whatchamacallit' — doing that thing you can't name. Meta-verbal.",             zh: "源自"那个叫什么来着"——做那件说不清名字的事。元动词。", tags: ["fun", "meta"] },
+  { word: "Whirlpooling",       pronun: "WURL-pool-ing",            en: "Spinning in a whirlpool pattern.",                                                    zh: "以漩涡状旋转。",                                      tags: [] },
+  { word: "Whirring",           pronun: "WHER-ing",                 en: "Making a continuous rapid buzzing or spinning sound.",                                zh: "发出连续快速的嗡嗡声或旋转声。",                       tags: [] },
+  { word: "Whisking",           pronun: "HWIS-king",                en: "Beating rapidly; also moving somewhere very briskly.",                               zh: "快速搅打；也指迅速移动某处。",                         tags: ["food"] },
+  { word: "Wibbling",           pronun: "WIB-ling",                 en: "Wobbling slightly. British informal. The sound says it all.",                        zh: "轻微摇晃。英国俚语。词的声音已经说明一切。",           tags: ["fun"] },
+  { word: "Working",            pronun: "WURK-ing",                 en: "Doing work. Safe, reliable, classic. The 'Thinking' of action words.",               zh: "在工作。安全、可靠、经典。行动词中的"Thinking"。",      tags: [] },
+  { word: "Wrangling",          pronun: "RANG-ling",                en: "Struggling with something difficult; also herding cattle.",                          zh: "与某事艰难较劲；也指驱赶牲口。",                       tags: [] },
+  { word: "Zesting",            pronun: "ZES-ting",                 en: "Grating citrus peel; also doing something with great zest and enthusiasm.",          zh: "磨柑橘皮；也指充满热情地做某事。",                     tags: ["food"] },
+  { word: "Zigzagging",         pronun: "ZIG-zag-ing",              en: "Moving in alternating sharp left-right turns.",                                       zh: "以左右交替的急剧转向运动。",                           tags: [] },
+];
+
+const HIGHLIGHT_WORDS = ["Clauding", "Reticulating", "Discombobulating", "Combobulating",
+  "Recombobulating", "Flibbertigibbeting", "Whatchamacalliting", "Gitifying",
+  "Razzmatazzing", "Quantumizing"];
+
+const BADGE_LABELS = { meta: "Meta", fun: "Whimsical", food: "Food", dance: "Dance", science: "Science" };
+
+let currentFilter = "all";
+let currentView = "grid";
+let currentSearch = "";
+
+// Build alphabet index
+const letters = [...new Set(VERBS.map(v => v.word[0].toUpperCase()))].sort();
+const allLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+const letterIndexEl = document.getElementById("letterIndex");
+allLetters.forEach(l => {
+  const btn = document.createElement("button");
+  btn.className = "letter-link" + (letters.includes(l) ? "" : " inactive");
+  btn.textContent = l;
+  btn.onclick = () => scrollToLetter(l);
+  letterIndexEl.appendChild(btn);
+});
+
+function scrollToLetter(l) {
+  const cards = [...document.querySelectorAll(".verb-card:not(.hidden)")];
+  const target = cards.find(c => c.dataset.word[0].toUpperCase() === l);
+  if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+// Build cards
+const cardsGrid = document.getElementById("cardsGrid");
+const tableBody = document.getElementById("tableBody");
+
+VERBS.forEach((v, i) => {
+  const isHL = HIGHLIGHT_WORDS.includes(v.word);
+  const badge = v.tags.find(t => ["meta","fun","food","dance","science"].includes(t));
+
+  // Card
+  const card = document.createElement("div");
+  card.className = "verb-card";
+  card.dataset.word = v.word;
+  card.dataset.tags = v.tags.join(",");
+  card.dataset.index = i;
+  card.innerHTML = `
+    <span class="card-index">${String(i + 1).padStart(3, "0")}</span>
+    <div class="card-word${isHL ? " highlight-word" : ""}">${v.word}</div>
+    <div class="card-pronun">${v.pronun}</div>
+    <div class="card-divider"></div>
+    <div class="card-en">${v.en}</div>
+    <div class="card-zh">${v.zh}</div>
+    ${badge ? `<div class="card-badge ${badge}">${BADGE_LABELS[badge]}</div>` : ""}
+  `;
+  cardsGrid.appendChild(card);
+
+  // Table row
+  const tr = document.createElement("tr");
+  tr.dataset.word = v.word;
+  tr.dataset.tags = v.tags.join(",");
+  tr.innerHTML = `
+    <td class="td-num">${String(i + 1).padStart(3, "0")}</td>
+    <td class="td-word${isHL ? " highlight-word" : ""}">${v.word}</td>
+    <td class="td-pronun">${v.pronun}</td>
+    <td class="td-en">${v.en}</td>
+    <td class="td-zh">${v.zh}</td>
+  `;
+  tableBody.appendChild(tr);
+});
+
+// Animate cards on load
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add("visible");
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.05 });
+
+document.querySelectorAll(".verb-card").forEach(card => observer.observe(card));
+
+function updateVisibility() {
+  const q = currentSearch.toLowerCase().trim();
+  let visible = 0;
+  document.querySelectorAll(".verb-card").forEach(card => {
+    const word = card.dataset.word.toLowerCase();
+    const tags = card.dataset.tags;
+    const matchSearch = !q || word.includes(q);
+    const matchFilter = currentFilter === "all" || tags.includes(currentFilter);
+    const show = matchSearch && matchFilter;
+    card.classList.toggle("hidden", !show);
+    if (show) visible++;
+  });
+  document.querySelectorAll("#tableBody tr").forEach(tr => {
+    const word = tr.dataset.word.toLowerCase();
+    const tags = tr.dataset.tags;
+    const matchSearch = !q || word.includes(q);
+    const matchFilter = currentFilter === "all" || tags.includes(currentFilter);
+    tr.classList.toggle("hidden", !(matchSearch && matchFilter));
+  });
+  document.getElementById("visibleCount").textContent = visible + " verb" + (visible !== 1 ? "s" : "");
+  document.getElementById("noResults").style.display = visible === 0 ? "block" : "none";
+}
+
+// Search
+document.getElementById("searchInput").addEventListener("input", e => {
+  currentSearch = e.target.value;
+  updateVisibility();
+});
+
+// Filter buttons
+document.querySelectorAll(".filter-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    currentFilter = btn.dataset.filter;
+    updateVisibility();
+  });
+});
+
+// View toggle
+document.getElementById("btnGrid").addEventListener("click", () => {
+  currentView = "grid";
+  document.getElementById("btnGrid").classList.add("active");
+  document.getElementById("btnTable").classList.remove("active");
+  cardsGrid.classList.add("show");
+  document.getElementById("tableView").classList.remove("show");
+});
+document.getElementById("btnTable").addEventListener("click", () => {
+  currentView = "table";
+  document.getElementById("btnTable").classList.add("active");
+  document.getElementById("btnGrid").classList.remove("active");
+  document.getElementById("tableView").classList.add("show");
+  cardsGrid.classList.remove("show");
+});
+
+// Hero animation
+gsap.to("#hero", { opacity: 1, y: 0, duration: 0.8, ease: "power3.out", delay: 0.1 });
+</script>
+
+</body>
+</html>
