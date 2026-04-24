@@ -249,25 +249,28 @@
       flex: 1;
     }
     .project-card {
-      display: block;
-      margin-bottom: 24px;
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 14px 0;
       border-bottom: 1px solid var(--border);
-      padding-bottom: 24px;
-      transition: opacity 0.3s;
+      transition: opacity 0.2s;
     }
-    .project-card:last-child { border-bottom: none; margin-bottom: 0; }
-    .project-card:hover { opacity: 0.7; }
-    .project-card .proj-img {
-      width: 100%;
-      aspect-ratio: 2/1;
-      margin-bottom: 12px;
-      overflow: hidden;
-      line-height: 0;
+    .project-card:last-child { border-bottom: none; }
+    .project-card:hover { opacity: 0.55; }
+    .proj-thumb {
+      width: 52px;
+      height: 52px;
+      flex-shrink: 0;
+      display: block;
+      image-rendering: pixelated;
+      image-rendering: crisp-edges;
     }
-    .project-card h3 {
-      font-size: 1rem;
+    .proj-info { flex: 1; min-width: 0; }
+    .proj-info h3 {
+      font-size: 0.875rem;
       font-weight: 600;
-      margin-bottom: 6px;
+      margin-bottom: 5px;
     }
     .proj-tags {
       display: flex; gap: 6px; flex-wrap: wrap;
@@ -433,21 +436,24 @@
     }
     .exp-project-card {
       border: 1px solid var(--border);
-      padding: 20px;
-      transition: all 0.3s;
+      padding: 18px;
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      transition: border-color 0.2s;
       cursor: pointer;
     }
-    .exp-project-card:hover {
-      border-color: var(--primary);
+    .exp-project-card:hover { border-color: var(--primary); }
+    .exp-project-card .proj-thumb {
+      width: 64px;
+      height: 64px;
+      flex-shrink: 0;
+      display: block;
+      image-rendering: pixelated;
+      image-rendering: crisp-edges;
     }
-    .exp-project-card .proj-img {
-      width: 100%;
-      aspect-ratio: 2/1;
-      margin-bottom: 16px;
-      overflow: hidden;
-      line-height: 0;
-    }
-    .exp-project-card h4 { font-weight: 600; margin-bottom: 8px; }
+    .exp-project-card .proj-body { flex: 1; min-width: 0; }
+    .exp-project-card h4 { font-weight: 600; margin-bottom: 8px; font-size: 0.95rem; }
     .exp-project-card p { font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 10px; }
 
     /* ═══ Expanded About View ═══ */
@@ -629,24 +635,24 @@
       </div>
       <div class="work-content">
         <a href="/claude-spinner-verbs.html" target="_blank" class="project-card">
-          <div class="proj-img"><svg viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;display:block;"><rect width="400" height="200" fill="#0c1117"/><text x="24" y="50" font-family="'JetBrains Mono',monospace" font-size="15" fill="#1e4a30">Analyzing...</text><text x="24" y="78" font-family="'JetBrains Mono',monospace" font-size="15" fill="#1e4a30">Reasoning...</text><rect x="0" y="86" width="400" height="34" fill="#0f2a1f"/><text x="24" y="112" font-family="'JetBrains Mono',monospace" font-size="20" fill="#4ade80" font-weight="600">▶ Synthesizing_</text><text x="24" y="142" font-family="'JetBrains Mono',monospace" font-size="15" fill="#1e4a30">Computing...</text><text x="24" y="168" font-family="'JetBrains Mono',monospace" font-size="15" fill="#1e4a30">Refining...</text><text x="376" y="22" font-family="'Inter',sans-serif" font-size="11" fill="#4ade80" text-anchor="end" opacity="0.7">127 verbs</text><text x="24" y="190" font-family="'Inter',sans-serif" font-size="10" fill="#1e4a30" letter-spacing="2">CLAUDE CODE</text></svg></div>
-          <h3>Claude Spinner Verbs</h3>
-          <div class="proj-tags">
-            <span class="proj-tag">Claude Code</span>
-            <span class="proj-tag">AI</span>
+          <svg class="proj-thumb" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><rect width="64" height="64" fill="#0c1117"/><rect x="0" y="0" width="64" height="4" fill="#1a3528"/><rect x="0" y="60" width="64" height="4" fill="#1a3528"/><rect x="0" y="0" width="4" height="64" fill="#1a3528"/><rect x="60" y="0" width="4" height="64" fill="#1a3528"/><rect x="4" y="10" width="56" height="12" fill="#0f2a1f"/><rect x="8" y="12" width="4" height="8" fill="#4ade80"/><rect x="16" y="14" width="20" height="4" fill="#4ade80"/><rect x="8" y="28" width="4" height="4" fill="#4ade80"/><rect x="16" y="28" width="4" height="4" fill="#4ade80" opacity="0.6"/><rect x="24" y="28" width="4" height="4" fill="#4ade80" opacity="0.35"/><rect x="8" y="38" width="32" height="3" fill="#1e4a30"/><rect x="8" y="46" width="22" height="3" fill="#1e4a30"/><rect x="8" y="54" width="28" height="3" fill="#1e4a30"/></svg>
+          <div class="proj-info">
+            <h3>Claude Spinner Verbs</h3>
+            <div class="proj-tags">
+              <span class="proj-tag">Claude Code</span>
+              <span class="proj-tag">AI</span>
+            </div>
           </div>
         </a>
         <a href="/star-fall-racing.html" target="_blank" class="project-card">
-          <div class="proj-img"><svg viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;display:block;"><rect width="400" height="200" fill="#050510"/><circle cx="30" cy="20" r="1.5" fill="#ffd700" opacity="0.9"/><circle cx="85" cy="8" r="1" fill="#ffd700" opacity="0.7"/><circle cx="155" cy="28" r="2" fill="#fffde7" opacity="0.8"/><circle cx="255" cy="12" r="1.5" fill="#ffd700" opacity="0.6"/><circle cx="325" cy="32" r="1" fill="#ffd700" opacity="0.9"/><circle cx="375" cy="18" r="2" fill="#fffde7" opacity="0.7"/><circle cx="12" cy="65" r="1" fill="#ffd700" opacity="0.5"/><circle cx="390" cy="72" r="1.5" fill="#ffd700" opacity="0.4"/><circle cx="62" cy="155" r="1" fill="#ffd700" opacity="0.3"/><circle cx="345" cy="165" r="1.5" fill="#ffd700" opacity="0.4"/><circle cx="200" cy="45" r="1" fill="#ffd700" opacity="0.5"/><text x="200" y="100" font-family="'Inter',Arial,sans-serif" font-size="52" font-weight="900" fill="#ffd700" text-anchor="middle" letter-spacing="4">STAR FALL</text><text x="200" y="128" font-family="'Inter',Arial,sans-serif" font-size="16" font-weight="400" fill="#6070b8" text-anchor="middle" letter-spacing="12">RACING</text><text x="200" y="174" font-family="'Inter',Arial,sans-serif" font-size="11" fill="#2a2a50" text-anchor="middle">designed by age 6 · built by AI in one prompt</text></svg></div>
-          <h3>Star Fall Racing</h3>
-          <div class="proj-tags">
-            <span class="proj-tag">AI</span>
-            <span class="proj-tag">Game</span>
-            <span class="proj-tag">Canvas</span>
-          </div>
-          <div class="story-note" style="margin-top:8px;">
-            <div class="story-label">Designed by my 6-year-old daughter</div>
-            She gave Claude AI one prompt — and this game was born.
+          <svg class="proj-thumb" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><rect width="64" height="64" fill="#050510"/><rect x="4" y="4" width="4" height="4" fill="#ffd700"/><rect x="52" y="4" width="4" height="4" fill="#ffd700" opacity="0.8"/><rect x="20" y="2" width="2" height="2" fill="#fffde7" opacity="0.6"/><rect x="44" y="16" width="2" height="2" fill="#ffd700" opacity="0.7"/><rect x="4" y="48" width="2" height="2" fill="#ffd700" opacity="0.5"/><rect x="56" y="52" width="2" height="2" fill="#ffd700" opacity="0.4"/><rect x="24" y="8" width="16" height="4" fill="#8090d8"/><rect x="16" y="12" width="32" height="4" fill="#4050a0"/><rect x="20" y="16" width="24" height="20" fill="#8090d8"/><rect x="24" y="16" width="16" height="12" fill="#c0d0ff"/><rect x="28" y="20" width="8" height="4" fill="#2030a0"/><rect x="16" y="36" width="32" height="4" fill="#4050a0"/><rect x="24" y="40" width="16" height="8" fill="#8090d8"/><rect x="8" y="12" width="8" height="12" fill="#1a1a40"/><rect x="48" y="12" width="8" height="12" fill="#1a1a40"/><rect x="8" y="36" width="8" height="12" fill="#1a1a40"/><rect x="48" y="36" width="8" height="12" fill="#1a1a40"/></svg>
+          <div class="proj-info">
+            <h3>Star Fall Racing</h3>
+            <div class="proj-tags">
+              <span class="proj-tag">AI</span>
+              <span class="proj-tag">Game</span>
+              <span class="proj-tag">Canvas</span>
+            </div>
           </div>
         </a>
       </div>
@@ -774,31 +780,23 @@
       <h3>AI Experiments</h3>
       <div class="exp-projects-grid">
         <a href="/claude-spinner-verbs.html" target="_blank" class="exp-project-card">
-          <div class="proj-img"><svg viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;display:block;"><rect width="400" height="200" fill="#0c1117"/><text x="24" y="50" font-family="'JetBrains Mono',monospace" font-size="15" fill="#1e4a30">Analyzing...</text><text x="24" y="78" font-family="'JetBrains Mono',monospace" font-size="15" fill="#1e4a30">Reasoning...</text><rect x="0" y="86" width="400" height="34" fill="#0f2a1f"/><text x="24" y="112" font-family="'JetBrains Mono',monospace" font-size="20" fill="#4ade80" font-weight="600">▶ Synthesizing_</text><text x="24" y="142" font-family="'JetBrains Mono',monospace" font-size="15" fill="#1e4a30">Computing...</text><text x="24" y="168" font-family="'JetBrains Mono',monospace" font-size="15" fill="#1e4a30">Refining...</text><text x="376" y="22" font-family="'Inter',sans-serif" font-size="11" fill="#4ade80" text-anchor="end" opacity="0.7">127 verbs</text><text x="24" y="190" font-family="'Inter',sans-serif" font-size="10" fill="#1e4a30" letter-spacing="2">CLAUDE CODE</text></svg></div>
-          <h4>Claude Spinner Verbs</h4>
-          <p>A curated collection of the action verbs Claude Code displays while thinking — an inside look at how the model narrates its own reasoning.</p>
-          <div class="proj-tags">
-            <span class="proj-tag">Claude Code</span>
-            <span class="proj-tag">AI</span>
+          <svg class="proj-thumb" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><rect width="64" height="64" fill="#0c1117"/><rect x="0" y="0" width="64" height="4" fill="#1a3528"/><rect x="0" y="60" width="64" height="4" fill="#1a3528"/><rect x="0" y="0" width="4" height="64" fill="#1a3528"/><rect x="60" y="0" width="4" height="64" fill="#1a3528"/><rect x="4" y="10" width="56" height="12" fill="#0f2a1f"/><rect x="8" y="12" width="4" height="8" fill="#4ade80"/><rect x="16" y="14" width="20" height="4" fill="#4ade80"/><rect x="8" y="28" width="4" height="4" fill="#4ade80"/><rect x="16" y="28" width="4" height="4" fill="#4ade80" opacity="0.6"/><rect x="24" y="28" width="4" height="4" fill="#4ade80" opacity="0.35"/><rect x="8" y="38" width="32" height="3" fill="#1e4a30"/><rect x="8" y="46" width="22" height="3" fill="#1e4a30"/><rect x="8" y="54" width="28" height="3" fill="#1e4a30"/></svg>
+          <div class="proj-body">
+            <h4>Claude Spinner Verbs</h4>
+            <p>127 action verbs Claude Code displays while thinking — an inside look at how the model narrates its own reasoning.</p>
+            <div class="proj-tags"><span class="proj-tag">Claude Code</span><span class="proj-tag">AI</span></div>
           </div>
         </a>
         <a href="/star-fall-racing.html" target="_blank" class="exp-project-card">
-          <div class="proj-img"><svg viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;display:block;"><rect width="400" height="200" fill="#050510"/><circle cx="30" cy="20" r="1.5" fill="#ffd700" opacity="0.9"/><circle cx="85" cy="8" r="1" fill="#ffd700" opacity="0.7"/><circle cx="155" cy="28" r="2" fill="#fffde7" opacity="0.8"/><circle cx="255" cy="12" r="1.5" fill="#ffd700" opacity="0.6"/><circle cx="325" cy="32" r="1" fill="#ffd700" opacity="0.9"/><circle cx="375" cy="18" r="2" fill="#fffde7" opacity="0.7"/><circle cx="12" cy="65" r="1" fill="#ffd700" opacity="0.5"/><circle cx="390" cy="72" r="1.5" fill="#ffd700" opacity="0.4"/><circle cx="62" cy="155" r="1" fill="#ffd700" opacity="0.3"/><circle cx="345" cy="165" r="1.5" fill="#ffd700" opacity="0.4"/><circle cx="200" cy="45" r="1" fill="#ffd700" opacity="0.5"/><text x="200" y="100" font-family="'Inter',Arial,sans-serif" font-size="52" font-weight="900" fill="#ffd700" text-anchor="middle" letter-spacing="4">STAR FALL</text><text x="200" y="128" font-family="'Inter',Arial,sans-serif" font-size="16" font-weight="400" fill="#6070b8" text-anchor="middle" letter-spacing="12">RACING</text><text x="200" y="174" font-family="'Inter',Arial,sans-serif" font-size="11" fill="#2a2a50" text-anchor="middle">designed by age 6 · built by AI in one prompt</text></svg></div>
-          <h4>Star Fall Racing</h4>
-          <p>A space car racing game — built entirely from a single prompt by my 6-year-old daughter.</p>
-          <div class="story-note">
-            <div class="story-label">The story behind this</div>
-            My daughter came up with the idea and described it to Claude AI exactly as a 6-year-old would. I wanted to test the <em>aha moment</em> — to see how AI interprets the imagination and intent of a child's prompt, and what it builds.
-            <div class="story-prompt">
-              "design a game called star fall. there are cars that race. you can choose your color of your car. then you push a button space, then the car wil go go. when you cross the finish line it will tell you what is your ranking. you could also choose the number of your car."
+          <svg class="proj-thumb" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><rect width="64" height="64" fill="#050510"/><rect x="4" y="4" width="4" height="4" fill="#ffd700"/><rect x="52" y="4" width="4" height="4" fill="#ffd700" opacity="0.8"/><rect x="20" y="2" width="2" height="2" fill="#fffde7" opacity="0.6"/><rect x="44" y="16" width="2" height="2" fill="#ffd700" opacity="0.7"/><rect x="4" y="48" width="2" height="2" fill="#ffd700" opacity="0.5"/><rect x="56" y="52" width="2" height="2" fill="#ffd700" opacity="0.4"/><rect x="24" y="8" width="16" height="4" fill="#8090d8"/><rect x="16" y="12" width="32" height="4" fill="#4050a0"/><rect x="20" y="16" width="24" height="20" fill="#8090d8"/><rect x="24" y="16" width="16" height="12" fill="#c0d0ff"/><rect x="28" y="20" width="8" height="4" fill="#2030a0"/><rect x="16" y="36" width="32" height="4" fill="#4050a0"/><rect x="24" y="40" width="16" height="8" fill="#8090d8"/><rect x="8" y="12" width="8" height="12" fill="#1a1a40"/><rect x="48" y="12" width="8" height="12" fill="#1a1a40"/><rect x="8" y="36" width="8" height="12" fill="#1a1a40"/><rect x="48" y="36" width="8" height="12" fill="#1a1a40"/></svg>
+          <div class="proj-body">
+            <h4>Star Fall Racing</h4>
+            <p>Space car racing game built from one prompt by my 6-year-old daughter — testing the AI aha moment with a child's imagination.</p>
+            <div class="story-note">
+              <div class="story-label">The prompt, verbatim</div>
+              <div class="story-prompt">"design a game called star fall. there are cars that race. you can choose your color of your car. then you push a button space, then the car wil go go. when you cross the finish line it will tell you what is your ranking."</div>
             </div>
-            Claude understood the vision — typos and all — and turned it into a fully playable game. The result speaks for itself.
-          </div>
-          <div class="proj-tags" style="margin-top:10px;">
-            <span class="proj-tag">Claude AI</span>
-            <span class="proj-tag">Canvas</span>
-            <span class="proj-tag">Game</span>
-            <span class="proj-tag">Prompt Engineering</span>
+            <div class="proj-tags" style="margin-top:8px;"><span class="proj-tag">Claude AI</span><span class="proj-tag">Canvas</span><span class="proj-tag">Game</span></div>
           </div>
         </a>
       </div>
@@ -808,24 +806,19 @@
       <h3>Microsoft (Professional)</h3>
       <div class="exp-projects-grid">
         <div class="exp-project-card">
-          <div class="proj-img"><svg viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;display:block;"><rect width="400" height="200" fill="#0a1929"/><circle cx="50" cy="40" r="3" fill="#1e3a5f"/><circle cx="150" cy="25" r="3" fill="#1e3a5f"/><circle cx="300" cy="50" r="3" fill="#1e3a5f"/><circle cx="375" cy="30" r="3" fill="#1e3a5f"/><line x1="50" y1="40" x2="150" y2="25" stroke="#1e3a5f" stroke-width="1"/><line x1="150" y1="25" x2="300" y2="50" stroke="#1e3a5f" stroke-width="1"/><line x1="300" y1="50" x2="375" y2="30" stroke="#1e3a5f" stroke-width="1"/><text x="200" y="112" font-family="'Inter',Arial,sans-serif" font-size="80" font-weight="900" fill="#60a5fa" text-anchor="middle">10K+</text><text x="200" y="142" font-family="'Inter',Arial,sans-serif" font-size="12" fill="#2d5a8a" text-anchor="middle" letter-spacing="3">AUTHORS AUTOMATED</text><text x="200" y="172" font-family="'Inter',Arial,sans-serif" font-size="11" fill="#1e3a5f" text-anchor="middle">millions of incident actions · Azure</text></svg></div>
-          <h4>Incident Automation Platform</h4>
-          <p>Agentic automation workflows adopted by 10K+ authors, powering millions of incident actions across Azure services.</p>
-          <div class="proj-tags">
-            <span class="proj-tag">TypeScript</span>
-            <span class="proj-tag">Azure</span>
-            <span class="proj-tag">Agentic AI</span>
-            <span class="proj-tag">MCP</span>
+          <svg class="proj-thumb" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><rect width="64" height="64" fill="#0f1929"/><rect x="28" y="0" width="8" height="4" fill="#60a5fa"/><rect x="28" y="4" width="8" height="8" fill="#60a5fa" opacity="0.5"/><rect x="12" y="12" width="40" height="26" fill="#1e3a5f"/><rect x="16" y="18" width="12" height="10" fill="#0a1520"/><rect x="36" y="18" width="12" height="10" fill="#0a1520"/><rect x="20" y="20" width="4" height="6" fill="#60a5fa"/><rect x="40" y="20" width="4" height="6" fill="#60a5fa"/><rect x="20" y="32" width="4" height="4" fill="#2d5a8a"/><rect x="30" y="32" width="4" height="4" fill="#2d5a8a"/><rect x="40" y="32" width="4" height="4" fill="#60a5fa"/><rect x="24" y="38" width="16" height="6" fill="#1e3a5f"/><rect x="12" y="44" width="40" height="18" fill="#1e3a5f"/><rect x="24" y="50" width="16" height="8" fill="#0a1520"/><rect x="28" y="52" width="8" height="4" fill="#60a5fa" opacity="0.7"/></svg>
+          <div class="proj-body">
+            <h4>Incident Automation Platform</h4>
+            <p>Agentic automation workflows adopted by 10K+ authors, powering millions of incident actions across Azure services.</p>
+            <div class="proj-tags"><span class="proj-tag">TypeScript</span><span class="proj-tag">Azure</span><span class="proj-tag">Agentic AI</span><span class="proj-tag">MCP</span></div>
           </div>
         </div>
         <div class="exp-project-card">
-          <div class="proj-img"><svg viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;display:block;"><rect width="400" height="200" fill="#eff6ff"/><rect x="280" y="80" width="25" height="110" fill="#dbeafe"/><rect x="315" y="50" width="25" height="140" fill="#bfdbfe"/><rect x="350" y="20" width="25" height="170" fill="#93c5fd" opacity="0.6"/><text x="30" y="120" font-family="'Inter',Arial,sans-serif" font-size="76" font-weight="900" fill="#1d4ed8">300K+</text><text x="30" y="152" font-family="'Inter',Arial,sans-serif" font-size="12" fill="#60a5fa" letter-spacing="3">MONTHLY ACTIVE USERS</text><text x="30" y="178" font-family="'Inter',Arial,sans-serif" font-size="11" fill="#93c5fd">Founding Member · Azure Advisor</text><text x="370" y="28" font-family="'Inter',Arial,sans-serif" font-size="22" fill="#1d4ed8" text-anchor="middle">↑</text></svg></div>
-          <h4>Azure Advisor</h4>
-          <p>Founding member — built recommendation UX and pipelines serving 300K+ monthly active users and 1.5M daily recommendations.</p>
-          <div class="proj-tags">
-            <span class="proj-tag">C#</span>
-            <span class="proj-tag">React</span>
-            <span class="proj-tag">Azure</span>
+          <svg class="proj-thumb" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><rect width="64" height="64" fill="#f0f7ff"/><rect x="12" y="8" width="2" height="46" fill="#93c5fd"/><rect x="12" y="52" width="48" height="2" fill="#93c5fd"/><rect x="16" y="44" width="8" height="10" fill="#93c5fd"/><rect x="26" y="34" width="8" height="20" fill="#60a5fa"/><rect x="36" y="20" width="8" height="34" fill="#3b82f6"/><rect x="46" y="8" width="8" height="46" fill="#1d4ed8"/><rect x="48" y="4" width="4" height="4" fill="#1d4ed8"/><rect x="46" y="8" width="8" height="2" fill="#1d4ed8"/></svg>
+          <div class="proj-body">
+            <h4>Azure Advisor</h4>
+            <p>Founding member — built recommendation UX and pipelines serving 300K+ monthly active users and 1.5M daily recommendations.</p>
+            <div class="proj-tags"><span class="proj-tag">C#</span><span class="proj-tag">React</span><span class="proj-tag">Azure</span></div>
           </div>
         </div>
       </div>
