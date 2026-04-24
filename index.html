@@ -8,8 +8,6 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <style>
     /* ═══ Reset ═══ */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -99,7 +97,6 @@
       padding: 28px 32px;
       display: flex;
       flex-direction: column;
-      opacity: 0;
     }
 
     /* ═══ Dividers (draggable) ═══ */
@@ -185,17 +182,50 @@
       transform: translateY(-20px);
     }
 
-    /* ═══ Skills Section (Matter.js) ═══ */
-    .skills-panel {
-      padding: 0 !important;
-      cursor: grab;
+    /* ═══ Skills Section ═══ */
+    .skills-panel { overflow-y: auto; }
+    .skills-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--text-secondary);
+      margin-bottom: 16px;
     }
-    .skills-panel:active { cursor: grabbing; }
-    #skills-canvas {
-      width: 100%;
-      height: 100%;
-      display: block;
+    .skills-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+    .skill-tag {
+      font-size: 0.75rem;
+      padding: 4px 12px;
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
+      white-space: nowrap;
+      transition: border-color 0.2s, color 0.2s;
     }
+    .skill-tag:hover { border-color: var(--primary); color: var(--primary); }
+    .skill-tag.hl {
+      border-color: var(--primary);
+      color: var(--primary);
+      font-weight: 600;
+    }
+
+    /* ═══ Fade-in entry ═══ */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .panel {
+      animation: fadeUp 0.5s ease both;
+    }
+    .bento-container .panel:nth-child(1) { animation-delay: 0.05s; }
+    .bento-container .panel:nth-child(3) { animation-delay: 0.15s; }
+    .bottom-row .panel:nth-child(1)      { animation-delay: 0.25s; }
+    .bottom-right .panel:nth-child(1)    { animation-delay: 0.35s; }
+    .bottom-right .panel:nth-child(3)    { animation-delay: 0.45s; }
+    .mobile-section { animation: fadeUp 0.4s ease both; }
+    .mobile-section:nth-child(1) { animation-delay: 0.05s; }
+    .mobile-section:nth-child(2) { animation-delay: 0.12s; }
+    .mobile-section:nth-child(3) { animation-delay: 0.19s; }
+    .mobile-section:nth-child(4) { animation-delay: 0.26s; }
+    .mobile-section:nth-child(5) { animation-delay: 0.33s; }
 
     /* ═══ Work Section ═══ */
     .work-panel { padding: 0 !important; }
@@ -556,7 +586,6 @@
     .mobile-section {
       border-bottom: 1px solid var(--border);
       padding: 28px 24px;
-      opacity: 0;
     }
     .mobile-hero { min-height: 40vh; display: flex; flex-direction: column; justify-content: center; }
     .mobile-skills { min-height: 30vh; padding: 0 !important; position: relative; }
@@ -595,7 +624,31 @@
 
     <!-- Skills Panel -->
     <div class="panel skills-panel" id="panelSkills">
-      <canvas id="skills-canvas"></canvas>
+      <div class="skills-label">Skills</div>
+      <div class="skills-tags">
+        <span class="skill-tag hl">TypeScript</span>
+        <span class="skill-tag hl">Python</span>
+        <span class="skill-tag hl">Azure</span>
+        <span class="skill-tag hl">React</span>
+        <span class="skill-tag hl">Agentic AI</span>
+        <span class="skill-tag">JavaScript</span>
+        <span class="skill-tag">C#</span>
+        <span class="skill-tag">Java</span>
+        <span class="skill-tag">C++</span>
+        <span class="skill-tag">SQL</span>
+        <span class="skill-tag">Shell</span>
+        <span class="skill-tag">MCP Servers</span>
+        <span class="skill-tag">Incident Automation</span>
+        <span class="skill-tag">UX Design</span>
+        <span class="skill-tag">Product Strategy</span>
+        <span class="skill-tag">Node.js</span>
+        <span class="skill-tag">.NET</span>
+        <span class="skill-tag">Cosmos DB</span>
+        <span class="skill-tag">Kusto</span>
+        <span class="skill-tag">Git</span>
+        <span class="skill-tag">Agile</span>
+        <span class="skill-tag">Scrum</span>
+      </div>
     </div>
   </div>
 
@@ -660,7 +713,7 @@
       <!-- About Panel -->
       <div class="panel about-panel" id="panelAbout">
         <div class="about-inner">
-          <div class="about-avatar"><svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;display:block;"><circle cx="50" cy="50" r="50" fill="#fef9c3"/><g transform="translate(50,60) scale(0.82) translate(-50,-58)"><ellipse cx="50" cy="99" rx="30" ry="17" fill="#d97706"/><rect x="46" y="74" width="8" height="10" fill="#f9d5b0"/><path d="M22,82 C18,74 18,44 22,34 Q34,24 50,24 Q66,24 78,34 C82,44 82,74 78,82" fill="#1c0e08"/><circle cx="50" cy="58" r="24" fill="#f9d5b0"/><rect x="22" y="34" width="56" height="15" rx="8" fill="#1c0e08"/><circle cx="43" cy="57" r="3.5" fill="#1a1a1a"/><circle cx="57" cy="57" r="3.5" fill="#1a1a1a"/><circle cx="44.5" cy="55.5" r="1.3" fill="white"/><circle cx="58.5" cy="55.5" r="1.3" fill="white"/><circle cx="36" cy="62" r="5.5" fill="rgba(255,120,120,0.28)"/><circle cx="64" cy="62" r="5.5" fill="rgba(255,120,120,0.28)"/><circle cx="50" cy="62" r="1.5" fill="#e8a090"/><path d="M44 67 Q50 74 56 67" stroke="#e07080" stroke-width="2" fill="none" stroke-linecap="round"/></g><g transform="translate(50,17) scale(0.4) translate(-50,-60)"><ellipse cx="50" cy="100" rx="36" ry="22" fill="#e8893a"/><polygon points="18,46 26,18 44,46" fill="#e8893a"/><polygon points="21,44 26,22 41,44" fill="#f8b090"/><polygon points="56,46 74,18 82,46" fill="#e8893a"/><polygon points="59,44 74,22 79,44" fill="#f8b090"/><circle cx="50" cy="60" r="28" fill="#e8893a"/><path d="M43,36 Q50,33 57,36" stroke="#c06818" stroke-width="2.5" fill="none"/><path d="M41,41 Q50,38 59,41" stroke="#c06818" stroke-width="2" fill="none"/><path d="M45,46 Q50,44 55,46" stroke="#c06818" stroke-width="1.5" fill="none"/><ellipse cx="50" cy="72" rx="17" ry="12" fill="#fef0d0"/><circle cx="40" cy="57" r="9" fill="#80b038"/><circle cx="60" cy="57" r="9" fill="#80b038"/><ellipse cx="40" cy="57" rx="5" ry="7" fill="#1a1808"/><ellipse cx="60" cy="57" rx="5" ry="7" fill="#1a1808"/><circle cx="42" cy="54" r="2.5" fill="white"/><circle cx="62" cy="54" r="2.5" fill="white"/><ellipse cx="50" cy="71" rx="3" ry="2.2" fill="#f0a0a0"/><path d="M46,74 Q50,78 54,74" stroke="#d09090" stroke-width="1.5" fill="none" stroke-linecap="round"/><ellipse cx="30" cy="90" rx="8" ry="6" fill="#e8893a"/><ellipse cx="70" cy="90" rx="8" ry="6" fill="#e8893a"/></g><ellipse cx="75" cy="28" rx="2.5" ry="3.5" fill="#60a5fa"/><path d="M75,24 Q77,26 75,28" stroke="#60a5fa" stroke-width="1.2" fill="none" stroke-linecap="round"/></svg></div>
+          <div class="about-avatar"><svg viewBox="0 0 96 96" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;display:block;image-rendering:pixelated;image-rendering:crisp-edges;"><rect width="96" height="96" fill="#fef9c3"/><!-- cat body top --><rect x="24" y="6" width="48" height="6" fill="#e8893a"/><!-- cat row2 ears --><rect x="18" y="12" width="12" height="6" fill="#e8893a"/><rect x="30" y="12" width="6" height="6" fill="#f8b090"/><rect x="36" y="12" width="24" height="6" fill="#e8893a"/><rect x="60" y="12" width="6" height="6" fill="#f8b090"/><rect x="66" y="12" width="12" height="6" fill="#e8893a"/><!-- cat eyes row --><rect x="18" y="18" width="6" height="6" fill="#e8893a"/><rect x="24" y="18" width="6" height="6" fill="#c06818"/><rect x="30" y="18" width="6" height="6" fill="#80b038"/><rect x="36" y="18" width="6" height="6" fill="#1a1808"/><rect x="42" y="18" width="12" height="6" fill="#e8893a"/><rect x="54" y="18" width="6" height="6" fill="#80b038"/><rect x="60" y="18" width="6" height="6" fill="#1a1808"/><rect x="66" y="18" width="6" height="6" fill="#c06818"/><rect x="72" y="18" width="6" height="6" fill="#e8893a"/><!-- cat muzzle --><rect x="18" y="24" width="18" height="6" fill="#e8893a"/><rect x="36" y="24" width="6" height="6" fill="#fef0d0"/><rect x="42" y="24" width="6" height="6" fill="#f0a0a0"/><rect x="48" y="24" width="6" height="6" fill="#fef0d0"/><rect x="54" y="24" width="24" height="6" fill="#e8893a"/><!-- cat bottom --><rect x="24" y="30" width="48" height="6" fill="#e8893a"/><!-- bangs --><rect x="6" y="36" width="78" height="6" fill="#1c0e08"/><!-- face row7 --><rect x="0" y="42" width="12" height="6" fill="#1c0e08"/><rect x="12" y="42" width="66" height="6" fill="#f9d5b0"/><rect x="78" y="42" width="12" height="6" fill="#1c0e08"/><!-- eyes row8 --><rect x="0" y="48" width="12" height="6" fill="#1c0e08"/><rect x="12" y="48" width="12" height="6" fill="#f9d5b0"/><rect x="24" y="48" width="6" height="6" fill="#1a1a1a"/><rect x="30" y="48" width="6" height="6" fill="#ffffff"/><rect x="36" y="48" width="18" height="6" fill="#f9d5b0"/><rect x="54" y="48" width="6" height="6" fill="#1a1a1a"/><rect x="60" y="48" width="6" height="6" fill="#ffffff"/><rect x="66" y="48" width="12" height="6" fill="#f9d5b0"/><rect x="78" y="48" width="12" height="6" fill="#1c0e08"/><!-- face row9 --><rect x="0" y="54" width="12" height="6" fill="#1c0e08"/><rect x="12" y="54" width="66" height="6" fill="#f9d5b0"/><rect x="78" y="54" width="12" height="6" fill="#1c0e08"/><!-- cheeks+nose row10 --><rect x="0" y="60" width="12" height="6" fill="#1c0e08"/><rect x="12" y="60" width="6" height="6" fill="#f9d5b0"/><rect x="18" y="60" width="6" height="6" fill="#f0a0a0"/><rect x="24" y="60" width="18" height="6" fill="#f9d5b0"/><rect x="42" y="60" width="6" height="6" fill="#e8a090"/><rect x="48" y="60" width="18" height="6" fill="#f9d5b0"/><rect x="66" y="60" width="6" height="6" fill="#f0a0a0"/><rect x="72" y="60" width="6" height="6" fill="#f9d5b0"/><rect x="78" y="60" width="12" height="6" fill="#1c0e08"/><!-- mouth row11 --><rect x="0" y="66" width="12" height="6" fill="#1c0e08"/><rect x="12" y="66" width="18" height="6" fill="#f9d5b0"/><rect x="30" y="66" width="6" height="6" fill="#e07080"/><rect x="36" y="66" width="18" height="6" fill="#f9d5b0"/><rect x="54" y="66" width="6" height="6" fill="#e07080"/><rect x="60" y="66" width="18" height="6" fill="#f9d5b0"/><rect x="78" y="66" width="12" height="6" fill="#1c0e08"/><!-- chin rows12-13 --><rect x="0" y="72" width="12" height="12" fill="#1c0e08"/><rect x="12" y="72" width="66" height="12" fill="#f9d5b0"/><rect x="78" y="72" width="12" height="12" fill="#1c0e08"/><!-- shirt --><rect x="6" y="84" width="84" height="6" fill="#d97706"/><rect x="12" y="90" width="72" height="6" fill="#d97706"/></svg></div>
           <div class="about-text-wrap">
             <div class="about-label">About</div>
             <div class="about-body">Product-minded technical leader with 10+ years at Microsoft and J.P. Morgan. Principal Software Engineer driving Incident Management Automation across Azure — building agentic workflows adopted by 10K+ authors, powering millions of incident actions. Founding member of Azure Advisor (300K+ MAU). Columbia University CS graduate passionate about developer platforms, UX-driven product thinking, and bridging engineering with product strategy.</div>
@@ -707,8 +760,27 @@
     <div class="hero-greeting">Hi, I am Xiaoyu</div>
     <div class="hero-titles" id="mobileHeroTitles"></div>
   </div>
-  <div class="mobile-section mobile-skills" id="mobileSkills">
-    <canvas id="mobile-skills-canvas"></canvas>
+  <div class="mobile-section" id="mobileSkills" style="padding:24px;">
+    <div class="skills-label">Skills</div>
+    <div class="skills-tags">
+      <span class="skill-tag hl">TypeScript</span>
+      <span class="skill-tag hl">Python</span>
+      <span class="skill-tag hl">Azure</span>
+      <span class="skill-tag hl">React</span>
+      <span class="skill-tag hl">Agentic AI</span>
+      <span class="skill-tag">JavaScript</span>
+      <span class="skill-tag">C#</span>
+      <span class="skill-tag">Java</span>
+      <span class="skill-tag">SQL</span>
+      <span class="skill-tag">MCP Servers</span>
+      <span class="skill-tag">Incident Automation</span>
+      <span class="skill-tag">UX Design</span>
+      <span class="skill-tag">Product Strategy</span>
+      <span class="skill-tag">Node.js</span>
+      <span class="skill-tag">.NET</span>
+      <span class="skill-tag">Git</span>
+      <span class="skill-tag">Agile</span>
+    </div>
   </div>
   <div class="mobile-section mobile-clickable" id="mobileWork">
     <span class="heading-section">Work</span>
@@ -844,7 +916,7 @@
   <button class="close-btn" onclick="closeOverlay('aboutOverlay')">&times;</button>
   <div class="expanded-about">
     <div class="expanded-about-top">
-      <div class="expanded-avatar"><svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;display:block;"><circle cx="50" cy="50" r="50" fill="#fef9c3"/><g transform="translate(50,60) scale(0.82) translate(-50,-58)"><ellipse cx="50" cy="99" rx="30" ry="17" fill="#d97706"/><rect x="46" y="74" width="8" height="10" fill="#f9d5b0"/><path d="M22,82 C18,74 18,44 22,34 Q34,24 50,24 Q66,24 78,34 C82,44 82,74 78,82" fill="#1c0e08"/><circle cx="50" cy="58" r="24" fill="#f9d5b0"/><rect x="22" y="34" width="56" height="15" rx="8" fill="#1c0e08"/><circle cx="43" cy="57" r="3.5" fill="#1a1a1a"/><circle cx="57" cy="57" r="3.5" fill="#1a1a1a"/><circle cx="44.5" cy="55.5" r="1.3" fill="white"/><circle cx="58.5" cy="55.5" r="1.3" fill="white"/><circle cx="36" cy="62" r="5.5" fill="rgba(255,120,120,0.28)"/><circle cx="64" cy="62" r="5.5" fill="rgba(255,120,120,0.28)"/><circle cx="50" cy="62" r="1.5" fill="#e8a090"/><path d="M44 67 Q50 74 56 67" stroke="#e07080" stroke-width="2" fill="none" stroke-linecap="round"/></g><g transform="translate(50,17) scale(0.4) translate(-50,-60)"><ellipse cx="50" cy="100" rx="36" ry="22" fill="#e8893a"/><polygon points="18,46 26,18 44,46" fill="#e8893a"/><polygon points="21,44 26,22 41,44" fill="#f8b090"/><polygon points="56,46 74,18 82,46" fill="#e8893a"/><polygon points="59,44 74,22 79,44" fill="#f8b090"/><circle cx="50" cy="60" r="28" fill="#e8893a"/><path d="M43,36 Q50,33 57,36" stroke="#c06818" stroke-width="2.5" fill="none"/><path d="M41,41 Q50,38 59,41" stroke="#c06818" stroke-width="2" fill="none"/><path d="M45,46 Q50,44 55,46" stroke="#c06818" stroke-width="1.5" fill="none"/><ellipse cx="50" cy="72" rx="17" ry="12" fill="#fef0d0"/><circle cx="40" cy="57" r="9" fill="#80b038"/><circle cx="60" cy="57" r="9" fill="#80b038"/><ellipse cx="40" cy="57" rx="5" ry="7" fill="#1a1808"/><ellipse cx="60" cy="57" rx="5" ry="7" fill="#1a1808"/><circle cx="42" cy="54" r="2.5" fill="white"/><circle cx="62" cy="54" r="2.5" fill="white"/><ellipse cx="50" cy="71" rx="3" ry="2.2" fill="#f0a0a0"/><path d="M46,74 Q50,78 54,74" stroke="#d09090" stroke-width="1.5" fill="none" stroke-linecap="round"/><ellipse cx="30" cy="90" rx="8" ry="6" fill="#e8893a"/><ellipse cx="70" cy="90" rx="8" ry="6" fill="#e8893a"/></g><ellipse cx="75" cy="28" rx="2.5" ry="3.5" fill="#60a5fa"/><path d="M75,24 Q77,26 75,28" stroke="#60a5fa" stroke-width="1.2" fill="none" stroke-linecap="round"/></svg></div>
+      <div class="expanded-avatar"><svg viewBox="0 0 96 96" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;display:block;image-rendering:pixelated;image-rendering:crisp-edges;"><rect width="96" height="96" fill="#fef9c3"/><!-- cat body top --><rect x="24" y="6" width="48" height="6" fill="#e8893a"/><!-- cat row2 ears --><rect x="18" y="12" width="12" height="6" fill="#e8893a"/><rect x="30" y="12" width="6" height="6" fill="#f8b090"/><rect x="36" y="12" width="24" height="6" fill="#e8893a"/><rect x="60" y="12" width="6" height="6" fill="#f8b090"/><rect x="66" y="12" width="12" height="6" fill="#e8893a"/><!-- cat eyes row --><rect x="18" y="18" width="6" height="6" fill="#e8893a"/><rect x="24" y="18" width="6" height="6" fill="#c06818"/><rect x="30" y="18" width="6" height="6" fill="#80b038"/><rect x="36" y="18" width="6" height="6" fill="#1a1808"/><rect x="42" y="18" width="12" height="6" fill="#e8893a"/><rect x="54" y="18" width="6" height="6" fill="#80b038"/><rect x="60" y="18" width="6" height="6" fill="#1a1808"/><rect x="66" y="18" width="6" height="6" fill="#c06818"/><rect x="72" y="18" width="6" height="6" fill="#e8893a"/><!-- cat muzzle --><rect x="18" y="24" width="18" height="6" fill="#e8893a"/><rect x="36" y="24" width="6" height="6" fill="#fef0d0"/><rect x="42" y="24" width="6" height="6" fill="#f0a0a0"/><rect x="48" y="24" width="6" height="6" fill="#fef0d0"/><rect x="54" y="24" width="24" height="6" fill="#e8893a"/><!-- cat bottom --><rect x="24" y="30" width="48" height="6" fill="#e8893a"/><!-- bangs --><rect x="6" y="36" width="78" height="6" fill="#1c0e08"/><!-- face row7 --><rect x="0" y="42" width="12" height="6" fill="#1c0e08"/><rect x="12" y="42" width="66" height="6" fill="#f9d5b0"/><rect x="78" y="42" width="12" height="6" fill="#1c0e08"/><!-- eyes row8 --><rect x="0" y="48" width="12" height="6" fill="#1c0e08"/><rect x="12" y="48" width="12" height="6" fill="#f9d5b0"/><rect x="24" y="48" width="6" height="6" fill="#1a1a1a"/><rect x="30" y="48" width="6" height="6" fill="#ffffff"/><rect x="36" y="48" width="18" height="6" fill="#f9d5b0"/><rect x="54" y="48" width="6" height="6" fill="#1a1a1a"/><rect x="60" y="48" width="6" height="6" fill="#ffffff"/><rect x="66" y="48" width="12" height="6" fill="#f9d5b0"/><rect x="78" y="48" width="12" height="6" fill="#1c0e08"/><!-- face row9 --><rect x="0" y="54" width="12" height="6" fill="#1c0e08"/><rect x="12" y="54" width="66" height="6" fill="#f9d5b0"/><rect x="78" y="54" width="12" height="6" fill="#1c0e08"/><!-- cheeks+nose row10 --><rect x="0" y="60" width="12" height="6" fill="#1c0e08"/><rect x="12" y="60" width="6" height="6" fill="#f9d5b0"/><rect x="18" y="60" width="6" height="6" fill="#f0a0a0"/><rect x="24" y="60" width="18" height="6" fill="#f9d5b0"/><rect x="42" y="60" width="6" height="6" fill="#e8a090"/><rect x="48" y="60" width="18" height="6" fill="#f9d5b0"/><rect x="66" y="60" width="6" height="6" fill="#f0a0a0"/><rect x="72" y="60" width="6" height="6" fill="#f9d5b0"/><rect x="78" y="60" width="12" height="6" fill="#1c0e08"/><!-- mouth row11 --><rect x="0" y="66" width="12" height="6" fill="#1c0e08"/><rect x="12" y="66" width="18" height="6" fill="#f9d5b0"/><rect x="30" y="66" width="6" height="6" fill="#e07080"/><rect x="36" y="66" width="18" height="6" fill="#f9d5b0"/><rect x="54" y="66" width="6" height="6" fill="#e07080"/><rect x="60" y="66" width="18" height="6" fill="#f9d5b0"/><rect x="78" y="66" width="12" height="6" fill="#1c0e08"/><!-- chin rows12-13 --><rect x="0" y="72" width="12" height="12" fill="#1c0e08"/><rect x="12" y="72" width="66" height="12" fill="#f9d5b0"/><rect x="78" y="72" width="12" height="12" fill="#1c0e08"/><!-- shirt --><rect x="6" y="84" width="84" height="6" fill="#d97706"/><rect x="12" y="90" width="72" height="6" fill="#d97706"/></svg></div>
       <div>
         <h2>About Me</h2>
         <div class="bio">
@@ -926,8 +998,6 @@ const heroTitles = [
   "seeking PM roles"
 ];
 
-const skillWords = "TypeScript, JavaScript, C#, Java, Python, C++, SQL, Shell, Azure, React, MCP Servers, Agentic AI, Incident Automation, UX Design, Product Strategy, GSAP, Matter.js, Node.js, .NET, Cosmos DB, Kusto, Git, Agile, Scrum";
-const highlightedSkills = ["TypeScript", "Python", "Azure", "React", "Agentic AI"];
 
 // ═══════════════════════════════════════════════════════════
 // ROTATING TITLES
@@ -969,190 +1039,6 @@ function initRotatingTitles(containerId) {
 initRotatingTitles('heroTitles');
 initRotatingTitles('mobileHeroTitles');
 
-// ═══════════════════════════════════════════════════════════
-// MATTER.JS FALLING SKILLS
-// ═══════════════════════════════════════════════════════════
-
-// roundRect polyfill for older browsers
-function drawRoundRect(ctx, x, y, w, h, r) {
-  ctx.beginPath();
-  ctx.moveTo(x + r, y);
-  ctx.lineTo(x + w - r, y);
-  ctx.quadraticCurveTo(x + w, y, x + w, y + r);
-  ctx.lineTo(x + w, y + h - r);
-  ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
-  ctx.lineTo(x + r, y + h);
-  ctx.quadraticCurveTo(x, y + h, x, y + h - r);
-  ctx.lineTo(x, y + r);
-  ctx.quadraticCurveTo(x, y, x + r, y);
-  ctx.closePath();
-}
-
-function initFallingSkills(canvasId, panelId) {
-  const canvas = document.getElementById(canvasId);
-  const panel = document.getElementById(panelId);
-  if (!canvas || !panel) return;
-
-  const Engine = Matter.Engine,
-        Render = Matter.Render,
-        World = Matter.World,
-        Bodies = Matter.Bodies,
-        Body = Matter.Body,
-        Mouse = Matter.Mouse,
-        MouseConstraint = Matter.MouseConstraint,
-        Runner = Matter.Runner;
-
-  let engine, render, runner, mouseConstraint;
-  const words = skillWords.split(',').map(s => s.trim());
-
-  function setup() {
-    const w = panel.clientWidth;
-    const h = panel.clientHeight;
-
-    // Guard against zero dimensions (panel not yet laid out)
-    if (w < 10 || h < 10) {
-      setTimeout(setup, 100);
-      return;
-    }
-
-    canvas.width = w * (window.devicePixelRatio || 1);
-    canvas.height = h * (window.devicePixelRatio || 1);
-    canvas.style.width = w + 'px';
-    canvas.style.height = h + 'px';
-
-    engine = Engine.create({ gravity: { x: 0, y: 0.56 } });
-
-    render = Render.create({
-      canvas: canvas,
-      engine: engine,
-      options: {
-        width: w,
-        height: h,
-        wireframes: false,
-        background: '#ffffff',
-        pixelRatio: window.devicePixelRatio || 1
-      }
-    });
-
-    // Walls
-    const wallOpts = { isStatic: true, render: { visible: false } };
-    World.add(engine.world, [
-      Bodies.rectangle(w / 2, h + 25, w, 50, wallOpts),   // floor
-      Bodies.rectangle(-25, h / 2, 50, h * 2, wallOpts),   // left
-      Bodies.rectangle(w + 25, h / 2, 50, h * 2, wallOpts),// right
-    ]);
-
-    // Word bodies
-    const fontSize = Math.max(13, Math.min(18, w / 28));
-    const tmpCtx = canvas.getContext('2d');
-    tmpCtx.font = `500 ${fontSize}px Inter, sans-serif`;
-
-    words.forEach((word, i) => {
-      const textW = tmpCtx.measureText(word).width + 28;
-      const textH = fontSize + 18;
-      const x = 40 + Math.random() * (w - 80);
-      const y = -30 - (i * 35) - Math.random() * 100;
-      const isHighlight = highlightedSkills.includes(word);
-
-      const body = Bodies.rectangle(x, y, textW, textH, {
-        restitution: 0.8,
-        friction: 0.1,
-        frictionAir: 0.008,
-        render: {
-          fillStyle: 'transparent'
-        },
-        label: word,
-        plugin: { isHighlight }
-      });
-      World.add(engine.world, body);
-    });
-
-    // Mouse interaction
-    const mouse = Mouse.create(canvas);
-    mouseConstraint = MouseConstraint.create(engine, {
-      mouse: mouse,
-      constraint: {
-        stiffness: 0.2,
-        render: { visible: false }
-      }
-    });
-    World.add(engine.world, mouseConstraint);
-    render.mouse = mouse;
-
-    // Custom rendering for text
-    Matter.Events.on(render, 'afterRender', () => {
-      const ctx = render.context;
-      const bodies = Matter.Composite.allBodies(engine.world);
-      const fs = Math.max(13, Math.min(18, w / 28));
-
-      bodies.forEach(body => {
-        if (body.isStatic || !body.label || body.label === 'Rectangle Body') return;
-        const { x, y } = body.position;
-        const angle = body.angle;
-        const isHL = body.plugin && body.plugin.isHighlight;
-
-        ctx.save();
-        ctx.translate(x, y);
-        ctx.rotate(angle);
-
-        // Measure text and draw pill
-        ctx.font = `${isHL ? '600' : '400'} ${fs}px Inter, sans-serif`;
-        const tw = ctx.measureText(body.label).width;
-        const pw = tw + 28;
-        const ph = fs + 18;
-        const radius = ph / 2;
-
-        // Draw pill background using polyfill
-        drawRoundRect(ctx, -pw/2, -ph/2, pw, ph, radius);
-        ctx.fillStyle = isHL ? 'rgba(26,26,26,0.08)' : 'rgba(0,0,0,0.03)';
-        ctx.fill();
-        ctx.strokeStyle = isHL ? 'rgba(26,26,26,0.3)' : 'rgba(0,0,0,0.12)';
-        ctx.lineWidth = 1;
-        ctx.stroke();
-
-        // Draw text
-        ctx.fillStyle = isHL ? '#1a1a1a' : '#6b6b6b';
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        ctx.fillText(body.label, 0, 1);
-
-        ctx.restore();
-      });
-    });
-
-    runner = Runner.create();
-    Runner.run(runner, engine);
-    Render.run(render);
-  }
-
-  // Delay setup slightly so DOM layout is ready
-  setTimeout(setup, 200);
-
-  // Resize handler
-  let resizeTimeout;
-  const ro = new ResizeObserver(() => {
-    clearTimeout(resizeTimeout);
-    resizeTimeout = setTimeout(() => {
-      if (runner) Runner.stop(runner);
-      if (render) Render.stop(render);
-      if (engine) {
-        World.clear(engine.world);
-        Engine.clear(engine);
-      }
-      setup();
-    }, 300);
-  });
-  ro.observe(panel);
-}
-
-// Init skills after a short delay to ensure panels are laid out
-setTimeout(() => {
-  if (window.innerWidth > 768) {
-    initFallingSkills('skills-canvas', 'panelSkills');
-  } else {
-    initFallingSkills('mobile-skills-canvas', 'mobileSkills');
-  }
-}, 300);
 
 // ═══════════════════════════════════════════════════════════
 // DRAGGABLE DIVIDERS
@@ -1280,37 +1166,6 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
-// ═══════════════════════════════════════════════════════════
-// GSAP ENTRY ANIMATION
-// ═══════════════════════════════════════════════════════════
-window.addEventListener('DOMContentLoaded', () => {
-  const isMobile = window.innerWidth <= 768;
-
-  if (!isMobile) {
-    const panels = document.querySelectorAll('.bento-container .panel');
-    const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
-
-    // Animate divider lines first
-    tl.to('.divider-h::after', { scaleX: 1, duration: 0.5 }, 0);
-
-    // Then fade in panels with stagger
-    tl.to(panels, {
-      opacity: 1,
-      duration: 0.6,
-      stagger: 0.12,
-      ease: 'power2.out'
-    }, 0.2);
-  } else {
-    const sections = document.querySelectorAll('.mobile-section');
-    gsap.to(sections, {
-      opacity: 1,
-      duration: 0.5,
-      stagger: 0.1,
-      ease: 'power2.out',
-      delay: 0.1
-    });
-  }
-});
 </script>
 
 </body>
