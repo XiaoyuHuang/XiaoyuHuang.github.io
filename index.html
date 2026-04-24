@@ -287,55 +287,40 @@
 
     /* ═══ Star Fall story card ═══ */
     .story-note {
-      background: linear-gradient(135deg, #fdf6ff, #f0f4ff);
-      border: 1px solid #d8b4fe;
-      border-left: 3px solid #7c3aed;
-      border-radius: 4px;
-      padding: 14px 16px;
-      margin-top: 10px;
+      border: 1px solid var(--border);
+      border-left: 2px solid var(--primary);
+      padding: 12px 14px;
+      margin-top: 8px;
       font-size: 0.8rem;
-      color: #4b5563;
+      color: var(--text-secondary);
       line-height: 1.6;
     }
     .story-note .story-label {
       font-size: 0.68rem;
       text-transform: uppercase;
       letter-spacing: 1.5px;
-      color: #7c3aed;
+      color: var(--text);
       font-weight: 600;
       margin-bottom: 6px;
     }
     .story-prompt {
-      background: rgba(0,0,0,0.04);
-      border-left: 2px solid #c4b5fd;
+      background: rgba(0,0,0,0.03);
+      border-left: 1px solid var(--border);
       padding: 8px 10px;
       margin: 8px 0;
       font-style: italic;
       font-size: 0.78rem;
-      color: #374151;
-      border-radius: 0 3px 3px 0;
+      color: var(--text-secondary);
     }
     .proj-img-star {
       width: 100%;
       aspect-ratio: 2/1;
-      background: linear-gradient(135deg, #050510 0%, #0a0520 50%, #0d0830 100%);
-      border-radius: 4px;
+      background: #0d0820;
       margin-bottom: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 2.2rem;
-      position: relative;
-      overflow: hidden;
-    }
-    .proj-img-star::after {
-      content: '✦ ✧ ✦';
-      position: absolute;
-      bottom: 6px;
-      right: 8px;
-      font-size: 0.7rem;
-      color: rgba(255,215,0,0.5);
-      letter-spacing: 4px;
     }
 
     /* ═══ About Section ═══ */
@@ -430,7 +415,6 @@
     }
     .close-btn:hover {
       background: var(--primary); color: white; border-color: var(--primary);
-      transform: scale(1.1);
     }
 
     /* ═══ Expanded Work View ═══ */
@@ -470,8 +454,6 @@
     }
     .exp-project-card:hover {
       border-color: var(--primary);
-      transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
     }
     .exp-project-card .proj-img {
       width: 100%;
@@ -664,29 +646,12 @@
         <span class="work-arrow">&#8599;</span>
       </div>
       <div class="work-content">
-        <a href="https://github.com/XiaoyuHuang/XiaoyuHuang.github.io" target="_blank" class="project-card">
-          <div class="proj-img">🌐</div>
-          <h3>Personal Portfolio</h3>
+        <a href="/claude-spinner-verbs.html" target="_blank" class="project-card">
+          <div class="proj-img">⟳</div>
+          <h3>Claude Spinner Verbs</h3>
           <div class="proj-tags">
-            <span class="proj-tag">HTML</span>
-            <span class="proj-tag">CSS</span>
-            <span class="proj-tag">JavaScript</span>
-          </div>
-        </a>
-        <a href="https://github.com/XiaoyuHuang/WebDevelop" target="_blank" class="project-card">
-          <div class="proj-img">💻</div>
-          <h3>Web Development</h3>
-          <div class="proj-tags">
-            <span class="proj-tag">CSS</span>
-            <span class="proj-tag">Web</span>
-          </div>
-        </a>
-        <a href="https://github.com/XiaoyuHuang/Sort-Algorithm" target="_blank" class="project-card">
-          <div class="proj-img">🔢</div>
-          <h3>Sort Algorithm</h3>
-          <div class="proj-tags">
-            <span class="proj-tag">Python</span>
-            <span class="proj-tag">Algorithms</span>
+            <span class="proj-tag">Claude Code</span>
+            <span class="proj-tag">AI</span>
           </div>
         </a>
         <a href="/star-fall-racing.html" target="_blank" class="project-card">
@@ -824,42 +789,17 @@
   <div class="expanded-work">
     <h2>Work</h2>
     <div class="exp-category">
-      <h3>Platform Products</h3>
-      <div class="exp-projects-grid">
-        <a href="https://github.com/XiaoyuHuang/XiaoyuHuang.github.io" target="_blank" class="exp-project-card">
-          <div class="proj-img">🌐</div>
-          <h4>Personal Portfolio</h4>
-          <p>Bento-style animated personal portfolio with physics-based interactions and responsive design.</p>
-          <div class="proj-tags">
-            <span class="proj-tag">HTML</span>
-            <span class="proj-tag">CSS</span>
-            <span class="proj-tag">JavaScript</span>
-            <span class="proj-tag">Matter.js</span>
-          </div>
-        </a>
-        <a href="https://github.com/XiaoyuHuang/WebDevelop" target="_blank" class="exp-project-card">
-          <div class="proj-img">💻</div>
-          <h4>Web Development</h4>
-          <p>Collection of web development projects and experiments with modern frontend technologies.</p>
-          <div class="proj-tags">
-            <span class="proj-tag">CSS</span>
-            <span class="proj-tag">Web</span>
-          </div>
-        </a>
-        <a href="https://github.com/XiaoyuHuang/Sort-Algorithm" target="_blank" class="exp-project-card">
-          <div class="proj-img">🔢</div>
-          <h4>Sort Algorithm</h4>
-          <p>Implementations and visualizations of classic sorting algorithms in Python.</p>
-          <div class="proj-tags">
-            <span class="proj-tag">Python</span>
-            <span class="proj-tag">Algorithms</span>
-          </div>
-        </a>
-      </div>
-    </div>
-    <div class="exp-category">
       <h3>AI Experiments</h3>
       <div class="exp-projects-grid">
+        <a href="/claude-spinner-verbs.html" target="_blank" class="exp-project-card">
+          <div class="proj-img">⟳</div>
+          <h4>Claude Spinner Verbs</h4>
+          <p>A curated collection of the action verbs Claude Code displays while thinking — an inside look at how the model narrates its own reasoning.</p>
+          <div class="proj-tags">
+            <span class="proj-tag">Claude Code</span>
+            <span class="proj-tag">AI</span>
+          </div>
+        </a>
         <a href="/star-fall-racing.html" target="_blank" class="exp-project-card">
           <div class="proj-img-star">⭐</div>
           <h4>Star Fall Racing</h4>
