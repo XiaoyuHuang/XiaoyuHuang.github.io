@@ -933,11 +933,14 @@ function initRotatingTitles(containerId) {
   container.appendChild(first);
 
   setInterval(() => {
+    // Remove any stale exit-up elements from rapid-fire ticks (e.g. tab switching)
+    container.querySelectorAll('.hero-title-line:not(.active)').forEach(el => el.remove());
+
     const current = container.querySelector('.active');
     if (current) {
       current.classList.remove('active');
       current.classList.add('exit-up');
-      setTimeout(() => current.remove(), 500);
+      setTimeout(() => { if (current.parentNode) current.remove(); }, 500);
     }
 
     currentIndex = (currentIndex + 1) % heroTitles.length;
