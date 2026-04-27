@@ -148,8 +148,8 @@
 
     /* Hand-drawn pencil sketch filter on map tiles */
     .leaflet-tile-pane {
-      filter: grayscale(1) sepia(0.22) contrast(1.45) brightness(1.1);
-      opacity: 0.88;
+      filter: grayscale(0.85) sepia(0.28) contrast(1.05) brightness(1.02) saturate(0.4);
+      opacity: 0.92;
     }
 
     /* Grain / paper texture overlay */
@@ -373,7 +373,7 @@ const PLACES = [
 const map = L.map('map', { scrollWheelZoom: false })
              .setView([47.625, -122.278], 11);
 
-L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
   attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/">CARTO</a>',
   subdomains: 'abcd', maxZoom: 19
 }).addTo(map);
