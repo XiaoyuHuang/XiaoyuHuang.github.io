@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>西雅图咖啡 & 奶茶</title>
+  <meta name="description" content="Seattle & Bellevue 精选咖啡馆与奶茶店地图" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+  <style>
+    :root {
+      --bg:        #f7f1e3;
+      --surface:   #fffcf6;
+      --panel:     #ebe1d1;
+      --chip:      #f5ecde;
+      --text:      #171411;
+      --muted:     rgba(23,20,17,.52);
+      --line:      #171411;
+      --shadow:    rgba(83,70,46,.13);
+      --c-coffee:  #6b3f1f;
+      --c-coffee-bg: #f5e8d8;
+      --c-tea:     #5b3d9a;
+      --c-tea-bg:  #ede8f8;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { background: var(--bg); }
+
+    body {
+      font-family: 'Comic Neue', 'Avenir Next', 'Helvetica Neue', sans-serif;
+      font-weight: 400;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.2;
+      min-height: 100vh;
+    }
+
+    /* ── Page shell ─────────────────────────────── */
+    .page {
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 1.4rem 1rem 5rem;
+    }
+
+    /* ── Back link ──────────────────────────────── */
+    .back {
+      display: inline-block;
+      font-size: .82rem;
+      color: var(--muted);
+      text-decoration: none;
+      margin-bottom: 1.8rem;
+      transition: color .18s;
+    }
+    .back:hover { color: var(--text); }
+
+    /* ── Header ─────────────────────────────────── */
+    .header {
+      text-align: center;
+      margin-bottom: 1.8rem;
+    }
+    .header-eyebrow {
+      font-size: .8rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: .5rem;
+    }
+    .header-title {
+      font-size: clamp(2rem, 5.5vw, 3.2rem);
+      font-weight: 700;
+      line-height: 1.05;
+      margin-bottom: .55rem;
+    }
+    .header-sub {
+      font-size: .96rem;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+
+    /* ── Filter pills ───────────────────────────── */
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .45rem;
+      justify-content: center;
+      margin-bottom: 1.4rem;
+    }
+
+    .pill {
+      appearance: none;
+      border: 2px solid var(--line);
+      background: var(--surface);
+      color: var(--text);
+      border-radius: 999px;
+      padding: .48rem 1.05rem;
+      font: inherit;
+      font-size: .84rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background .18s, color .18s, transform .1s, box-shadow .18s;
+      box-shadow: 0 3px 8px var(--shadow);
+    }
+    .pill:hover { background: var(--panel); }
+    .pill:active { transform: scale(.97); }
+    .pill.active {
+      background: var(--text);
+      color: var(--surface);
+      box-shadow: 0 5px 14px var(--shadow);
+    }
+
+    /* ── Legend ─────────────────────────────────── */
+    .legend {
+      display: flex;
+      gap: 1.4rem;
+      justify-content: center;
+      align-items: center;
+      font-size: .82rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+    .leg-dot {
+      width: 11px; height: 11px;
+      border-radius: 50%;
+      border: 2px solid var(--line);
+      display: inline-block;
+      vertical-align: middle;
+      margin-right: .35rem;
+    }
+
+    /* ── Map ────────────────────────────────────── */
+    .map-wrap {
+      border: 2px solid var(--line);
+      border-radius: 22px;
+      overflow: hidden;
+      box-shadow: 0 16px 48px var(--shadow);
+      margin-bottom: 2.2rem;
+    }
+    #map { height: 480px; width: 100%; }
+
+    /* Leaflet popup override */
+    .leaflet-popup-content-wrapper {
+      font-family: 'Comic Neue', sans-serif !important;
+      border: 2px solid var(--line) !important;
+      border-radius: 16px !important;
+      box-shadow: 0 10px 28px var(--shadow) !important;
+      padding: 0 !important;
+      background: var(--surface) !important;
+    }
+    .leaflet-popup-content { margin: 0 !important; }
+    .leaflet-popup-tip-container { display: none; }
+    .leaflet-popup-close-button {
+      font-size: 1.1rem !important;
+      padding: 6px 10px !important;
+      color: var(--muted) !important;
+    }
+
+    /* ── Section label ──────────────────────────── */
+    .section-label {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin: 1.8rem 0 .85rem;
+      display: flex;
+      align-items: center;
+      gap: .45rem;
+    }
+
+    /* ── Card grid ──────────────────────────────── */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(268px, 1fr));
+      gap: .9rem;
+    }
+
+    /* ── Card ───────────────────────────────────── */
+    .card {
+      border: 2px solid var(--line);
+      background: var(--surface);
+      border-radius: 20px;
+      padding: 1.05rem 1.15rem 1rem;
+      box-shadow: 0 6px 20px var(--shadow);
+      cursor: pointer;
+      transition: background .18s, transform .18s, box-shadow .18s;
+      user-select: none;
+    }
+    .card:hover {
+      background: var(--chip);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px var(--shadow);
+    }
+
+    .card-top {
+      display: flex;
+      gap: .65rem;
+      align-items: flex-start;
+      margin-bottom: .45rem;
+    }
+    .card-icon {
+      font-size: 1.5rem;
+      line-height: 1;
+      flex: none;
+      margin-top: 1px;
+    }
+    .card-name {
+      font-weight: 700;
+      font-size: 1rem;
+      line-height: 1.18;
+    }
+    .card-neighborhood {
+      font-size: .77rem;
+      color: var(--muted);
+      margin-top: .18rem;
+    }
+    .card-desc {
+      font-size: .82rem;
+      line-height: 1.38;
+      color: rgba(23,20,17,.72);
+      margin-top: .5rem;
+    }
+    .card-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .3rem;
+      margin-top: .65rem;
+    }
+    .tag {
+      font-size: .7rem;
+      font-weight: 700;
+      border-radius: 999px;
+      padding: .18rem .6rem;
+      border: 1.5px solid transparent;
+    }
+    .tag-coffee { color: var(--c-coffee); background: var(--c-coffee-bg); border-color: rgba(107,63,31,.28); }
+    .tag-tea    { color: var(--c-tea);    background: var(--c-tea-bg);    border-color: rgba(91,61,154,.28); }
+    .tag-misc   { color: var(--muted);    background: var(--panel);       border-color: rgba(23,20,17,.18); }
+
+    /* ── No-results ─────────────────────────────── */
+    .empty {
+      text-align: center;
+      padding: 3rem 1rem;
+      color: var(--muted);
+      font-size: 1rem;
+    }
+
+    /* ── Count badge ────────────────────────────── */
+    .count-badge {
+      display: inline-block;
+      background: var(--panel);
+      border: 1.5px solid rgba(23,20,17,.2);
+      border-radius: 999px;
+      font-size: .72rem;
+      font-weight: 700;
+      padding: .12rem .55rem;
+      margin-left: .5rem;
+      color: var(--muted);
+      vertical-align: middle;
+    }
+
+    @media (max-width: 640px) {
+      #map { height: 340px; }
+      .grid { grid-template-columns: 1fr; }
+      .header-title { font-size: 1.85rem; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="page">
+  <a class="back" href="/">← Back</a>
+
+  <div class="header">
+    <p class="header-eyebrow">Seattle · Bellevue · PNW</p>
+    <h1 class="header-title">☕ 咖啡 & 奶茶 地图 🧋</h1>
+    <p class="header-sub">精选西雅图地区咖啡馆与奶茶店 · Click a card to locate it on the map</p>
+  </div>
+
+  <div class="filters" id="filters">
+    <button class="pill active" data-f="all">All</button>
+    <button class="pill" data-f="coffee">☕ Coffee</button>
+    <button class="pill" data-f="tea">🧋 Milk Tea</button>
+    <button class="pill" data-f="seattle">Seattle</button>
+    <button class="pill" data-f="bellevue">Bellevue</button>
+  </div>
+
+  <div class="legend">
+    <span><span class="leg-dot" style="background:var(--c-coffee)"></span>Coffee</span>
+    <span><span class="leg-dot" style="background:var(--c-tea)"></span>Milk Tea</span>
+  </div>
+
+  <div class="map-wrap">
+    <div id="map"></div>
+  </div>
+
+  <div id="cards"></div>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+// ── Data ─────────────────────────────────────────────────────────
+const PLACES = [
+  // Seattle – Coffee
+  { name:"Victrola Coffee Roasters",   type:"coffee", area:"seattle",  hood:"Capitol Hill",          lat:47.6162, lng:-122.3200, desc:"Seattle icon since 2000. Direct-trade beans in a restored jazz-era building.",                             tags:["Roaster","Espresso"] },
+  { name:"Espresso Vivace",             type:"coffee", area:"seattle",  hood:"Capitol Hill",          lat:47.6187, lng:-122.3143, desc:"Legendary birthplace of latte art. Espresso as it was meant to be.",                                    tags:["Espresso","Iconic"] },
+  { name:"Elm Coffee Roasters",         type:"coffee", area:"seattle",  hood:"Pioneer Square",        lat:47.6013, lng:-122.3313, desc:"Light roasts in a historic building. Minimal, precise, excellent.",                                     tags:["Light Roast","Roaster"] },
+  { name:"Slate Coffee Roasters",       type:"coffee", area:"seattle",  hood:"Ballard",               lat:47.6608, lng:-122.3843, desc:"Coffee served in wine glasses. Deconstructed and thoughtful — unlike anything else in Seattle.",         tags:["Specialty","Roaster"] },
+  { name:"Caffe Vita",                  type:"coffee", area:"seattle",  hood:"Capitol Hill",          lat:47.6189, lng:-122.3226, desc:"Seattle institution since 1995. Farm Direct pioneer, still independently owned.",                       tags:["Classic","Roaster"] },
+  { name:"Lighthouse Roasters",         type:"coffee", area:"seattle",  hood:"Fremont",               lat:47.6513, lng:-122.3506, desc:"Operating since 1993 with a vintage 1952 roaster. Old Seattle soul.",                                   tags:["Classic","Neighborhood"] },
+  { name:"Anchorhead Coffee",           type:"coffee", area:"seattle",  hood:"Downtown",              lat:47.6082, lng:-122.3354, desc:"America's Best Espresso award winner. Order the Brown Sugar Latte.",                                    tags:["Award-Winning","Espresso"] },
+  { name:"Storyville Coffee",           type:"coffee", area:"seattle",  hood:"Pike Place Market",     lat:47.6094, lng:-122.3417, desc:"Same-day roasted on Bainbridge Island. Proceeds support human trafficking rescue.",                     tags:["Roaster","Mission-Driven"] },
+  { name:"Zoka Coffee",                 type:"coffee", area:"seattle",  hood:"Tangletown",            lat:47.6659, lng:-122.3218, desc:"Owner-operated since 1996. Two-time National Barista Championship winner.",                             tags:["Specialty","Classic"] },
+  { name:"Milstead & Co.",              type:"coffee", area:"seattle",  hood:"Fremont",               lat:47.6505, lng:-122.3472, desc:"Multi-roaster with Lake Union views. Food & Wine gave it a perfect 5 out of 5.",                       tags:["Multi-Roaster","Views"] },
+  { name:"Analog Coffee",               type:"coffee", area:"seattle",  hood:"Capitol Hill",          lat:47.6160, lng:-122.3290, desc:"Vinyl records + great Herkimer coffee. Neighborhood hang since 2011.",                                  tags:["Cozy","Neighborhood"] },
+  { name:"Herkimer Coffee",             type:"coffee", area:"seattle",  hood:"Greenwood",             lat:47.6886, lng:-122.3540, desc:"Sustainable sourcing from small farms. Quietly excellent.",                                             tags:["Roaster","Sustainable"] },
+  // Seattle – Milk Tea
+  { name:"Xing Fu Tang",                type:"tea",    area:"seattle",  hood:"Westlake Center",       lat:47.6100, lng:-122.3375, desc:"Handmade brown sugar boba cooked in a copper wok. Always a line — always worth it.",                    tags:["Brown Sugar","Taiwanese"] },
+  { name:"Oasis Tea Zone",              type:"tea",    area:"seattle",  hood:"Chinatown / ID",        lat:47.5992, lng:-122.3235, desc:"The OG — longest-running boba shop in the Pacific Northwest since 2001.",                              tags:["Classic","OG"] },
+  { name:"Gaga Tea",                    type:"tea",    area:"seattle",  hood:"International District",lat:47.5985, lng:-122.3240, desc:"One of Seattle's top-rated boba stops. Consistently excellent across the menu.",                       tags:["Top Rated","Boba"] },
+  { name:"Sharetea",                    type:"tea",    area:"seattle",  hood:"University District",   lat:47.6595, lng:-122.3130, desc:"Tea leaves imported directly from Taiwan. Reliable quality across 9 area locations.",                  tags:["Taiwanese","Classic"] },
+  { name:"Happy Lemon",                 type:"tea",    area:"seattle",  hood:"South Lake Union",      lat:47.6219, lng:-122.3390, desc:"The beloved Taiwanese lemon-drink chain. Refreshing and crowd-pleasing.",                              tags:["Lemon Tea","Taiwanese"] },
+  { name:"Yifang Taiwan Fruit Tea",     type:"tea",    area:"seattle",  hood:"University District",   lat:47.6578, lng:-122.3114, desc:"Born from grandma's pineapple jam recipe. The signature fruit tea is unforgettable.",                 tags:["Fruit Tea","Taiwanese"] },
+  { name:"Atulea",                      type:"tea",    area:"seattle",  hood:"Capitol Hill",          lat:47.6175, lng:-122.3195, desc:"Quality boba in the heart of Capitol Hill. Low-key neighborhood gem.",                                 tags:["Boba","Neighborhood"] },
+  { name:"Bobae Coffee & Tea",          type:"tea",    area:"seattle",  hood:"Multiple locations",    lat:47.6090, lng:-122.3310, desc:"Home of the original Boba Donut and Seattle's first Nitro Bubble Tea.",                               tags:["Innovative","Donut"] },
+  // Bellevue – Coffee
+  { name:"Cafe Cesura",                 type:"coffee", area:"bellevue", hood:"Downtown Bellevue",     lat:47.6102, lng:-122.2012, desc:"Modern, roasts its own beans, supports local artists. A downtown anchor for 10+ years.",               tags:["Roaster","Art Space"] },
+  { name:"Mercury Coffee",              type:"coffee", area:"bellevue", hood:"Eastside",              lat:47.6154, lng:-122.2068, desc:"Eastside staple since 1998. 6-time award winner across 11 locations.",                                 tags:["Award-Winning","Chain"] },
+  { name:"Third Culture Coffee",        type:"coffee", area:"bellevue", hood:"Downtown Bellevue",     lat:47.6140, lng:-122.2023, desc:"Globally inspired menu — Indian filter coffee, Vietnamese drip, and more.",                           tags:["Global","Specialty"] },
+  { name:"Bellden Café",                type:"coffee", area:"bellevue", hood:"Bellevue",              lat:47.6148, lng:-122.1998, desc:"Community-first cafe. Don't miss the signature Orange Blossom Cold Brew.",                             tags:["Community","Cold Brew"] },
+  { name:"Dote Coffee Bar",             type:"coffee", area:"bellevue", hood:"Downtown Bellevue",     lat:47.6135, lng:-122.2001, desc:"Thoughtfully sourced espresso, teas, and chocolate. Also in the Spring District.",                    tags:["Espresso","Cozy"] },
+  { name:"Coffeeholic House",           type:"coffee", area:"bellevue", hood:"Bellevue",              lat:47.6090, lng:-122.2040, desc:"Authentic Vietnamese coffee in Bellevue. Founded by Chen & Trang.",                                    tags:["Vietnamese","Specialty"] },
+  { name:"Copper Kettle Coffee Bar",    type:"coffee", area:"bellevue", hood:"Botanical Garden",      lat:47.6012, lng:-122.1682, desc:"Peaceful oasis inside the Bellevue Botanical Garden. Sleepy Monk coffee + Macrina pastries.",         tags:["Nature","Peaceful"] },
+  // Bellevue – Milk Tea
+  { name:"Mi Tea",                      type:"tea",    area:"bellevue", hood:"Downtown Bellevue",     lat:47.6132, lng:-122.2025, desc:"Rich Himalayan cheese foam that sets it apart. High quality since 2016.",                              tags:["Cheese Foam","Quality"] },
+  { name:"CHICHA San Chen",             type:"tea",    area:"bellevue", hood:"Bellevue",              lat:47.6098, lng:-122.2010, desc:"Fresh-brewed Taiwanese bubble tea with a modern look. They offer samples!",                            tags:["Fresh Brewed","Taiwanese"] },
+  { name:"Happy Lemon",                 type:"tea",    area:"bellevue", hood:"Downtown Bellevue",     lat:47.6108, lng:-122.2050, desc:"Locally sourced fruits, lemon green teas, bubble waffles, and Korean corn dogs.",                     tags:["Lemon Tea","Snacks"] },
+  { name:"Blackbird",                   type:"tea",    area:"bellevue", hood:"Downtown Bellevue",     lat:47.6145, lng:-122.2055, desc:"Bubble tea meets mille crepe cakes. Beautiful drinks, beautiful desserts.",                            tags:["Aesthetic","Dessert"] },
+  { name:"Don't Yell at Me",            type:"tea",    area:"bellevue", hood:"Bellevue",              lat:47.6087, lng:-122.2035, desc:"Bold name, beautiful drinks. The rose milk tea is a must-order.",                                      tags:["Aesthetic","Rose Tea"] },
+  { name:"Sharetea Bellevue",           type:"tea",    area:"bellevue", hood:"Downtown Bellevue",     lat:47.6120, lng:-122.1990, desc:"Taiwan-imported tea leaves. Try the mojito series: mango, peach, or strawberry.",                    tags:["Taiwanese","Mojito"] },
+  { name:"Over the Rainbow",            type:"tea",    area:"bellevue", hood:"Bellevue",              lat:47.6115, lng:-122.2048, desc:"DIY topping station + bright murals. Open since 2016, perpetually festive.",                           tags:["DIY","Fun"] },
+  { name:"Heytea",                      type:"tea",    area:"bellevue", hood:"Bellevue",              lat:47.6127, lng:-122.2018, desc:"The sought-after Chinese cheese tea chain, finally in Bellevue.",                                      tags:["Cheese Tea","Trendy"] },
+  { name:"Molly Tea",                   type:"tea",    area:"bellevue", hood:"Bellevue",              lat:47.6140, lng:-122.1985, desc:"Shenzhen-origin shop known for jasmine drinks with floral & fruity notes. ★ 4.6",                    tags:["Jasmine","Floral"] },
+  { name:"TRA Tea & Juice Bar",         type:"tea",    area:"bellevue", hood:"Downtown Bellevue",     lat:47.6119, lng:-122.2032, desc:"Fresh brewed tea, cold-pressed juice, and Vietnamese coffee — all in playful cups.",                  tags:["Fresh","Juice"] },
+  { name:"Yifang Taiwan Fruit Tea",     type:"tea",    area:"bellevue", hood:"Bellevue",              lat:47.6094, lng:-122.2020, desc:"Bellevue outpost of the beloved grandma's-recipe fruit tea brand.",                                    tags:["Fruit Tea","Taiwanese"] },
+];
+
+// ── Map init ─────────────────────────────────────────────────────
+const map = L.map('map', { scrollWheelZoom: false })
+             .setView([47.625, -122.278], 11);
+
+L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+  attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/">CARTO</a>',
+  subdomains: 'abcd', maxZoom: 19
+}).addTo(map);
+
+// ── Custom icons ──────────────────────────────────────────────────
+function makeIcon(type) {
+  const fill = type === 'coffee' ? '#6b3f1f' : '#5b3d9a';
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="36" viewBox="0 0 28 36">
+    <path d="M14 0C6.268 0 0 6.268 0 14c0 9.333 14 22 14 22S28 23.333 28 14C28 6.268 21.732 0 14 0z"
+          fill="${fill}" stroke="#171411" stroke-width="2"/>
+    <circle cx="14" cy="14" r="7" fill="rgba(255,252,246,0.25)"/>
+    <text x="14" y="18.5" text-anchor="middle" font-size="10" font-family="sans-serif">${type === 'coffee' ? '☕' : '🧋'}</text>
+  </svg>`;
+  return L.divIcon({
+    html: svg,
+    className: '',
+    iconSize: [28, 36],
+    iconAnchor: [14, 36],
+    popupAnchor: [0, -38],
+  });
+}
+
+// ── Popup content ─────────────────────────────────────────────────
+function popupHtml(p) {
+  const typeColor = p.type === 'coffee' ? '#6b3f1f' : '#5b3d9a';
+  const typeBg    = p.type === 'coffee' ? '#f5e8d8' : '#ede8f8';
+  return `<div style="padding:.85rem 1rem .9rem;min-width:185px;max-width:230px;">
+    <div style="font-size:.7rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;
+                color:${typeColor};background:${typeBg};border:1.5px solid rgba(0,0,0,.1);
+                border-radius:999px;display:inline-block;padding:.12rem .55rem;margin-bottom:.45rem;">
+      ${p.type === 'coffee' ? '☕ Coffee' : '🧋 Milk Tea'}
+    </div>
+    <div style="font-weight:700;font-size:.98rem;line-height:1.18;margin-bottom:.15rem;">${p.name}</div>
+    <div style="font-size:.75rem;opacity:.55;margin-bottom:.4rem;">${p.hood}</div>
+    <div style="font-size:.8rem;line-height:1.38;opacity:.78;">${p.desc}</div>
+  </div>`;
+}
+
+// ── Create markers ────────────────────────────────────────────────
+const markerMap = {};
+
+PLACES.forEach(p => {
+  const m = L.marker([p.lat, p.lng], { icon: makeIcon(p.type) })
+             .addTo(map)
+             .bindPopup(popupHtml(p), { maxWidth: 240, className: '' });
+  markerMap[p.name] = m;
+});
+
+// ── Cards ─────────────────────────────────────────────────────────
+const AREA_LABELS = { seattle: '📍 Seattle', bellevue: '📍 Bellevue' };
+const cardsEl = document.getElementById('cards');
+
+function renderCards(filter) {
+  cardsEl.innerHTML = '';
+  const filtered = PLACES.filter(p => {
+    if (filter === 'all')     return true;
+    if (filter === 'coffee')  return p.type === 'coffee';
+    if (filter === 'tea')     return p.type === 'tea';
+    return p.area === filter;
+  });
+  if (!filtered.length) {
+    cardsEl.innerHTML = '<div class="empty">No results for this filter.</div>';
+    return;
+  }
+  const areas = [...new Set(filtered.map(p => p.area))];
+  areas.forEach(area => {
+    const group = filtered.filter(p => p.area === area);
+    const sec = document.createElement('div');
+    sec.innerHTML = `<div class="section-label">${AREA_LABELS[area]}<span class="count-badge">${group.length}</span></div>`;
+    const grid = document.createElement('div');
+    grid.className = 'grid';
+    group.forEach(p => {
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.innerHTML = `
+        <div class="card-top">
+          <span class="card-icon">${p.type === 'coffee' ? '☕' : '🧋'}</span>
+          <div>
+            <div class="card-name">${p.name}</div>
+            <div class="card-neighborhood">${p.hood}</div>
+          </div>
+        </div>
+        <div class="card-desc">${p.desc}</div>
+        <div class="card-tags">
+          <span class="tag ${p.type === 'coffee' ? 'tag-coffee' : 'tag-tea'}">${p.type === 'coffee' ? 'Coffee' : 'Milk Tea'}</span>
+          ${p.tags.map(t => `<span class="tag tag-misc">${t}</span>`).join('')}
+        </div>`;
+      card.addEventListener('click', () => {
+        map.setView([p.lat, p.lng], 15, { animate: true });
+        const m = markerMap[p.name];
+        if (m) setTimeout(() => m.openPopup(), 350);
+        document.getElementById('map').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      });
+      grid.appendChild(card);
+    });
+    sec.appendChild(grid);
+    cardsEl.appendChild(sec);
+  });
+}
+
+// ── Filter interaction ────────────────────────────────────────────
+let current = 'all';
+
+document.getElementById('filters').addEventListener('click', e => {
+  const btn = e.target.closest('.pill');
+  if (!btn) return;
+  current = btn.dataset.f;
+  document.querySelectorAll('.pill').forEach(b => b.classList.toggle('active', b === btn));
+  renderCards(current);
+
+  // Show / hide markers
+  PLACES.forEach(p => {
+    const m = markerMap[p.name];
+    const show = current === 'all'
+      || (current === 'coffee' && p.type === 'coffee')
+      || (current === 'tea'    && p.type === 'tea')
+      || (current === p.area);
+    if (show) { if (!map.hasLayer(m)) map.addLayer(m); }
+    else       { if (map.hasLayer(m)) map.removeLayer(m); }
+  });
+});
+
+// ── Initial render ────────────────────────────────────────────────
+renderCards('all');
+</script>
+
+</body>
+</html>
