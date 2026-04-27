@@ -7,426 +7,476 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { background: #1a1a1a; overflow: hidden; width: 100vw; height: 100vh; }
-    canvas {
-      display: block;
+    html, body { width: 100%; height: 100%; background: #111; overflow: hidden; }
+
+    #scene {
+      position: relative;
       width: 100vw;
       height: 100vh;
-      cursor: pointer;
     }
+
+    /* Layer 1: the actual painting */
+    #painting {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      object-fit: contain;
+      object-position: center;
+      display: block;
+    }
+
+    /* Layer 2: mask canvas — covers original goose positions */
+    /* Layer 3: geese canvas — animated Wu Guanzhong-style geese */
+    #mask-canvas, #geese-canvas {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+    }
+
+    #geese-canvas { cursor: pointer; }
+
+    /* UI overlay */
     .ui {
       position: fixed;
       inset: 0;
       pointer-events: none;
-      padding: 28px 32px;
+      padding: 24px 28px;
       display: flex;
       flex-direction: column;
+      z-index: 10;
     }
     .back {
       pointer-events: all;
       font-family: 'Inter', sans-serif;
-      font-size: 0.85rem;
+      font-size: 0.82rem;
       color: rgba(255,255,255,0.55);
       text-decoration: none;
       align-self: flex-start;
       transition: color 0.2s;
+      text-shadow: 0 1px 6px rgba(0,0,0,0.6);
     }
     .back:hover { color: rgba(255,255,255,0.9); }
+
     .title-block { margin-top: auto; }
     h1 {
       font-family: 'Inter', sans-serif;
-      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-size: clamp(1.6rem, 3.5vw, 2.4rem);
       font-weight: 700;
       color: rgba(255,255,255,0.92);
       letter-spacing: 0.12em;
-      text-shadow: 0 2px 24px rgba(0,0,0,0.4);
+      text-shadow: 0 2px 20px rgba(0,0,0,0.55);
     }
     .attribution {
       font-family: 'Inter', sans-serif;
-      font-size: 0.82rem;
-      color: rgba(255,255,255,0.45);
-      margin-top: 5px;
-      letter-spacing: 0.15em;
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.42);
+      margin-top: 4px;
+      letter-spacing: 0.14em;
+      text-shadow: 0 1px 8px rgba(0,0,0,0.5);
     }
+
     #hint {
       position: fixed;
-      bottom: 32px;
+      bottom: 28px;
       left: 50%;
       transform: translateX(-50%);
       font-family: 'Inter', sans-serif;
-      font-size: 0.8rem;
+      font-size: 0.75rem;
       letter-spacing: 0.08em;
-      color: rgba(255,255,255,0.75);
-      background: rgba(0,0,0,0.28);
-      backdrop-filter: blur(6px);
-      padding: 8px 22px;
-      border-radius: 24px;
+      color: rgba(255,255,255,0.72);
+      background: rgba(0,0,0,0.3);
+      backdrop-filter: blur(8px);
+      padding: 7px 20px;
+      border-radius: 20px;
       border: 1px solid rgba(255,255,255,0.1);
       white-space: nowrap;
-      transition: opacity 0.6s;
+      transition: opacity 0.5s;
+      z-index: 10;
       pointer-events: none;
+    }
+
+    #loading {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.4);
+      letter-spacing: 0.1em;
+      z-index: 20;
+      background: #111;
+      transition: opacity 0.8s;
     }
   </style>
 </head>
 <body>
 
-<canvas id="c"></canvas>
+<div id="loading">正在加载画作…</div>
+
+<div id="scene">
+  <!-- Layer 1: the actual Wu Guanzhong painting -->
+  <img id="painting"
+       src="https://img1.artron.net/artist/A0000076/brt0001320222.jpg"
+       alt="吴冠中 太湖鹅群 1974" />
+  <!-- Layer 2: mask over original goose positions -->
+  <canvas id="mask-canvas"></canvas>
+  <!-- Layer 3: animated Wu Guanzhong-style geese -->
+  <canvas id="geese-canvas"></canvas>
+</div>
 
 <div class="ui">
   <a href="/" class="back">← 返回 / Back</a>
   <div class="title-block">
     <h1>太湖鹅群</h1>
-    <p class="attribution">吴冠中 · Wu Guanzhong</p>
+    <p class="attribution">吴冠中 Wu Guanzhong · 1974</p>
   </div>
 </div>
-<div id="hint">点击画面唤醒鹅群 · Click to awaken</div>
+<div id="hint">点击画面让鹅群游动 · Click to awaken</div>
 
 <script>
-const canvas = document.getElementById('c');
-const ctx = canvas.getContext('2d');
+const painting    = document.getElementById('painting');
+const maskCanvas  = document.getElementById('mask-canvas');
+const geeseCanvas = document.getElementById('geese-canvas');
+const maskCtx     = maskCanvas.getContext('2d');
+const geeseCtx    = geeseCanvas.getContext('2d');
+const hintEl      = document.getElementById('hint');
+const loadingEl   = document.getElementById('loading');
 
-let W, H, waterY;
-let bg; // offscreen background canvas
-let geese = [];
-let animated = false;
-let raf;
+// ── State ────────────────────────────────────────────────────────
+const S = { INITIAL: 0, ANIMATING: 1, FROZEN: 2 };
+let state = S.INITIAL;
+let raf = null;
 
-// ── Resize ──────────────────────────────────────────────────────
+// ── Approximate positions of original geese in the painting ──────
+// Normalized (0–1) relative to painting's natural dimensions.
+// cx,cy = goose center; rx,ry = mask ellipse radii.
+// Estimated from the 1974 oil painting composition.
+const ORIG = [
+  { cx: 0.14, cy: 0.50, rx: 0.07, ry: 0.12 },
+  { cx: 0.22, cy: 0.42, rx: 0.06, ry: 0.10 },
+  { cx: 0.20, cy: 0.60, rx: 0.06, ry: 0.10 },
+  { cx: 0.35, cy: 0.38, rx: 0.07, ry: 0.12 },
+  { cx: 0.42, cy: 0.55, rx: 0.06, ry: 0.10 },
+  { cx: 0.38, cy: 0.68, rx: 0.06, ry: 0.09 },
+  { cx: 0.56, cy: 0.44, rx: 0.07, ry: 0.11 },
+  { cx: 0.62, cy: 0.60, rx: 0.06, ry: 0.10 },
+  { cx: 0.70, cy: 0.50, rx: 0.06, ry: 0.10 },
+  { cx: 0.76, cy: 0.65, rx: 0.06, ry: 0.09 },
+  { cx: 0.82, cy: 0.55, rx: 0.06, ry: 0.09 },
+  { cx: 0.48, cy: 0.72, rx: 0.06, ry: 0.09 },
+];
+
+// ── Canvas resize ────────────────────────────────────────────────
 function resize() {
-  W = canvas.width  = window.innerWidth;
-  H = canvas.height = window.innerHeight;
-  waterY = H * 0.28;
-  buildBg();
-  buildGeese();
+  maskCanvas.width  = geeseCanvas.width  = window.innerWidth;
+  maskCanvas.height = geeseCanvas.height = window.innerHeight;
 }
 
-// ── Background (painted once to offscreen canvas) ────────────────
-function buildBg() {
-  bg = document.createElement('canvas');
-  bg.width = W; bg.height = H;
-  const c = bg.getContext('2d');
-
-  // Cream sky
-  const sky = c.createLinearGradient(0, 0, 0, waterY * 1.1);
-  sky.addColorStop(0, '#dde5e8');
-  sky.addColorStop(1, '#c8d5db');
-  c.fillStyle = sky;
-  c.fillRect(0, 0, W, H);
-
-  // Faint distant hills
-  c.beginPath();
-  c.moveTo(0, waterY);
-  c.bezierCurveTo(W*0.15, waterY-38, W*0.35, waterY-22, W*0.55, waterY-30);
-  c.bezierCurveTo(W*0.72, waterY-42, W*0.88, waterY-18, W, waterY);
-  c.closePath();
-  c.fillStyle = 'rgba(110,140,130,0.18)';
-  c.fill();
-
-  // Water body
-  const water = c.createLinearGradient(0, waterY, 0, H);
-  water.addColorStop(0,   '#a8c2cc');
-  water.addColorStop(0.45,'#92afbc');
-  water.addColorStop(1,   '#7a9dac');
-  c.fillStyle = water;
-  c.fillRect(0, waterY, W, H - waterY);
-
-  // Shoreline stroke
-  c.beginPath();
-  c.moveTo(0, waterY); c.lineTo(W, waterY);
-  c.strokeStyle = 'rgba(70,100,90,0.35)';
-  c.lineWidth = 1.2;
-  c.stroke();
-
-  // Water shimmer
-  c.globalAlpha = 0.1;
-  for (let i = 0; i < 90; i++) {
-    const y   = waterY + 5 + Math.random() * (H - waterY - 10);
-    const x   = Math.random() * W;
-    const len = 18 + Math.random() * 90;
-    c.beginPath();
-    c.moveTo(x, y); c.lineTo(x + len, y);
-    c.strokeStyle = 'white';
-    c.lineWidth = 0.7;
-    c.stroke();
-  }
-  c.globalAlpha = 1;
-
-  // Lotus leaves
-  for (let i = 0; i < 10; i++) {
-    const lx = 30 + Math.random() * (W - 60);
-    const ly = waterY + 20 + Math.random() * (H - waterY - 40);
-    const lr = 14 + Math.random() * 22;
-    c.beginPath();
-    c.arc(lx, ly, lr, 0, Math.PI * 2);
-    c.fillStyle   = `rgba(55,90,60,${0.08 + Math.random() * 0.1})`;
-    c.strokeStyle = `rgba(55,90,60,${0.25 + Math.random() * 0.2})`;
-    c.lineWidth   = 1.2;
-    c.fill(); c.stroke();
-    // Leaf vein
-    c.beginPath();
-    c.moveTo(lx, ly); c.lineTo(lx + lr * 0.7, ly - lr * 0.5);
-    c.strokeStyle = `rgba(55,90,60,0.15)`;
-    c.lineWidth   = 0.6;
-    c.stroke();
-  }
-
-  // Reeds left
-  reeds(c, 0,   18);
-  // Reeds right
-  reeds(c, W,   14);
-  // Scattered interior reeds
-  reeds(c, W * 0.22, 4);
-  reeds(c, W * 0.68, 6);
-
-  // Wu Guanzhong signature red/orange dots
-  const dotColors = ['#be1a1a','#cc2a10','#d43a08','#c82818','#d44a10'];
-  for (let i = 0; i < 32; i++) {
-    const dx = 20 + Math.random() * (W - 40);
-    const dy = waterY + 8 + Math.random() * (H - waterY - 16);
-    const dr = 1.8 + Math.random() * 4.5;
-    c.beginPath();
-    c.arc(dx, dy, dr, 0, Math.PI * 2);
-    c.fillStyle   = dotColors[i % dotColors.length];
-    c.globalAlpha = 0.4 + Math.random() * 0.55;
-    c.fill();
-  }
-  c.globalAlpha = 1;
+// ── Get the painting's rendered rectangle (object-fit: contain) ──
+function paintingRect() {
+  const iw = painting.naturalWidth  || 800;
+  const ih = painting.naturalHeight || 600;
+  const cw = window.innerWidth;
+  const ch = window.innerHeight;
+  const ir = iw / ih;
+  const cr = cw / ch;
+  let dw, dh;
+  if (ir > cr) { dw = cw; dh = cw / ir; }
+  else         { dh = ch; dw = ch * ir; }
+  return { x: (cw - dw) / 2, y: (ch - dh) / 2, w: dw, h: dh };
 }
 
-function reeds(c, bx, n) {
-  const dir = bx === 0 ? 1 : -1;
-  for (let i = 0; i < n; i++) {
-    const rx  = bx + dir * (8 + Math.random() * 110);
-    const bot = waterY + 10 + Math.random() * (H - waterY - 30) * 0.65;
-    const h   = 55 + Math.random() * 160;
-    const tx  = rx + (Math.random() - 0.5) * 28;
-    const ty  = bot - h;
-    c.beginPath();
-    c.moveTo(rx, bot);
-    c.quadraticCurveTo(rx + (Math.random()-0.5)*18, bot - h*0.5, tx, ty);
-    const g = Math.floor(65 + Math.random()*30);
-    c.strokeStyle = `rgba(40,${g},35,${0.55 + Math.random()*0.4})`;
-    c.lineWidth   = 0.8 + Math.random() * 2;
-    c.stroke();
-    if (Math.random() > 0.35) {
-      c.beginPath();
-      c.ellipse(tx, ty + 6, 2.5, 9, (Math.random()-0.5)*0.5, 0, Math.PI*2);
-      c.fillStyle = `rgba(75,45,15,${0.55+Math.random()*0.4})`;
-      c.fill();
+// ── Draw mask over original goose positions ──────────────────────
+// Color sampled to match Taihu Lake's blue-grey water in the painting.
+function drawMask(rect) {
+  maskCtx.clearRect(0, 0, maskCanvas.width, maskCanvas.height);
+  ORIG.forEach(g => {
+    const cx = rect.x + g.cx * rect.w;
+    const cy = rect.y + g.cy * rect.h;
+    const rx = g.rx * rect.w * 1.5;
+    const ry = g.ry * rect.h * 1.4;
+
+    // Soft radial gradient blending into the lake
+    const grad = maskCtx.createRadialGradient(cx, cy, 0, cx, cy, Math.max(rx, ry));
+    grad.addColorStop(0,   'rgba(98, 122, 138, 0.95)');
+    grad.addColorStop(0.55,'rgba(90, 114, 130, 0.88)');
+    grad.addColorStop(0.8, 'rgba(82, 106, 122, 0.55)');
+    grad.addColorStop(1,   'rgba(75, 100, 115, 0)');
+
+    maskCtx.fillStyle = grad;
+    maskCtx.beginPath();
+    maskCtx.ellipse(cx, cy, rx, ry, 0, 0, Math.PI * 2);
+    maskCtx.fill();
+
+    // Subtle horizontal water strokes inside the patch
+    maskCtx.save();
+    maskCtx.beginPath();
+    maskCtx.ellipse(cx, cy, rx * 0.85, ry * 0.82, 0, 0, Math.PI * 2);
+    maskCtx.clip();
+    for (let dy = -ry * 0.8; dy < ry * 0.8; dy += 5) {
+      const frac  = 1 - (dy / (ry * 0.85)) ** 2;
+      const lw    = Math.sqrt(Math.max(0, frac)) * rx * 1.4;
+      const alpha = 0.12 + Math.random() * 0.1;
+      maskCtx.strokeStyle = `rgba(65, 95, 112, ${alpha})`;
+      maskCtx.lineWidth = 0.8 + Math.random() * 0.8;
+      maskCtx.beginPath();
+      maskCtx.moveTo(cx - lw, cy + dy);
+      maskCtx.lineTo(cx + lw, cy + dy);
+      maskCtx.stroke();
     }
-  }
+    maskCtx.restore();
+  });
 }
 
-// ── Draw a single goose ──────────────────────────────────────────
-// neckBob: -1 (drinking/down) → 0 (neutral) → 1 (alert/up)
-// facing:  true = right, false = left
-function drawGoose(cx, cy, sc, facing, neckBob, wingFlap) {
-  ctx.save();
-  ctx.translate(cx, cy);
-  if (!facing) ctx.scale(-1, 1);
-  ctx.scale(sc, sc);
+// ── Wu Guanzhong style goose drawing ─────────────────────────────
+// s  = body half-width in pixels
+// wb = wobble offset (swimming bob)
+// frozen = draw static (no extra wobble)
+function drawGoose(ctx, x, y, s, angle, wobble) {
+  const facingRight = Math.cos(angle) >= 0;
 
-  const bw = 22, bh = 13;
-
-  // ── Water reflection (squished ellipse below) ──
   ctx.save();
-  ctx.scale(1, 0.28);
+  ctx.translate(x, y);
+  if (!facingRight) ctx.scale(-1, 1);
+
+  const wb = wobble;
+
+  // Water ripple / reflection
+  ctx.save();
+  ctx.scale(1, 0.22);
+  ctx.fillStyle = 'rgba(55, 85, 105, 0.18)';
   ctx.beginPath();
-  ctx.ellipse(0, (bh + 8) / 0.28, bw * 0.82, bh * 0.6, 0, 0, Math.PI * 2);
-  ctx.fillStyle = 'rgba(80,120,145,0.2)';
+  ctx.ellipse(s * 0.05, (s * 0.34 + wb + s * 0.3) / 0.22, s * 0.42, s * 0.24, 0, 0, Math.PI * 2);
   ctx.fill();
   ctx.restore();
 
-  // ── Wing flap (behind body) ──
-  if (wingFlap > 0.04) {
-    ctx.beginPath();
-    ctx.ellipse(-2, -bh - wingFlap * 13, bw * 0.72, 5 + wingFlap * 4, -0.18, 0, Math.PI * 2);
-    ctx.fillStyle   = '#ededea';
-    ctx.strokeStyle = '#333';
-    ctx.lineWidth   = 1;
-    ctx.fill(); ctx.stroke();
-  }
-
-  // ── Body ──
+  // Body — warm white oval, slight tilt
+  ctx.fillStyle   = 'rgba(252, 250, 244, 0.97)';
+  ctx.strokeStyle = 'rgba(26, 18, 10, 0.70)';
+  ctx.lineWidth   = s * 0.033;
   ctx.beginPath();
-  ctx.ellipse(0, 0, bw, bh, 0, 0, Math.PI * 2);
-  ctx.fillStyle   = '#f5f5f2';
+  ctx.ellipse(0, wb, s * 0.50, s * 0.27, 0.12, 0, Math.PI * 2);
   ctx.fill();
-  ctx.strokeStyle = '#1c1c1c';
-  ctx.lineWidth   = 1.8;
   ctx.stroke();
 
-  // Wing fold crease
+  // Bold wing stroke — Wu Guanzhong's characteristic single bold arc
+  ctx.strokeStyle = 'rgba(20, 14, 6, 0.82)';
+  ctx.lineWidth   = s * 0.065;
+  ctx.lineCap     = 'round';
   ctx.beginPath();
-  ctx.moveTo(-11, -bh + 2);
-  ctx.quadraticCurveTo(2, -bh - 3, bw - 7, -bh + 3);
-  ctx.strokeStyle = 'rgba(100,100,100,0.4)';
-  ctx.lineWidth   = 0.9;
+  ctx.moveTo(-s * 0.36, wb - s * 0.09);
+  ctx.bezierCurveTo(-s * 0.10, wb - s * 0.26, s * 0.20, wb - s * 0.22, s * 0.44, wb - s * 0.07);
   ctx.stroke();
 
-  // ── Tail ──
+  // Tail feather strokes
+  ctx.strokeStyle = 'rgba(20, 14, 6, 0.52)';
+  ctx.lineWidth   = s * 0.026;
+  ctx.lineCap     = 'round';
   ctx.beginPath();
-  ctx.moveTo(-bw + 2, -4);
-  ctx.lineTo(-bw - 14, -3);
-  ctx.lineTo(-bw - 12,  0);
-  ctx.lineTo(-bw - 14,  4);
-  ctx.lineTo(-bw + 2,   3);
-  ctx.fillStyle   = '#eeeeeb';
-  ctx.fill();
-  ctx.strokeStyle = '#1c1c1c';
-  ctx.lineWidth   = 1.5;
+  ctx.moveTo(-s * 0.42, wb + s * 0.04);
+  ctx.lineTo(-s * 0.62, wb - s * 0.08);
+  ctx.moveTo(-s * 0.42, wb + s * 0.06);
+  ctx.lineTo(-s * 0.60, wb + s * 0.14);
   ctx.stroke();
 
-  // ── Neck + Head ──
-  // Map neckBob (-1..1) to head position
-  const t  = (neckBob + 1) / 2;          // 0 = drinking, 1 = alert
-  const hx = bw + 20 - t * 12;           // 40→28 as t goes 0→1
-  const hy = 16 - t * 52;                // +16 (water) → -36 (high)
-  const cpx = bw + 15 - t * 5;
-  const cpy = -2 - t * 18;
-  const nsx = bw - 4, nsy = -bh + 4;
+  // Neck — S-curve, warm white, bold stroke then outline
+  const nx0 = s * 0.34, ny0 = wb - s * 0.16;
+  const ncp1x = s * 0.55, ncp1y = wb - s * 0.40;
+  const ncp2x = s * 0.36, ncp2y = wb - s * 0.62;
+  const nhx   = s * 0.46, nhy   = wb - s * 0.88;
 
-  // Neck: black outline then white fill
-  const path = () => {
-    ctx.beginPath();
-    ctx.moveTo(nsx, nsy);
-    ctx.quadraticCurveTo(cpx, cpy, hx, hy);
-  };
-  path(); ctx.strokeStyle = '#1c1c1c'; ctx.lineWidth = 9;  ctx.lineCap = 'round'; ctx.stroke();
-  path(); ctx.strokeStyle = '#f5f5f2'; ctx.lineWidth = 6;  ctx.stroke();
+  ctx.lineWidth = s * 0.15;
+  ctx.lineCap   = 'round';
+  ctx.strokeStyle = 'rgba(250, 247, 240, 0.97)';
+  ctx.beginPath();
+  ctx.moveTo(nx0, ny0);
+  ctx.bezierCurveTo(ncp1x, ncp1y, ncp2x, ncp2y, nhx, nhy);
+  ctx.stroke();
+
+  ctx.lineWidth   = s * 0.029;
+  ctx.strokeStyle = 'rgba(24, 16, 8, 0.58)';
+  ctx.beginPath();
+  ctx.moveTo(nx0, ny0);
+  ctx.bezierCurveTo(ncp1x, ncp1y, ncp2x, ncp2y, nhx, nhy);
+  ctx.stroke();
 
   // Head
+  ctx.fillStyle   = 'rgba(252, 249, 242, 0.97)';
+  ctx.strokeStyle = 'rgba(24, 16, 8, 0.68)';
+  ctx.lineWidth   = s * 0.029;
   ctx.beginPath();
-  ctx.arc(hx, hy, 7.5, 0, Math.PI * 2);
-  ctx.fillStyle   = '#f5f5f2';
+  ctx.arc(nhx, nhy, s * 0.125, 0, Math.PI * 2);
   ctx.fill();
-  ctx.strokeStyle = '#1c1c1c';
-  ctx.lineWidth   = 1.6;
   ctx.stroke();
 
-  // Beak
+  // Red crown dot — Wu Guanzhong's signature accent
+  ctx.fillStyle = '#c42e16';
   ctx.beginPath();
-  ctx.moveTo(hx + 5,  hy - 1);
-  ctx.lineTo(hx + 16, hy + 1);
-  ctx.lineTo(hx + 14, hy + 4);
-  ctx.lineTo(hx + 4,  hy + 3);
-  ctx.closePath();
-  ctx.fillStyle   = '#c84000';
+  ctx.arc(nhx - s * 0.015, nhy - s * 0.115, s * 0.058, 0, Math.PI * 2);
   ctx.fill();
-  ctx.strokeStyle = '#882000';
-  ctx.lineWidth   = 0.8;
-  ctx.stroke();
-  // Beak groove
+
+  // Beak — small, amber-orange
+  ctx.fillStyle   = 'rgba(158, 112, 38, 0.90)';
+  ctx.strokeStyle = 'rgba(100, 68, 18, 0.55)';
+  ctx.lineWidth   = s * 0.018;
   ctx.beginPath();
-  ctx.moveTo(hx + 7, hy + 0.5);
-  ctx.lineTo(hx + 14, hy + 2);
-  ctx.strokeStyle = 'rgba(130,40,0,0.5)';
-  ctx.lineWidth   = 0.6;
+  ctx.moveTo(nhx + s * 0.10, nhy - s * 0.02);
+  ctx.lineTo(nhx + s * 0.24, nhy + s * 0.01);
+  ctx.lineTo(nhx + s * 0.22, nhy + s * 0.06);
+  ctx.lineTo(nhx + s * 0.09, nhy + s * 0.05);
+  ctx.closePath();
+  ctx.fill();
   ctx.stroke();
 
   // Eye
+  ctx.fillStyle = 'rgba(16, 10, 5, 0.92)';
   ctx.beginPath();
-  ctx.arc(hx + 1, hy - 2, 2.5, 0, Math.PI * 2);
-  ctx.fillStyle = '#111'; ctx.fill();
+  ctx.arc(nhx + s * 0.04, nhy - s * 0.01, s * 0.023, 0, Math.PI * 2);
+  ctx.fill();
+  // Eye highlight
+  ctx.fillStyle = 'rgba(255,255,255,0.7)';
   ctx.beginPath();
-  ctx.arc(hx + 1.8, hy - 2.8, 0.9, 0, Math.PI * 2);
-  ctx.fillStyle = 'rgba(255,255,255,0.85)'; ctx.fill();
+  ctx.arc(nhx + s * 0.05, nhy - s * 0.025, s * 0.009, 0, Math.PI * 2);
+  ctx.fill();
 
   ctx.restore();
 }
 
 // ── Goose entity ─────────────────────────────────────────────────
 class Goose {
-  constructor() {
-    this.x      = 80 + Math.random() * (W - 160);
-    this.y      = waterY + 55 + Math.random() * (H - waterY - 110);
-    this.sc     = 0.6 + Math.random() * 0.65;
-    this.facing = Math.random() > 0.5;
-    this.speed  = (0.3 + Math.random() * 0.55) * this.sc;
-    this.vx     = (this.facing ? 1 : -1) * this.speed;
-    this.vy     = (Math.random() - 0.5) * this.speed * 0.35;
-    this.tvx    = this.vx;
-    this.tvy    = this.vy;
-    this.phase  = Math.random() * Math.PI * 2;
-    this.pspd   = 0.018 + Math.random() * 0.012;
-    this.dphase = Math.random() * Math.PI * 2;
-    this.drink  = Math.random() < 0.18;
-    this.neckBob = this.drink ? Math.sin(this.dphase) * 0.85 : Math.sin(this.phase) * 0.4;
-    this.wingFlap = 0;
-    this.timer  = 120 + Math.random() * 280;
+  constructor(rect) {
+    const orig = ORIG[Math.floor(Math.random() * ORIG.length)];
+    this.x = rect.x + orig.cx * rect.w + (Math.random() - 0.5) * 50;
+    this.y = rect.y + orig.cy * rect.h + (Math.random() - 0.5) * 30;
+
+    this.angle  = Math.random() * Math.PI * 2;
+    this.target = this.angle;
+    this.speed  = 0.45 + Math.random() * 0.55;
+    this.size   = (0.042 + Math.random() * 0.018) * rect.w;
+
+    this.wobble     = Math.random() * Math.PI * 2;
+    this.wobbleSpd  = 0.038 + Math.random() * 0.025;
+    this.wobbleAmp  = 0.028 + Math.random() * 0.018; // fraction of size
+
+    this.timer     = 80 + Math.random() * 160;
   }
 
-  update() {
-    if (!animated) return;
-
-    this.phase  += this.pspd;
-    this.dphase += 0.014;
+  update(rect) {
+    this.wobble += this.wobbleSpd;
     this.timer--;
-
     if (this.timer <= 0) {
-      this.timer = 140 + Math.random() * 320;
-      if (Math.random() < 0.35) {
-        this.facing = !this.facing;
-      }
-      this.tvx = (this.facing ? 1 : -1) * this.speed * (0.7 + Math.random() * 0.6);
-      this.tvy = (Math.random() - 0.5) * this.speed * 0.5;
-      if (Math.random() < 0.08) this.wingFlap = 1;
+      this.timer  = 100 + Math.random() * 200;
+      this.target = Math.random() * Math.PI * 2;
     }
 
-    this.vx += (this.tvx - this.vx) * 0.06;
-    this.vy += (this.tvy - this.vy) * 0.06;
-    this.x  += this.vx;
-    this.y  += this.vy;
-    this.wingFlap = Math.max(0, this.wingFlap - 0.018);
+    // Smooth angle rotation
+    let da = this.target - this.angle;
+    while (da >  Math.PI) da -= Math.PI * 2;
+    while (da < -Math.PI) da += Math.PI * 2;
+    this.angle += da * 0.018;
 
-    // Boundary
-    const m = 55;
-    if (this.x < m)     { this.tvx =  Math.abs(this.tvx); this.facing = true;  }
-    if (this.x > W - m) { this.tvx = -Math.abs(this.tvx); this.facing = false; }
-    if (this.y < waterY + m) { this.tvy =  Math.abs(this.tvy); }
-    if (this.y > H - m)      { this.tvy = -Math.abs(this.tvy); }
+    this.x += Math.cos(this.angle) * this.speed;
+    this.y += Math.sin(this.angle) * this.speed;
 
-    this.neckBob = this.drink
-      ? Math.sin(this.dphase) * 0.88
-      : Math.sin(this.phase)  * 0.38;
+    // Boundary — stay within 6% margin of painting edges
+    const mg = 0.06;
+    const lx = rect.x + rect.w * mg,  rx = rect.x + rect.w * (1 - mg);
+    const ty = rect.y + rect.h * mg,  by = rect.y + rect.h * (1 - mg);
+    if (this.x < lx) { this.x = lx; this.target =  0; }
+    if (this.x > rx) { this.x = rx; this.target =  Math.PI; }
+    if (this.y < ty) { this.y = ty; this.target =  Math.PI / 2; }
+    if (this.y > by) { this.y = by; this.target = -Math.PI / 2; }
   }
 
-  draw() {
-    drawGoose(this.x, this.y, this.sc, this.facing, this.neckBob, this.wingFlap);
+  draw(ctx, frozen) {
+    const wb = frozen ? 0 : Math.sin(this.wobble) * this.size * this.wobbleAmp;
+    drawGoose(ctx, this.x, this.y, this.size, this.angle, wb);
   }
 }
 
-// ── Build geese ──────────────────────────────────────────────────
-function buildGeese() {
-  geese = [];
-  const n = 20 + Math.floor(Math.random() * 8);
-  for (let i = 0; i < n; i++) geese.push(new Goose());
+let geese = [];
+
+function initGeese(rect) {
+  geese = ORIG.map(() => new Goose(rect));
 }
 
-// ── Render loop ──────────────────────────────────────────────────
-function loop() {
-  geese.forEach(g => g.update());
-
-  ctx.drawImage(bg, 0, 0);
-
-  // Draw back-to-front (by y)
-  [...geese].sort((a, b) => a.y - b.y).forEach(g => g.draw());
-
-  raf = requestAnimationFrame(loop);
+// ── Render ───────────────────────────────────────────────────────
+function renderGeese(frozen) {
+  const rect = paintingRect();
+  geeseCtx.clearRect(0, 0, geeseCanvas.width, geeseCanvas.height);
+  if (!frozen) geese.forEach(g => g.update(rect));
+  // Sort by y so closer geese overlap farther ones
+  [...geese].sort((a, b) => a.y - b.y).forEach(g => g.draw(geeseCtx, frozen));
 }
 
-// ── Toggle ───────────────────────────────────────────────────────
-canvas.addEventListener('click', () => {
-  animated = !animated;
-  document.getElementById('hint').textContent = animated
-    ? '再次点击让鹅群静止 · Click to freeze'
-    : '点击画面唤醒鹅群 · Click to awaken';
+function animLoop() {
+  renderGeese(false);
+  raf = requestAnimationFrame(animLoop);
+}
+
+// ── State transitions ────────────────────────────────────────────
+function handleClick() {
+  const rect = paintingRect();
+
+  if (state === S.INITIAL) {
+    state = S.ANIMATING;
+    initGeese(rect);
+    maskCanvas.style.display  = '';
+    geeseCanvas.style.display = '';
+    drawMask(rect);
+    hintEl.textContent = '再次点击让鹅群停下 · Click to freeze';
+    animLoop();
+
+  } else if (state === S.ANIMATING) {
+    state = S.FROZEN;
+    cancelAnimationFrame(raf); raf = null;
+    renderGeese(true);  // redraw frozen in Wu style
+    hintEl.textContent = '点击继续游动 · Click to continue';
+
+  } else {
+    state = S.ANIMATING;
+    hintEl.textContent = '再次点击让鹅群停下 · Click to freeze';
+    animLoop();
+  }
+}
+
+geeseCanvas.addEventListener('click', handleClick);
+
+// ── Resize handling ──────────────────────────────────────────────
+window.addEventListener('resize', () => {
+  resize();
+  if (state !== S.INITIAL) {
+    const rect = paintingRect();
+    drawMask(rect);
+    if (state === S.FROZEN) renderGeese(true);
+  }
 });
 
 // ── Boot ─────────────────────────────────────────────────────────
-window.addEventListener('resize', () => { resize(); });
 resize();
-loop();
+// Initially hide the overlay canvases
+maskCanvas.style.display  = 'none';
+geeseCanvas.style.display = 'none';
+
+painting.onload = () => {
+  loadingEl.style.opacity = '0';
+  setTimeout(() => { loadingEl.style.display = 'none'; }, 800);
+  // Now the image's natural dimensions are known — resize again
+  resize();
+  // Show geese canvas (but invisible until first click) for the click handler
+  geeseCanvas.style.display = '';
+};
+
+painting.onerror = () => {
+  loadingEl.textContent = '画作加载失败，请刷新重试';
+};
+
+// If the image is already cached
+if (painting.complete && painting.naturalWidth) {
+  painting.onload();
+}
 </script>
 </body>
 </html>
