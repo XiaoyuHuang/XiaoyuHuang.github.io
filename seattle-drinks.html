@@ -293,25 +293,25 @@
 <body>
 
 <div class="page">
-  <a class="back" href="/">← Back</a>
+  <a class="back" href="/">← 返回 Back</a>
 
   <div class="header">
     <p class="header-eyebrow">Seattle · Bellevue · PNW</p>
     <h1 class="header-title">☕ 咖啡 & 奶茶 地图 🧋</h1>
-    <p class="header-sub">精选西雅图地区咖啡馆与奶茶店 · Click a card to locate it on the map</p>
+    <p class="header-sub">精选西雅图地区咖啡馆与奶茶店<br><span style="font-size:.88em;opacity:.7">Handpicked cafés &amp; boba shops in Seattle &amp; Bellevue · Click a card to find it on the map</span></p>
   </div>
 
   <div class="filters" id="filters">
-    <button class="pill active" data-f="all">All</button>
-    <button class="pill" data-f="coffee">☕ Coffee</button>
-    <button class="pill" data-f="tea">🧋 Milk Tea</button>
-    <button class="pill" data-f="seattle">Seattle</button>
-    <button class="pill" data-f="bellevue">Bellevue</button>
+    <button class="pill active" data-f="all">全部 / All</button>
+    <button class="pill" data-f="coffee">☕ 咖啡 Coffee</button>
+    <button class="pill" data-f="tea">🧋 奶茶 Milk Tea</button>
+    <button class="pill" data-f="seattle">西雅图 Seattle</button>
+    <button class="pill" data-f="bellevue">贝尔维尤 Bellevue</button>
   </div>
 
   <div class="legend">
-    <span><span class="leg-dot" style="background:var(--c-coffee)"></span>Coffee</span>
-    <span><span class="leg-dot" style="background:var(--c-tea)"></span>Milk Tea</span>
+    <span><span class="leg-dot" style="background:var(--c-coffee)"></span>咖啡 Coffee</span>
+    <span><span class="leg-dot" style="background:var(--c-tea)"></span>奶茶 Milk Tea</span>
   </div>
 
   <div class="map-wrap">
@@ -326,47 +326,47 @@
 // ── Data ─────────────────────────────────────────────────────────
 const PLACES = [
   // Seattle – Coffee
-  { name:"Victrola Coffee Roasters",   type:"coffee", area:"seattle",  hood:"Capitol Hill",          lat:47.6162, lng:-122.3200, desc:"Seattle icon since 2000. Direct-trade beans in a restored jazz-era building.",                             tags:["Roaster","Espresso"] },
-  { name:"Espresso Vivace",             type:"coffee", area:"seattle",  hood:"Capitol Hill",          lat:47.6187, lng:-122.3143, desc:"Legendary birthplace of latte art. Espresso as it was meant to be.",                                    tags:["Espresso","Iconic"] },
-  { name:"Elm Coffee Roasters",         type:"coffee", area:"seattle",  hood:"Pioneer Square",        lat:47.6013, lng:-122.3313, desc:"Light roasts in a historic building. Minimal, precise, excellent.",                                     tags:["Light Roast","Roaster"] },
-  { name:"Slate Coffee Roasters",       type:"coffee", area:"seattle",  hood:"Ballard",               lat:47.6608, lng:-122.3843, desc:"Coffee served in wine glasses. Deconstructed and thoughtful — unlike anything else in Seattle.",         tags:["Specialty","Roaster"] },
-  { name:"Caffe Vita",                  type:"coffee", area:"seattle",  hood:"Capitol Hill",          lat:47.6189, lng:-122.3226, desc:"Seattle institution since 1995. Farm Direct pioneer, still independently owned.",                       tags:["Classic","Roaster"] },
-  { name:"Lighthouse Roasters",         type:"coffee", area:"seattle",  hood:"Fremont",               lat:47.6513, lng:-122.3506, desc:"Operating since 1993 with a vintage 1952 roaster. Old Seattle soul.",                                   tags:["Classic","Neighborhood"] },
-  { name:"Anchorhead Coffee",           type:"coffee", area:"seattle",  hood:"Downtown",              lat:47.6082, lng:-122.3354, desc:"America's Best Espresso award winner. Order the Brown Sugar Latte.",                                    tags:["Award-Winning","Espresso"] },
-  { name:"Storyville Coffee",           type:"coffee", area:"seattle",  hood:"Pike Place Market",     lat:47.6094, lng:-122.3417, desc:"Same-day roasted on Bainbridge Island. Proceeds support human trafficking rescue.",                     tags:["Roaster","Mission-Driven"] },
-  { name:"Zoka Coffee",                 type:"coffee", area:"seattle",  hood:"Tangletown",            lat:47.6659, lng:-122.3218, desc:"Owner-operated since 1996. Two-time National Barista Championship winner.",                             tags:["Specialty","Classic"] },
-  { name:"Milstead & Co.",              type:"coffee", area:"seattle",  hood:"Fremont",               lat:47.6505, lng:-122.3472, desc:"Multi-roaster with Lake Union views. Food & Wine gave it a perfect 5 out of 5.",                       tags:["Multi-Roaster","Views"] },
-  { name:"Analog Coffee",               type:"coffee", area:"seattle",  hood:"Capitol Hill",          lat:47.6160, lng:-122.3290, desc:"Vinyl records + great Herkimer coffee. Neighborhood hang since 2011.",                                  tags:["Cozy","Neighborhood"] },
-  { name:"Herkimer Coffee",             type:"coffee", area:"seattle",  hood:"Greenwood",             lat:47.6886, lng:-122.3540, desc:"Sustainable sourcing from small farms. Quietly excellent.",                                             tags:["Roaster","Sustainable"] },
+  { name:"Victrola Coffee Roasters",   type:"coffee", area:"seattle",  hood:"Capitol Hill",          lat:47.6162, lng:-122.3200, desc:"Seattle icon since 2000. Direct-trade beans in a restored jazz-era building.",                             desc_zh:"西雅图2000年创立的传奇咖啡馆，直接贸易豆，坐落于爵士风情的老建筑里。",  tags:["Roaster","Espresso"] },
+  { name:"Espresso Vivace",             type:"coffee", area:"seattle",  hood:"Capitol Hill",          lat:47.6187, lng:-122.3143, desc:"Legendary birthplace of latte art. Espresso as it was meant to be.",                                    desc_zh:"拿铁拉花艺术的发源地，一杯意式浓缩代表着西雅图咖啡的灵魂。",            tags:["Espresso","Iconic"] },
+  { name:"Elm Coffee Roasters",         type:"coffee", area:"seattle",  hood:"Pioneer Square",        lat:47.6013, lng:-122.3313, desc:"Light roasts in a historic building. Minimal, precise, excellent.",                                     desc_zh:"极简主义，历史建筑内的精品浅烘豆，精准而出色。",                          tags:["Light Roast","Roaster"] },
+  { name:"Slate Coffee Roasters",       type:"coffee", area:"seattle",  hood:"Ballard",               lat:47.6608, lng:-122.3843, desc:"Coffee served in wine glasses. Deconstructed and thoughtful — unlike anything else in Seattle.",         desc_zh:"用葡萄酒杯盛咖啡，解构主义风格，西雅图独一无二的体验。",                  tags:["Specialty","Roaster"] },
+  { name:"Caffe Vita",                  type:"coffee", area:"seattle",  hood:"Capitol Hill",          lat:47.6189, lng:-122.3226, desc:"Seattle institution since 1995. Farm Direct pioneer, still independently owned.",                       desc_zh:"1995年至今的西雅图老字号，直农场采购先驱，至今坚持独立经营。",            tags:["Classic","Roaster"] },
+  { name:"Lighthouse Roasters",         type:"coffee", area:"seattle",  hood:"Fremont",               lat:47.6513, lng:-122.3506, desc:"Operating since 1993 with a vintage 1952 roaster. Old Seattle soul.",                                   desc_zh:"1993年开业，配备1952年复古烘豆机，是老西雅图的灵魂所在。",               tags:["Classic","Neighborhood"] },
+  { name:"Anchorhead Coffee",           type:"coffee", area:"seattle",  hood:"Downtown",              lat:47.6082, lng:-122.3354, desc:"America's Best Espresso award winner. Order the Brown Sugar Latte.",                                    desc_zh:"美国最佳意式浓缩奖得主，招牌红糖拿铁不容错过。",                          tags:["Award-Winning","Espresso"] },
+  { name:"Storyville Coffee",           type:"coffee", area:"seattle",  hood:"Pike Place Market",     lat:47.6094, lng:-122.3417, desc:"Same-day roasted on Bainbridge Island. Proceeds support human trafficking rescue.",                     desc_zh:"当日在Bainbridge岛烘焙，收益支持反人口贩卖公益事业。",                    tags:["Roaster","Mission-Driven"] },
+  { name:"Zoka Coffee",                 type:"coffee", area:"seattle",  hood:"Tangletown",            lat:47.6659, lng:-122.3218, desc:"Owner-operated since 1996. Two-time National Barista Championship winner.",                             desc_zh:"1996年家族经营至今，两届全美咖啡师锦标赛冠军。",                          tags:["Specialty","Classic"] },
+  { name:"Milstead & Co.",              type:"coffee", area:"seattle",  hood:"Fremont",               lat:47.6505, lng:-122.3472, desc:"Multi-roaster with Lake Union views. Food & Wine gave it a perfect 5 out of 5.",                       desc_zh:"多品牌精品咖啡，可远眺联合湖，获Food & Wine杂志满分好评。",               tags:["Multi-Roaster","Views"] },
+  { name:"Analog Coffee",               type:"coffee", area:"seattle",  hood:"Capitol Hill",          lat:47.6160, lng:-122.3290, desc:"Vinyl records + great Herkimer coffee. Neighborhood hang since 2011.",                                  desc_zh:"黑胶唱片加好咖啡，Capitol Hill的街坊聚集地，2011年起。",                  tags:["Cozy","Neighborhood"] },
+  { name:"Herkimer Coffee",             type:"coffee", area:"seattle",  hood:"Greenwood",             lat:47.6886, lng:-122.3540, desc:"Sustainable sourcing from small farms. Quietly excellent.",                                             desc_zh:"可持续小农直采，低调而出色，真正的行家之选。",                            tags:["Roaster","Sustainable"] },
   // Seattle – Milk Tea
-  { name:"Xing Fu Tang",                type:"tea",    area:"seattle",  hood:"Westlake Center",       lat:47.6100, lng:-122.3375, desc:"Handmade brown sugar boba cooked in a copper wok. Always a line — always worth it.",                    tags:["Brown Sugar","Taiwanese"] },
-  { name:"Oasis Tea Zone",              type:"tea",    area:"seattle",  hood:"Chinatown / ID",        lat:47.5992, lng:-122.3235, desc:"The OG — longest-running boba shop in the Pacific Northwest since 2001.",                              tags:["Classic","OG"] },
-  { name:"Gaga Tea",                    type:"tea",    area:"seattle",  hood:"International District",lat:47.5985, lng:-122.3240, desc:"One of Seattle's top-rated boba stops. Consistently excellent across the menu.",                       tags:["Top Rated","Boba"] },
-  { name:"Sharetea",                    type:"tea",    area:"seattle",  hood:"University District",   lat:47.6595, lng:-122.3130, desc:"Tea leaves imported directly from Taiwan. Reliable quality across 9 area locations.",                  tags:["Taiwanese","Classic"] },
-  { name:"Happy Lemon",                 type:"tea",    area:"seattle",  hood:"South Lake Union",      lat:47.6219, lng:-122.3390, desc:"The beloved Taiwanese lemon-drink chain. Refreshing and crowd-pleasing.",                              tags:["Lemon Tea","Taiwanese"] },
-  { name:"Yifang Taiwan Fruit Tea",     type:"tea",    area:"seattle",  hood:"University District",   lat:47.6578, lng:-122.3114, desc:"Born from grandma's pineapple jam recipe. The signature fruit tea is unforgettable.",                 tags:["Fruit Tea","Taiwanese"] },
-  { name:"Atulea",                      type:"tea",    area:"seattle",  hood:"Capitol Hill",          lat:47.6175, lng:-122.3195, desc:"Quality boba in the heart of Capitol Hill. Low-key neighborhood gem.",                                 tags:["Boba","Neighborhood"] },
-  { name:"Bobae Coffee & Tea",          type:"tea",    area:"seattle",  hood:"Multiple locations",    lat:47.6090, lng:-122.3310, desc:"Home of the original Boba Donut and Seattle's first Nitro Bubble Tea.",                               tags:["Innovative","Donut"] },
+  { name:"幸福堂 Xing Fu Tang",          type:"tea",    area:"seattle",  hood:"Westlake Center",       lat:47.6100, lng:-122.3375, desc:"Handmade brown sugar boba cooked in a copper wok. Always a line — always worth it.",                    desc_zh:"铜锅手工熬制黑糖珍珠，台湾品牌，永远在排队，永远值得等。",                tags:["Black Sugar","Taiwanese"] },
+  { name:"Oasis Tea Zone",              type:"tea",    area:"seattle",  hood:"Chinatown / ID",        lat:47.5992, lng:-122.3235, desc:"The OG — longest-running boba shop in the Pacific Northwest since 2001.",                              desc_zh:"西北太平洋地区资历最深的珍珠奶茶店，2001年开业的元老级存在。",            tags:["Classic","OG"] },
+  { name:"Gaga Tea",                    type:"tea",    area:"seattle",  hood:"International District",lat:47.5985, lng:-122.3240, desc:"One of Seattle's top-rated boba stops. Consistently excellent across the menu.",                       desc_zh:"西雅图评分最高的奶茶店之一，全单稳定出色，百喝不厌。",                    tags:["Top Rated","Boba"] },
+  { name:"Sharetea 歇脚亭",              type:"tea",    area:"seattle",  hood:"University District",   lat:47.6595, lng:-122.3130, desc:"Tea leaves imported directly from Taiwan. Reliable quality across 9 area locations.",                  desc_zh:"台湾直进茶叶，9家分店，品质稳定，是华人圈的口碑老店。",                   tags:["Taiwanese","Classic"] },
+  { name:"Happy Lemon 快乐柠檬",         type:"tea",    area:"seattle",  hood:"South Lake Union",      lat:47.6219, lng:-122.3390, desc:"The beloved Taiwanese lemon-drink chain. Refreshing and crowd-pleasing.",                              desc_zh:"台湾柠檬饮品连锁，清爽好喝，人气爆棚，老少皆宜。",                        tags:["Lemon Tea","Taiwanese"] },
+  { name:"一芳台湾水果茶",                type:"tea",    area:"seattle",  hood:"University District",   lat:47.6578, lng:-122.3114, desc:"Born from grandma's pineapple jam recipe. The signature fruit tea is unforgettable.",                 desc_zh:"源自奶奶的菠萝酱配方，招牌鲜果茶令人念念不忘。",                          tags:["Fruit Tea","Taiwanese"] },
+  { name:"Atulea",                      type:"tea",    area:"seattle",  hood:"Capitol Hill",          lat:47.6175, lng:-122.3195, desc:"Quality boba in the heart of Capitol Hill. Low-key neighborhood gem.",                                 desc_zh:"Capitol Hill中心的优质奶茶，低调的街区隐藏宝藏。",                        tags:["Boba","Neighborhood"] },
+  { name:"Bobae Coffee & Tea",          type:"tea",    area:"seattle",  hood:"Multiple locations",    lat:47.6090, lng:-122.3310, desc:"Home of the original Boba Donut and Seattle's first Nitro Bubble Tea.",                               desc_zh:"原创珍珠甜甜圈发源地，西雅图首家氮气珍珠奶茶，勇于创新。",                tags:["Innovative","Donut"] },
   // Bellevue – Coffee
-  { name:"Cafe Cesura",                 type:"coffee", area:"bellevue", hood:"Downtown Bellevue",     lat:47.6102, lng:-122.2012, desc:"Modern, roasts its own beans, supports local artists. A downtown anchor for 10+ years.",               tags:["Roaster","Art Space"] },
-  { name:"Mercury Coffee",              type:"coffee", area:"bellevue", hood:"Eastside",              lat:47.6154, lng:-122.2068, desc:"Eastside staple since 1998. 6-time award winner across 11 locations.",                                 tags:["Award-Winning","Chain"] },
-  { name:"Third Culture Coffee",        type:"coffee", area:"bellevue", hood:"Downtown Bellevue",     lat:47.6140, lng:-122.2023, desc:"Globally inspired menu — Indian filter coffee, Vietnamese drip, and more.",                           tags:["Global","Specialty"] },
-  { name:"Bellden Café",                type:"coffee", area:"bellevue", hood:"Bellevue",              lat:47.6148, lng:-122.1998, desc:"Community-first cafe. Don't miss the signature Orange Blossom Cold Brew.",                             tags:["Community","Cold Brew"] },
-  { name:"Dote Coffee Bar",             type:"coffee", area:"bellevue", hood:"Downtown Bellevue",     lat:47.6135, lng:-122.2001, desc:"Thoughtfully sourced espresso, teas, and chocolate. Also in the Spring District.",                    tags:["Espresso","Cozy"] },
-  { name:"Coffeeholic House",           type:"coffee", area:"bellevue", hood:"Bellevue",              lat:47.6090, lng:-122.2040, desc:"Authentic Vietnamese coffee in Bellevue. Founded by Chen & Trang.",                                    tags:["Vietnamese","Specialty"] },
-  { name:"Copper Kettle Coffee Bar",    type:"coffee", area:"bellevue", hood:"Botanical Garden",      lat:47.6012, lng:-122.1682, desc:"Peaceful oasis inside the Bellevue Botanical Garden. Sleepy Monk coffee + Macrina pastries.",         tags:["Nature","Peaceful"] },
+  { name:"Cafe Cesura",                 type:"coffee", area:"bellevue", hood:"Downtown Bellevue",     lat:47.6102, lng:-122.2012, desc:"Modern, roasts its own beans, supports local artists. A downtown anchor for 10+ years.",               desc_zh:"自家烘焙豆，支持本地艺术家，市区标志性咖啡馆，扎根逾十年。",              tags:["Roaster","Art Space"] },
+  { name:"Mercury Coffee",              type:"coffee", area:"bellevue", hood:"Eastside",              lat:47.6154, lng:-122.2068, desc:"Eastside staple since 1998. 6-time award winner across 11 locations.",                                 desc_zh:"1998年起的Eastside老字号，11家分店，六度荣获行业大奖。",                  tags:["Award-Winning","Chain"] },
+  { name:"Third Culture Coffee",        type:"coffee", area:"bellevue", hood:"Downtown Bellevue",     lat:47.6140, lng:-122.2023, desc:"Globally inspired menu — Indian filter coffee, Vietnamese drip, and more.",                           desc_zh:"全球风味菜单——印度滴滤、越南滴漏，多元文化融于一杯。",                    tags:["Global","Specialty"] },
+  { name:"Bellden Café",                type:"coffee", area:"bellevue", hood:"Bellevue",              lat:47.6148, lng:-122.1998, desc:"Community-first cafe. Don't miss the signature Orange Blossom Cold Brew.",                             desc_zh:"社区优先的温暖咖啡馆，招牌橙花冷萃咖啡必点。",                            tags:["Community","Cold Brew"] },
+  { name:"Dote Coffee Bar",             type:"coffee", area:"bellevue", hood:"Downtown Bellevue",     lat:47.6135, lng:-122.2001, desc:"Thoughtfully sourced espresso, teas, and chocolate. Also in the Spring District.",                    desc_zh:"精心选豆的意式浓缩、精品茶与巧克力，Spring District也有分店。",           tags:["Espresso","Cozy"] },
+  { name:"Coffeeholic House",           type:"coffee", area:"bellevue", hood:"Bellevue",              lat:47.6090, lng:-122.2040, desc:"Authentic Vietnamese coffee in Bellevue. Founded by Chen & Trang.",                                    desc_zh:"正宗越南咖啡在Bellevue，由Chen与Trang创立，风味地道。",                   tags:["Vietnamese","Specialty"] },
+  { name:"Copper Kettle Coffee Bar",    type:"coffee", area:"bellevue", hood:"Botanical Garden",      lat:47.6012, lng:-122.1682, desc:"Peaceful oasis inside the Bellevue Botanical Garden. Sleepy Monk coffee + Macrina pastries.",         desc_zh:"植物园里的静谧绿洲，Sleepy Monk咖啡配Macrina糕点，绝佳放松之所。",       tags:["Nature","Peaceful"] },
   // Bellevue – Milk Tea
-  { name:"Mi Tea",                      type:"tea",    area:"bellevue", hood:"Downtown Bellevue",     lat:47.6132, lng:-122.2025, desc:"Rich Himalayan cheese foam that sets it apart. High quality since 2016.",                              tags:["Cheese Foam","Quality"] },
-  { name:"CHICHA San Chen",             type:"tea",    area:"bellevue", hood:"Bellevue",              lat:47.6098, lng:-122.2010, desc:"Fresh-brewed Taiwanese bubble tea with a modern look. They offer samples!",                            tags:["Fresh Brewed","Taiwanese"] },
-  { name:"Happy Lemon",                 type:"tea",    area:"bellevue", hood:"Downtown Bellevue",     lat:47.6108, lng:-122.2050, desc:"Locally sourced fruits, lemon green teas, bubble waffles, and Korean corn dogs.",                     tags:["Lemon Tea","Snacks"] },
-  { name:"Blackbird",                   type:"tea",    area:"bellevue", hood:"Downtown Bellevue",     lat:47.6145, lng:-122.2055, desc:"Bubble tea meets mille crepe cakes. Beautiful drinks, beautiful desserts.",                            tags:["Aesthetic","Dessert"] },
-  { name:"Don't Yell at Me",            type:"tea",    area:"bellevue", hood:"Bellevue",              lat:47.6087, lng:-122.2035, desc:"Bold name, beautiful drinks. The rose milk tea is a must-order.",                                      tags:["Aesthetic","Rose Tea"] },
-  { name:"Sharetea Bellevue",           type:"tea",    area:"bellevue", hood:"Downtown Bellevue",     lat:47.6120, lng:-122.1990, desc:"Taiwan-imported tea leaves. Try the mojito series: mango, peach, or strawberry.",                    tags:["Taiwanese","Mojito"] },
-  { name:"Over the Rainbow",            type:"tea",    area:"bellevue", hood:"Bellevue",              lat:47.6115, lng:-122.2048, desc:"DIY topping station + bright murals. Open since 2016, perpetually festive.",                           tags:["DIY","Fun"] },
-  { name:"Heytea",                      type:"tea",    area:"bellevue", hood:"Bellevue",              lat:47.6127, lng:-122.2018, desc:"The sought-after Chinese cheese tea chain, finally in Bellevue.",                                      tags:["Cheese Tea","Trendy"] },
-  { name:"Molly Tea",                   type:"tea",    area:"bellevue", hood:"Bellevue",              lat:47.6140, lng:-122.1985, desc:"Shenzhen-origin shop known for jasmine drinks with floral & fruity notes. ★ 4.6",                    tags:["Jasmine","Floral"] },
-  { name:"TRA Tea & Juice Bar",         type:"tea",    area:"bellevue", hood:"Downtown Bellevue",     lat:47.6119, lng:-122.2032, desc:"Fresh brewed tea, cold-pressed juice, and Vietnamese coffee — all in playful cups.",                  tags:["Fresh","Juice"] },
-  { name:"Yifang Taiwan Fruit Tea",     type:"tea",    area:"bellevue", hood:"Bellevue",              lat:47.6094, lng:-122.2020, desc:"Bellevue outpost of the beloved grandma's-recipe fruit tea brand.",                                    tags:["Fruit Tea","Taiwanese"] },
+  { name:"Mi Tea 蜜茶",                  type:"tea",    area:"bellevue", hood:"Downtown Bellevue",     lat:47.6132, lng:-122.2025, desc:"Rich Himalayan cheese foam that sets it apart. High quality since 2016.",                              desc_zh:"喜马拉雅芝士泡沫浓郁独特，2016年起坚持高品质，口碑极佳。",                tags:["Cheese Foam","Quality"] },
+  { name:"CHICHA San Chen 沁茶",         type:"tea",    area:"bellevue", hood:"Bellevue",              lat:47.6098, lng:-122.2010, desc:"Fresh-brewed Taiwanese bubble tea with a modern look. They offer samples!",                            desc_zh:"新鲜现泡台湾珍珠奶茶，颜值在线，还提供免费试喝！",                        tags:["Fresh Brewed","Taiwanese"] },
+  { name:"Happy Lemon 快乐柠檬",         type:"tea",    area:"bellevue", hood:"Downtown Bellevue",     lat:47.6108, lng:-122.2050, desc:"Locally sourced fruits, lemon green teas, bubble waffles, and Korean corn dogs.",                     desc_zh:"本地鲜果、柠檬绿茶、鲷鱼烧华夫格、韩式烤肠，品类丰富。",                 tags:["Lemon Tea","Snacks"] },
+  { name:"Blackbird",                   type:"tea",    area:"bellevue", hood:"Downtown Bellevue",     lat:47.6145, lng:-122.2055, desc:"Bubble tea meets mille crepe cakes. Beautiful drinks, beautiful desserts.",                            desc_zh:"珍珠奶茶遇上千层蛋糕，颜值与味道双双在线，好拍好吃。",                    tags:["Aesthetic","Dessert"] },
+  { name:"Don't Yell at Me",            type:"tea",    area:"bellevue", hood:"Bellevue",              lat:47.6087, lng:-122.2035, desc:"Bold name, beautiful drinks. The rose milk tea is a must-order.",                                      desc_zh:"名字大胆，饮品精美，玫瑰奶茶是必点招牌，颜值爆表。",                      tags:["Aesthetic","Rose Tea"] },
+  { name:"Sharetea 歇脚亭 Bellevue",     type:"tea",    area:"bellevue", hood:"Downtown Bellevue",     lat:47.6120, lng:-122.1990, desc:"Taiwan-imported tea leaves. Try the mojito series: mango, peach, or strawberry.",                    desc_zh:"台湾进口茶叶，莫吉托系列（芒果/桃子/草莓）超级人气。",                    tags:["Taiwanese","Mojito"] },
+  { name:"Over the Rainbow",            type:"tea",    area:"bellevue", hood:"Bellevue",              lat:47.6115, lng:-122.2048, desc:"DIY topping station + bright murals. Open since 2016, perpetually festive.",                           desc_zh:"DIY小料站加鲜艳壁画，2016年开业，永远洋溢着欢乐气氛。",                  tags:["DIY","Fun"] },
+  { name:"喜茶 Heytea",                  type:"tea",    area:"bellevue", hood:"Bellevue",              lat:47.6127, lng:-122.2018, desc:"The sought-after Chinese cheese tea chain, finally in Bellevue.",                                      desc_zh:"备受期待的国民芝士茶品牌，终于在Bellevue开店，果断去打卡。",              tags:["Cheese Tea","Trendy"] },
+  { name:"Molly Tea",                   type:"tea",    area:"bellevue", hood:"Bellevue",              lat:47.6140, lng:-122.1985, desc:"Shenzhen-origin shop known for jasmine drinks with floral & fruity notes. ★ 4.6",                    desc_zh:"深圳起源，以茉莉花系列闻名，花果香气层次丰富，★4.6高分。",               tags:["Jasmine","Floral"] },
+  { name:"TRA Tea & Juice Bar",         type:"tea",    area:"bellevue", hood:"Downtown Bellevue",     lat:47.6119, lng:-122.2032, desc:"Fresh brewed tea, cold-pressed juice, and Vietnamese coffee — all in playful cups.",                  desc_zh:"现泡茶、冷压果汁、越南咖啡，装在好看的杯子里，清新好喝。",                tags:["Fresh","Juice"] },
+  { name:"一芳台湾水果茶 Bellevue",       type:"tea",    area:"bellevue", hood:"Bellevue",              lat:47.6094, lng:-122.2020, desc:"Bellevue outpost of the beloved grandma's-recipe fruit tea brand.",                                    desc_zh:"奶奶菠萝酱配方鲜果茶品牌的Bellevue分店，好喝如初。",                      tags:["Fruit Tea","Taiwanese"] },
 ];
 
 // ── Map init ─────────────────────────────────────────────────────
@@ -413,15 +413,17 @@ function makeIcon(type) {
 function popupHtml(p) {
   const typeColor = p.type === 'coffee' ? '#6b3f1f' : '#5b3d9a';
   const typeBg    = p.type === 'coffee' ? '#f5e8d8' : '#ede8f8';
-  return `<div style="padding:.85rem 1rem .9rem;min-width:185px;max-width:230px;">
-    <div style="font-size:.7rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;
+  const typeLabel = p.type === 'coffee' ? '☕ 咖啡 Coffee' : '🧋 奶茶 Milk Tea';
+  return `<div style="padding:.85rem 1rem .9rem;min-width:185px;max-width:240px;">
+    <div style="font-size:.68rem;font-weight:700;letter-spacing:.06em;
                 color:${typeColor};background:${typeBg};border:1.5px solid rgba(0,0,0,.1);
                 border-radius:999px;display:inline-block;padding:.12rem .55rem;margin-bottom:.45rem;">
-      ${p.type === 'coffee' ? '☕ Coffee' : '🧋 Milk Tea'}
+      ${typeLabel}
     </div>
-    <div style="font-weight:700;font-size:.98rem;line-height:1.18;margin-bottom:.15rem;">${p.name}</div>
-    <div style="font-size:.75rem;opacity:.55;margin-bottom:.4rem;">${p.hood}</div>
-    <div style="font-size:.8rem;line-height:1.38;opacity:.78;">${p.desc}</div>
+    <div style="font-weight:700;font-size:.96rem;line-height:1.18;margin-bottom:.15rem;">${p.name}</div>
+    <div style="font-size:.73rem;opacity:.52;margin-bottom:.4rem;">${p.hood}</div>
+    <div style="font-size:.82rem;line-height:1.42;font-weight:700;margin-bottom:.25rem;">${p.desc_zh}</div>
+    <div style="font-size:.76rem;line-height:1.38;opacity:.62;">${p.desc}</div>
   </div>`;
 }
 
@@ -436,7 +438,7 @@ PLACES.forEach(p => {
 });
 
 // ── Cards ─────────────────────────────────────────────────────────
-const AREA_LABELS = { seattle: '📍 Seattle', bellevue: '📍 Bellevue' };
+const AREA_LABELS = { seattle: '📍 西雅图 Seattle', bellevue: '📍 贝尔维尤 Bellevue' };
 const cardsEl = document.getElementById('cards');
 
 function renderCards(filter) {
@@ -448,7 +450,7 @@ function renderCards(filter) {
     return p.area === filter;
   });
   if (!filtered.length) {
-    cardsEl.innerHTML = '<div class="empty">No results for this filter.</div>';
+    cardsEl.innerHTML = '<div class="empty">暂无结果 · No results for this filter.</div>';
     return;
   }
   const areas = [...new Set(filtered.map(p => p.area))];
@@ -469,9 +471,12 @@ function renderCards(filter) {
             <div class="card-neighborhood">${p.hood}</div>
           </div>
         </div>
-        <div class="card-desc">${p.desc}</div>
+        <div class="card-desc">
+          <span style="display:block;font-weight:700;margin-bottom:.22rem;">${p.desc_zh}</span>
+          <span style="opacity:.65;font-size:.78rem;">${p.desc}</span>
+        </div>
         <div class="card-tags">
-          <span class="tag ${p.type === 'coffee' ? 'tag-coffee' : 'tag-tea'}">${p.type === 'coffee' ? 'Coffee' : 'Milk Tea'}</span>
+          <span class="tag ${p.type === 'coffee' ? 'tag-coffee' : 'tag-tea'}">${p.type === 'coffee' ? '咖啡 Coffee' : '奶茶 Milk Tea'}</span>
           ${p.tags.map(t => `<span class="tag tag-misc">${t}</span>`).join('')}
         </div>`;
       card.addEventListener('click', () => {
